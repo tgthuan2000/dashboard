@@ -1,4 +1,5 @@
-export const cls = (...classes: string[] | any[]): string => classes.filter(Boolean).join(' ')
+export const cls = (...classes: (string | null | undefined | false)[]): string =>
+	classes.filter(Boolean).join(' ')
 export const activeCls = (
 	active: boolean,
 	classActive: string,

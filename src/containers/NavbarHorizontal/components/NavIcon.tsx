@@ -1,6 +1,6 @@
 import React from 'react'
 import { Icon } from '@mui/material'
-import { cls, activeCls } from '../utils/classname-supporter'
+import { cls, activeCls } from '../../../utils/classname-supporter'
 
 interface NavIconProps {
 	className?: string

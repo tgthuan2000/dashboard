@@ -7,7 +7,7 @@ import {
 } from '@mui/icons-material'
 import { Icon } from '@mui/material'
 import { FormEvent, useState } from 'react'
-import { NavIcon, PersonConfig } from '../../components'
+import { NavIcon, PersonConfig } from './components'
 
 const NavbarHorizontal = () => {
 	const [input, setInput] = useState('')

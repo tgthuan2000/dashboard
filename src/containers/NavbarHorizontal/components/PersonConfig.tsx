@@ -1,7 +1,7 @@
 import { LogoutOutlined } from '@mui/icons-material'
 import { Icon } from '@mui/material'
 import React from 'react'
-import { cls } from '../utils/classname-supporter'
+import { cls } from '../../../utils/classname-supporter'
 
 interface PersonConfigProps {
 	className?: string
