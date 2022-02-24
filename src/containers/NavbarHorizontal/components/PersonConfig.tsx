@@ -1,6 +1,7 @@
 import { LogoutOutlined } from '@mui/icons-material'
 import { Icon } from '@mui/material'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { cls } from '../../../utils/classname-supporter'
 
 interface PersonConfigProps {
@@ -14,12 +15,13 @@ interface PersonConfigProps {
 
 const PersonConfig = ({
 	className,
-	title = 'Tran Gia Thuan',
+	title = 'Username',
 	description = 'Leader',
 	active = false,
 	onClick,
 	onBlur,
 }: PersonConfigProps) => {
+	const navigate = useNavigate()
 	return (
 		<div
 			tabIndex={0}
@@ -33,7 +35,7 @@ const PersonConfig = ({
 			<img
 				className='w-8 h-8 rounded-full flex items-center justify-center bg-gray shrink-0'
 				src=''
-				alt='T'
+				alt={title[0]}
 			/>
 			<div className='flex-1 overflow-hidden flex ml-3 flex-col justify-between'>
 				<h3 className='leading-normal text-sm text-[#495057] dark:text-[#cde4ca] font-medium overflow-hidden text-ellipsis whitespace-nowrap'>
@@ -46,8 +48,12 @@ const PersonConfig = ({
 
 			{/* Dropdown */}
 			{active && (
-				<div className='absolute z-10 top-[95%] right-0 min-w-[10rem] py-2 text-sm bg-white dark:bg-[#292e33] rounded-md shadow-md'>
-					<PersonItem text='Logout' icon={LogoutOutlined} />
+				<div className='absolute top-[95%] right-0 min-w-[10rem] py-2 text-sm bg-white dark:bg-[#292e33] rounded-md shadow-md'>
+					<PersonItem
+						text='Logout'
+						icon={LogoutOutlined}
+						onClick={() => navigate('/auth')}
+					/>
 				</div>
 			)}
 		</div>
@@ -57,10 +63,14 @@ const PersonConfig = ({
 interface PersonItemProps {
 	text: string
 	icon: React.ElementType
+	onClick?: React.MouseEventHandler<HTMLDivElement>
 }
-const PersonItem = ({ text, icon }: PersonItemProps) => {
+const PersonItem = ({ text, icon, onClick }: PersonItemProps) => {
 	return (
-		<div className='w-full px-5 py-1 text-dark dark:text-[#b9bfc4] hover:text-[#1e2125] dark:hover:bg-[#2f343a] hover:bg-[#f3f6f9] bg-transparent flex items-center'>
+		<div
+			onClick={onClick}
+			className='w-full px-5 py-1 text-dark dark:text-[#b9bfc4] hover:text-[#1e2125] dark:hover:bg-[#2f343a] hover:bg-[#f3f6f9] bg-transparent flex items-center'
+		>
 			<Icon className='text-[#878a99]' component={icon} style={{ fontSize: 16 }} />
 			<p className='font-normal text-sm whitespace-nowrap ml-2'>{text}</p>
 		</div>

@@ -5,7 +5,6 @@ module.exports = {
 		colors: {
 			transparent: 'transparent',
 			inherit: 'inherit',
-			gradient: 'linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0))',
 			white: '#fff',
 			gray: '#878a99',
 			'gray-dark': '#343a40',

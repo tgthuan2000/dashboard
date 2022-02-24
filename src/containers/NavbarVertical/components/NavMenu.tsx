@@ -1,5 +1,5 @@
 interface NavMenuProps {
-	children: JSX.Element
+	children: JSX.Element | JSX.Element[]
 	title: string
 }
 const NavMenu = ({ children, title }: NavMenuProps) => {
@@ -8,7 +8,7 @@ const NavMenu = ({ children, title }: NavMenuProps) => {
 			<h4 className='uppercase text-[#838fb9] dark:text-[#5f6270] font-semibold text-[11px] px-5 py-4'>
 				{title}
 			</h4>
-			<div className=''>{children}</div>
+			{children}
 		</div>
 	)
 }

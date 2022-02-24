@@ -11,10 +11,9 @@
 }
 html {
 	@apply font-base;
-	font-size: 16px;
 }
 body {
-	@apply bg-[#f3f3f9] dark:bg-[#1a1d21] transition-colors;
+	@apply bg-[#f3f3f9] dark:bg-[#1a1d21] transition-colors text-[.8125rem];
 }
 ::selection {
 	@apply bg-primary text-white;

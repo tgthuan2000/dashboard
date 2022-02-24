@@ -1,19 +1,25 @@
-import React from 'react'
+import { NavLink } from 'react-router-dom'
+import { cls } from '../../../utils/classname-supporter'
 
 interface NavItemProps {
 	title: string
-	onClick: React.MouseEventHandler<HTMLLIElement>
+	href: string
 }
-const NavItem = ({ title, onClick }: NavItemProps) => {
+const NavItem = ({ title, href }: NavItemProps) => {
 	return (
-		<li
-			onClick={onClick}
-			className='cursor-pointer w-full inline-flex pl-12 py-2 pr-6 hover:text-white transition-colors'
+		<NavLink
+			to={href}
+			className={({ isActive }) =>
+				cls(
+					'w-full inline-flex pl-12 py-2 pr-6 transition-colors',
+					isActive ? 'text-white pointer-events-none' : 'hover:text-white cursor-pointer'
+				)
+			}
 		>
 			<p className='text-sm relative before:absolute before:content-["-"] before:-left-5 before:font-bold'>
 				{title}
 			</p>
-		</li>
+		</NavLink>
 	)
 }
 

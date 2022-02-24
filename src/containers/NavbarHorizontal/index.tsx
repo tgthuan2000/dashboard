@@ -7,6 +7,7 @@ import {
 } from '@mui/icons-material'
 import { Icon } from '@mui/material'
 import { FormEvent, useState } from 'react'
+import { Navigate } from 'react-router-dom'
 import { NavIcon, PersonConfig } from './components'
 
 const NavbarHorizontal = () => {
@@ -39,7 +40,7 @@ const NavbarHorizontal = () => {
 	}
 
 	return (
-		<div className='fixed top-0 left-0 right-0 shadow-sm bg-white dark:bg-[#292e32] transition-colors'>
+		<div className='fixed z-10 top-0 left-0 right-0 shadow-sm bg-white dark:bg-[#292e32] transition-colors'>
 			<div className='h-[70px] max-w-[95%] px-6 bg-transparent mx-auto flex items-center justify-between'>
 				{/* left */}
 				<div className='flex items-center'>

@@ -1,3 +1,5 @@
-export { default as Home } from './Home'
+export { default as Ecommerce } from './Ecommerce'
+export { default as Analytics } from './Analytics'
 export { default as NavbarHorizontal } from './NavbarHorizontal'
 export { default as NavbarVertical } from './NavbarVertical'
+export { default as Login } from './Login'
