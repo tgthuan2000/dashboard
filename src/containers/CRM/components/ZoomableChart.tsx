@@ -32,6 +32,10 @@ const options: ApexOptions = {
 	dataLabels: { enabled: false },
 	stroke: {
 		curve: 'smooth',
+		width: 2,
+	},
+	grid: {
+		strokeDashArray: 0.1,
 	},
 	xaxis: {
 		type: 'category',

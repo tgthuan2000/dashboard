@@ -1,9 +1,21 @@
 import { ApexOptions } from 'apexcharts'
 import React from 'react'
 import ReactApexChart from 'react-apexcharts'
+import { Box, SortDropDown } from '../../../components'
+import { cls } from '../../../utils/classname-supporter'
 
-const HeatChart = () => (
-	<ReactApexChart options={options} series={series} type='heatmap' height={400} />
+interface HeatChartProps {
+	className?: string
+}
+
+const HeatChart = ({ className }: HeatChartProps) => (
+	<div className={cls(className)}>
+		<Box options={<SortDropDown />}>
+			<div className='px-2'>
+				<ReactApexChart options={options} series={series} type='heatmap' height={400} />
+			</div>
+		</Box>
+	</div>
 )
 
 export default React.memo(HeatChart)

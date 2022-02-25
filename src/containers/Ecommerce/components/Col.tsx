@@ -21,7 +21,7 @@ const Col = ({
 				{stock ? (
 					<div
 						className={cls(
-							'text-center rounded text-xs font-semibold whitespace-nowrap p-1',
+							'text-center rounded text-xs font-semibold whitespace-nowrap p-1 select-none',
 							activeCls(type === 'danger', 'bg-[rgba(240,101,72,.1)] text-danger'),
 							activeCls(type === 'warning', 'bg-[rgba(247,184,75,.18)] text-warning'),
 							activeCls(type === 'info', 'bg-[rgba(41,156,219,.18)] text-info'),

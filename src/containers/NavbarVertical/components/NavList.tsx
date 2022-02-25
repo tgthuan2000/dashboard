@@ -24,7 +24,7 @@ const NavList = ({ icon, title, children, active = false, onClick, links }: NavL
 					activeCls(
 						active || links.includes(pathname.split('/')[1]),
 						'text-white',
-						'text-[#abb9e8] dark:text-white hover:text-white'
+						'text-[#abb9e8] dark:text-gray hover:text-white'
 					)
 				)}
 			>
