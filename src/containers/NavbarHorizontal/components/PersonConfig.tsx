@@ -1,7 +1,7 @@
-import { LogoutOutlined } from '@mui/icons-material'
-import { Icon } from '@mui/material'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { PersonItem } from '.'
+import { dataPersonConfigs } from '../../../constants'
 import { cls } from '../../../utils/classname-supporter'
 
 interface PersonConfigProps {
@@ -49,32 +49,16 @@ const PersonConfig = ({
 			{/* Dropdown */}
 			{active && (
 				<div className='absolute top-[95%] right-0 min-w-[10rem] py-2 text-sm bg-white dark:bg-[#292e33] rounded-md shadow-md'>
-					<PersonItem
-						text='Logout'
-						icon={LogoutOutlined}
-						onClick={() => navigate('/auth')}
-					/>
+					{dataPersonConfigs.map((config) => (
+						<PersonItem
+							text={config.title}
+							icon={config.icon}
+							onClick={() => navigate(config.link)}
+						/>
+					))}
 				</div>
 			)}
 		</div>
 	)
 }
-
-interface PersonItemProps {
-	text: string
-	icon: React.ElementType
-	onClick?: React.MouseEventHandler<HTMLDivElement>
-}
-const PersonItem = ({ text, icon, onClick }: PersonItemProps) => {
-	return (
-		<div
-			onClick={onClick}
-			className='w-full px-5 py-1 text-dark dark:text-[#b9bfc4] hover:text-[#1e2125] dark:hover:bg-[#2f343a] hover:bg-[#f3f6f9] bg-transparent flex items-center'
-		>
-			<Icon className='text-[#878a99]' component={icon} style={{ fontSize: 16 }} />
-			<p className='font-normal text-sm whitespace-nowrap ml-2'>{text}</p>
-		</div>
-	)
-}
-
 export default PersonConfig

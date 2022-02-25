@@ -25,7 +25,7 @@ const Card = ({
 	linkTo = '/',
 }: CardProps) => {
 	return (
-		<div className='shadow-md rounded flex flex-col bg-white p-4'>
+		<div className='shadow-md rounded flex flex-col bg-white dark:bg-dark transition-colors p-4'>
 			<div className='flex justify-between items-center'>
 				<p className='uppercase text-gray font-medium overflow-hidden whitespace-nowrap text-ellipsis flex-1'>
 					{title}
@@ -54,8 +54,10 @@ const Card = ({
 			</div>
 			<div className='mt-6 flex items-end justify-between'>
 				<div className=''>
-					<p className='font-medium text-[22px] mb-6 text-[#495057]'>${value}</p>
-					<Link className='underline text-primary' to={linkTo}>
+					<p className='font-medium text-[22px] mb-6 text-[#495057] dark:text-[#ced4da]'>
+						${value}
+					</p>
+					<Link className='underline text-primary dark:text-[#ced4da]' to={linkTo}>
 						{linkTitle}
 					</Link>
 				</div>

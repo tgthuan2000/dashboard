@@ -1,13 +1,15 @@
 import { Breadcrumb, IBreadcrumb } from '.'
+import { cls } from '../utils/classname-supporter'
 
 interface HeaderProps {
 	data: IBreadcrumb[]
 	title: string
+	className?: string
 }
 
-const Header = ({ title, data }: HeaderProps) => {
+const Header = ({ title, data, className }: HeaderProps) => {
 	return (
-		<div className='flex justify-between mb-5'>
+		<div className={cls('flex justify-between', className)}>
 			<h4 className='font-bold text-sm uppercase text-[#495057] dark:text-[#ced4da]'>
 				{title}
 			</h4>

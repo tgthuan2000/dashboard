@@ -1,6 +1,6 @@
 import { SpeedOutlined } from '@mui/icons-material'
 
-interface DataDropdown {
+export interface DataDropdown {
 	title: string
 	list: {
 		title: string
