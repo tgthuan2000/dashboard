@@ -10,7 +10,7 @@ const Table = () => {
 						<Row active={i === 0} key={`${product}-${i}`}>
 							<td className='p-3'>
 								<div className='flex'>
-									<div className='w-12 h-12'>
+									<div className='w-12 h-12 flex-shrink-0'>
 										<img
 											src={image}
 											alt=' '

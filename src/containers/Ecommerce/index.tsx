@@ -19,8 +19,8 @@ const Ecommerce = () => {
 			<div className='grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-6 mb-5'>
 				<CardList />
 			</div>
-			<div className='grid grid-cols-[70%,30%] gap-6 mb-5'>
-				<Revenue />
+			<div className='grid grid-cols-3 gap-6 mb-5'>
+				<Revenue className='col-span-2' />
 			</div>
 			<div className='grid grid-cols-2 gap-6'>
 				<BestSellingProducts />
