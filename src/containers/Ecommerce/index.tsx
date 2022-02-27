@@ -1,4 +1,4 @@
-import { Box, Header, IBreadcrumb } from '../../components'
+import { Header, IBreadcrumb } from '../../components'
 import { dataCardEcommerces } from '../../constants'
 import { BestSellingProducts, Card, Revenue } from './components'
 
