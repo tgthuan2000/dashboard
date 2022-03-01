@@ -2,7 +2,11 @@ import { ApexOptions } from 'apexcharts'
 import ReactApexChart from 'react-apexcharts'
 
 const Chart = () => {
-	return <ReactApexChart options={options} series={series} type='area' height={350} />
+	return (
+		<div className='flex-1 py-2'>
+			<ReactApexChart options={options} series={series} type='area' height='100%' />
+		</div>
+	)
 }
 
 export default Chart

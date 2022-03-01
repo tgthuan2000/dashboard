@@ -6,6 +6,7 @@ import {
 	Search,
 } from '@mui/icons-material'
 import { Icon } from '@mui/material'
+import { motion } from 'framer-motion'
 import { FormEvent, useState } from 'react'
 import { NavIcon, PersonConfig } from './components'
 
@@ -39,7 +40,11 @@ const NavbarHorizontal = () => {
 	}
 
 	return (
-		<div className='fixed z-10 top-0 left-0 right-0 shadow-sm bg-white dark:bg-[#292e32] transition-colors'>
+		<motion.div
+			initial={{ opacity: 0, y: -100 }}
+			animate={{ opacity: 1, y: 0 }}
+			className='fixed z-10 top-0 left-0 right-0 shadow-sm bg-white dark:bg-[#292e32] transition-colors'
+		>
 			<div className='h-[70px] max-w-[95%] px-6 bg-transparent mx-auto flex items-center justify-between'>
 				{/* left */}
 				<div className='flex items-center'>
@@ -95,7 +100,7 @@ const NavbarHorizontal = () => {
 					/>
 				</div>
 			</div>
-		</div>
+		</motion.div>
 	)
 }
 

@@ -5,6 +5,7 @@ import {
 	RemoveOutlined,
 } from '@mui/icons-material'
 import { Icon } from '@mui/material'
+import { motion } from 'framer-motion'
 import { activeCls, cls } from '../../../utils/classname-supporter'
 
 interface CardProps {
@@ -21,7 +22,11 @@ const Card = ({
 	rate = '0.00',
 }: CardProps) => {
 	return (
-		<div className='shadow-md rounded bg-white dark:bg-dark transition-colors p-4'>
+		<motion.div
+			viewport={{ once: true }}
+			whileInView={{ opacity: [0, 1], y: [100, 0] }}
+			className='shadow-md rounded bg-white dark:bg-dark transition-colors p-4'
+		>
 			<div className='flex justify-between'>
 				<div className='flex-1'>
 					<p className='font-medium text-gray overflow-hidden text-ellipsis whitespace-nowrap'>
@@ -61,7 +66,7 @@ const Card = ({
 					</span>
 				</div>
 			</div>
-		</div>
+		</motion.div>
 	)
 }
 

@@ -1,4 +1,4 @@
-import { activeCls, cls } from '../../../utils/classname-supporter'
+import { activeCls, cls } from '../utils/classname-supporter'
 
 interface ColProps {
 	title?: string
@@ -6,6 +6,7 @@ interface ColProps {
 	stock?: boolean
 	stockMessage?: string
 	type?: 'danger' | 'warning' | 'info' | 'success' | 'primary'
+	bold?: boolean
 }
 
 const Col = ({
@@ -14,6 +15,7 @@ const Col = ({
 	stock = false,
 	stockMessage = 'Stock',
 	type = 'danger',
+	bold = false,
 }: ColProps) => {
 	return (
 		<td className='p-3'>
@@ -32,7 +34,14 @@ const Col = ({
 						{stockMessage}
 					</div>
 				) : (
-					<p className='text-[#495057] dark:text-[#ced4da]'>{value}</p>
+					<p
+						className={cls(
+							'text-[#495057] dark:text-[#ced4da]',
+							activeCls(bold, 'font-semibold text-sm')
+						)}
+					>
+						{value}
+					</p>
 				)}
 				<span className='text-gray'>{title}</span>
 			</div>

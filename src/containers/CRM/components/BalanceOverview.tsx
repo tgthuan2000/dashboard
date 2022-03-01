@@ -8,7 +8,7 @@ interface BalanceOverviewProps {
 
 const BalanceOverview = ({ className }: BalanceOverviewProps) => {
 	return (
-		<div className={cls(className)}>
+		<div className={cls('h-full', className)}>
 			<Box
 				headerTitle='Balance Overview'
 				options={<SortDropDown sortSelected='Current Year' />}
@@ -19,8 +19,8 @@ const BalanceOverview = ({ className }: BalanceOverviewProps) => {
 						<Text value='$497k' name='Expenses' />
 						<Text value='3.6%' name='Profit Ratio' />
 					</div>
-					<ZoomableChart />
 				</div>
+				<ZoomableChart />
 			</Box>
 		</div>
 	)

@@ -19,7 +19,7 @@ function App() {
 			<NavbarHorizontal />
 			<div className='max-w-[95%] mx-auto px-6'>
 				<NavbarVertical />
-				<div className='ml-64 min-h-screen'>
+				<div className='md:ml-64 ml-0 transition-all min-h-screen'>
 					<div className='pt-[calc(70px+1.5rem)] pl-[calc(1.5rem/2)] pb-14 pr-[calc(1.5rem/2)]'>
 						<Outlet />
 					</div>

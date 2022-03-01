@@ -3,6 +3,7 @@ import { Checkbox, InputText } from './components'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 export type FormInputs = {
 	username: string
@@ -33,7 +34,10 @@ const Login = () => {
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
-			<div className='w-96 p-6 bg-white shadow-md rounded-lg'>
+			<motion.div
+				animate={{ opacity: [0, 1], scale: [1.5, 1] }}
+				className='w-96 p-6 bg-white shadow-md rounded-lg'
+			>
 				<div className='text-center'>
 					<h4 className='text-primary text-base font-medium mt-2'>Welcome Back !</h4>
 					<p className='mt-2 text-gray'>Sign in to continue to Dashboard.</p>
@@ -62,7 +66,7 @@ const Login = () => {
 						Sign In
 					</button>
 				</div>
-			</div>
+			</motion.div>
 		</form>
 	)
 }

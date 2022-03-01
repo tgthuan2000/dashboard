@@ -19,7 +19,7 @@ const Analytics = () => {
 			<div className={'grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-6 mb-6'}>
 				<CardList />
 			</div>
-			<div className='grid grid-cols-2 gap-6 mb-5'>
+			<div className='grid grid-cols-[repeat(auto-fill,minmax(500px,1fr))] grid-rows-[500px] gap-6 mb-5'>
 				<HeatChart />
 			</div>
 		</div>

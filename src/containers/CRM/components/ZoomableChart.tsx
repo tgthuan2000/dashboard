@@ -3,7 +3,9 @@ import React from 'react'
 import ReactApexChart from 'react-apexcharts'
 
 const ZoomableChart = () => (
-	<ReactApexChart options={options} series={series} type='area' height={290} />
+	<div className='py-2 flex-1'>
+		<ReactApexChart options={options} series={series} type='area' height='100%' />
+	</div>
 )
 
 export default React.memo(ZoomableChart)

@@ -1,8 +1,6 @@
 export { default as Card } from './Card'
 export { default as CardLogo } from './CardLogo'
 export { default as Table } from './Table'
-export { default as Row } from './Row'
-export { default as Col } from './Col'
 export { default as ButtonPaginate } from './ButtonPaginate'
 export { default as Revenue } from './Revenue'
 export { default as BestSellingProducts } from './BestSellingProducts'

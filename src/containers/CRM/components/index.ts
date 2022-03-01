@@ -1,3 +1,5 @@
 export { default as Text } from './Text'
 export { default as ZoomableChart } from './ZoomableChart'
 export { default as BalanceOverview } from './BalanceOverview'
+export { default as PotentialCustomer } from './PotentialCustomer'
+export { default as Table } from './Table'

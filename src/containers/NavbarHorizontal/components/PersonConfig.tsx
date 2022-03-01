@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PersonItem } from '.'
@@ -47,17 +48,24 @@ const PersonConfig = ({
 			</div>
 
 			{/* Dropdown */}
-			{active && (
-				<div className='absolute top-[95%] right-0 min-w-[10rem] py-2 text-sm bg-white dark:bg-[#292e33] rounded-md shadow-md'>
-					{dataPersonConfigs.map((config) => (
-						<PersonItem
-							text={config.title}
-							icon={config.icon}
-							onClick={() => navigate(config.link)}
-						/>
-					))}
-				</div>
-			)}
+			<AnimatePresence>
+				{active && (
+					<motion.div
+						initial={{ y: 10, opacity: 0 }}
+						animate={{ y: 0, opacity: 1 }}
+						exit={{ y: 10, opacity: 0 }}
+						className='absolute top-[95%] right-0 min-w-[10rem] py-2 text-sm bg-white dark:bg-[#292e33] rounded-md shadow-md'
+					>
+						{dataPersonConfigs.map((config) => (
+							<PersonItem
+								text={config.title}
+								icon={config.icon}
+								onClick={() => navigate(config.link)}
+							/>
+						))}
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</div>
 	)
 }

@@ -10,21 +10,19 @@ interface RevenueProps {
 
 const Revenue = ({ className }: RevenueProps) => {
 	return (
-		<div className={cls(className)}>
+		<div className={cls('h-full', className)}>
 			<Box headerTitle='Revenue' hiddenBorder options={<ButtonGroup />}>
-				<div className=''>
-					<div className='grid grid-cols-4 '>
-						{dataRevenue.map((props, index) => (
-							<Text
-								key={`${props.title}-${index}`}
-								hiddenBorder={index + 1 === dataRevenue.length}
-								valueType={index + 1 === dataRevenue.length ? 'success' : 'base'}
-								{...props}
-							/>
-						))}
-					</div>
-					<Chart />
+				<div className='grid grid-cols-4'>
+					{dataRevenue.map((props, index) => (
+						<Text
+							key={`${props.title}-${index}`}
+							hiddenBorder={index + 1 === dataRevenue.length}
+							valueType={index + 1 === dataRevenue.length ? 'success' : 'base'}
+							{...props}
+						/>
+					))}
 				</div>
+				<Chart />
 			</Box>
 		</div>
 	)

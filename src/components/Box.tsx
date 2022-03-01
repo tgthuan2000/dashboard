@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import { activeCls, cls } from '../utils/classname-supporter'
 
 interface BoxProps {
@@ -16,8 +17,13 @@ const Box = ({
 	hiddenBorder = false,
 }: BoxProps) => {
 	return (
-		<div
-			className={cls('bg-white dark:bg-dark transition-colors shadow-md rounded', className)}
+		<motion.div
+			viewport={{ once: true }}
+			whileInView={{ opacity: [0, 1], y: [100, 0] }}
+			className={cls(
+				'bg-white dark:bg-dark transition-colors shadow-md rounded flex flex-col h-full',
+				className
+			)}
 		>
 			<div
 				className={cls(
@@ -34,7 +40,7 @@ const Box = ({
 				{options}
 			</div>
 			{children}
-		</div>
+		</motion.div>
 	)
 }
 

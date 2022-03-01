@@ -1,5 +1,6 @@
 import { AbcOutlined, AddOutlined, NorthEastOutlined, SouthEastOutlined } from '@mui/icons-material'
 import { Icon } from '@mui/material'
+import { motion } from 'framer-motion'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { CardLogo, CardLogoColor } from '.'
@@ -25,7 +26,11 @@ const Card = ({
 	linkTo = '/',
 }: CardProps) => {
 	return (
-		<div className='shadow-md rounded flex flex-col bg-white dark:bg-dark transition-colors p-4'>
+		<motion.div
+			viewport={{ once: true }}
+			whileInView={{ opacity: [0, 1], y: [100, 0] }}
+			className='shadow-md rounded flex flex-col bg-white dark:bg-dark transition-colors p-4'
+		>
 			<div className='flex justify-between items-center'>
 				<p className='uppercase text-gray font-medium overflow-hidden whitespace-nowrap text-ellipsis flex-1'>
 					{title}
@@ -65,7 +70,7 @@ const Card = ({
 					<CardLogo icon={icon} color={color} />
 				</div>
 			</div>
-		</div>
+		</motion.div>
 	)
 }
 

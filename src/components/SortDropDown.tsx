@@ -1,5 +1,6 @@
 import { KeyboardArrowDownOutlined } from '@mui/icons-material'
 import { Icon } from '@mui/material'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
 import { BoxChild } from '.'
 
@@ -29,13 +30,20 @@ const SortDropDown = ({
 					style={{ fontSize: 16 }}
 				/>
 			</span>
-			{showDropdown && (
-				<ul className='ml-2 absolute z-10 right-0 top-[calc(100%+10px)] py-2 min-w-[10rem] shadow-md rounded bg-white dark:bg-dark'>
-					{sortData.map((x, i) => (
-						<BoxChild key={i}>{x}</BoxChild>
-					))}
-				</ul>
-			)}
+			<AnimatePresence>
+				{showDropdown && (
+					<motion.ul
+						initial={{ y: 10, opacity: 0 }}
+						animate={{ y: 0, opacity: 1 }}
+						exit={{ y: 10, opacity: 0 }}
+						className='ml-2 absolute z-10 right-0 top-[calc(100%+10px)] py-2 min-w-[10rem] shadow-md rounded bg-white dark:bg-dark'
+					>
+						{sortData.map((x, i) => (
+							<BoxChild key={i}>{x}</BoxChild>
+						))}
+					</motion.ul>
+				)}
+			</AnimatePresence>
 		</div>
 	)
 }

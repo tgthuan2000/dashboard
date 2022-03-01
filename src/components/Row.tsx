@@ -1,11 +1,12 @@
-import { activeCls, cls } from '../../../utils/classname-supporter'
+import { activeCls, cls } from '../utils/classname-supporter'
 
 interface RowProps {
 	active?: boolean
 	children: JSX.Element | JSX.Element[]
+	className?: string
 }
 
-const Row = ({ active = false, children }: RowProps) => {
+const Row = ({ active = false, children, className }: RowProps) => {
 	return (
 		<tr
 			className={cls(
@@ -14,7 +15,8 @@ const Row = ({ active = false, children }: RowProps) => {
 					active,
 					'bg-[#f3f6f9] dark:bg-[#31373c]',
 					'hover:bg-[#f3f6f9] dark:hover:bg-[#31373c]'
-				)
+				),
+				className
 			)}
 		>
 			{children}
