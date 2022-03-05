@@ -28,7 +28,7 @@ const Card = ({
 	return (
 		<motion.div
 			viewport={{ once: true }}
-			whileInView={{ opacity: [0, 1], y: [100, 0] }}
+			whileInView={{ opacity: [0, 1] }}
 			className='shadow-md rounded flex flex-col bg-white dark:bg-dark transition-colors p-4'
 		>
 			<div className='flex justify-between items-center'>

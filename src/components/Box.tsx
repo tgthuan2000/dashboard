@@ -19,7 +19,7 @@ const Box = ({
 	return (
 		<motion.div
 			viewport={{ once: true }}
-			whileInView={{ opacity: [0, 1], y: [100, 0] }}
+			whileInView={{ opacity: [0, 1] }}
 			className={cls(
 				'bg-white dark:bg-dark transition-colors shadow-md rounded flex flex-col h-full',
 				className
