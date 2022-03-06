@@ -9,7 +9,7 @@ import { Provider } from 'react-redux'
 import { store } from './store'
 import { headerHOC } from './hoc'
 
-const NotFound = headerHOC(() => <></>, 'Page not found', [{ title: 'Dashboards', to: '/' }])
+const NotFound = headerHOC(() => <></>, 'Page not found')
 
 ReactDOM.render(
 	<React.StrictMode>

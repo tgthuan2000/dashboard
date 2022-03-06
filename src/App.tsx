@@ -14,6 +14,7 @@ function App() {
 			document.documentElement.classList.remove('dark')
 		}
 	}, [])
+
 	return (
 		<>
 			<NavbarHorizontal />
