@@ -32,6 +32,10 @@ const dataDropdowns: DataDropdown[] = [
 						title: 'CRM',
 						to: 'crm',
 					},
+					{
+						title: 'Bill Management',
+						to: 'bill-management',
+					},
 				],
 			},
 		],

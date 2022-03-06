@@ -6,11 +6,12 @@ const Table = () => {
 		<div className='flex-1 w-ful'>
 			<table className='w-full'>
 				<tbody>
-					{dataPotentialCustomers.map(({ name, orders, pays }, i) => (
+					{dataPotentialCustomers.map(({ name, orders, pays, visits }, i) => (
 						<Row active={i === 0} key={`${name}-${i}`}>
 							<Col title='Customer name' value={name} bold />
 							<Col title='Order' value={orders} />
 							<Col title='Pay' value={pays} />
+							<Col title='Visits' value={visits} />
 						</Row>
 					))}
 				</tbody>

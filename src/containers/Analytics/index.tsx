@@ -1,39 +1,24 @@
-import { Header, IBreadcrumb } from '../../components'
 import { dataCardAnalytics } from '../../constants'
+import { headerHOC } from '../../hoc'
 import { Card, HeatChart } from './components'
-
-const breadcrumb: IBreadcrumb[] = [
-	{
-		title: 'Dashboards',
-		to: '/',
-	},
-	{
-		title: 'Analytics',
-	},
-]
 
 const Analytics = () => {
 	return (
-		<div>
-			<Header className='mb-5' title='analytics' data={breadcrumb} />
-			<div className={'grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-6 mb-6'}>
-				<CardList />
-			</div>
-			<div className='grid grid-cols-[repeat(auto-fill,minmax(500px,1fr))] grid-rows-[500px] gap-6 mb-5'>
-				<HeatChart />
-			</div>
+		<div className='grid grid-cols-[400px_minmax(500px,1fr)] grid-rows-[500px] gap-6 mb-5'>
+			<CardList />
+			<HeatChart />
 		</div>
 	)
 }
 
-export default Analytics
+export default headerHOC(Analytics, 'Analytics', [{ title: 'Dashboards', to: '/' }])
 
 const CardList = () => {
 	return (
-		<>
+		<div className='gap-6 grid'>
 			{dataCardAnalytics.map((props) => (
 				<Card key={props.title} {...props} />
 			))}
-		</>
+		</div>
 	)
 }
