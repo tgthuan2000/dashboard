@@ -34,22 +34,17 @@ const ButtonGroup = () => {
 	const [click, setClick] = useState(0)
 
 	return (
-		<div className='flex'>
+		<div className='flex gap-1'>
 			<Button onClick={() => setClick(0)} active={click === 0}>
 				ALL
 			</Button>
-			<Button onClick={() => setClick(1)} active={click === 1} className='ml-1'>
+			<Button onClick={() => setClick(1)} active={click === 1}>
 				1M
 			</Button>
-			<Button onClick={() => setClick(2)} active={click === 2} className='ml-1'>
+			<Button onClick={() => setClick(2)} active={click === 2}>
 				6M
 			</Button>
-			<Button
-				onClick={() => setClick(3)}
-				active={click === 3}
-				className='ml-1'
-				color='primary'
-			>
+			<Button onClick={() => setClick(3)} active={click === 3} color='primary'>
 				1Y
 			</Button>
 		</div>

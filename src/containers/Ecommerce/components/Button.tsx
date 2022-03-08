@@ -29,8 +29,8 @@ const Button = ({
 				),
 				activeCls(
 					color === 'primary',
-					'text-primary bg-[rgba(64,81,137,.1)] hover:bg-[#405189] hover:text-white',
-					'bg-[#405189] text-white',
+					'text-primary bg-[rgba(64,81,137,.1)] hover:bg-primary hover:text-white',
+					'bg-primary text-white',
 					active
 				),
 				className

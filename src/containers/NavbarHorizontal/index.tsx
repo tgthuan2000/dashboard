@@ -5,13 +5,11 @@ import {
 	NotificationsNoneOutlined,
 	Search,
 } from '@mui/icons-material'
-import { Icon } from '@mui/material'
 import { motion } from 'framer-motion'
-import { FormEvent, useState } from 'react'
+import { useState } from 'react'
 import { NavIcon, PersonConfig } from './components'
 
 const NavbarHorizontal = () => {
-	const [input, setInput] = useState('')
 	const [showNotify, setShowNotify] = useState(false)
 	const [showPersonConfig, setShowPersonConfig] = useState(false)
 	const [darkMode, setDarkMode] = useState(
@@ -19,11 +17,6 @@ const NavbarHorizontal = () => {
 			(!('theme' in localStorage) &&
 				window.matchMedia('(prefers-color-scheme: dark)').matches)
 	)
-
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		console.log(input)
-	}
 
 	const handleDarkModeClick = () => {
 		if (darkMode) {
@@ -51,30 +44,6 @@ const NavbarHorizontal = () => {
 					<span className='inline-block text-4xl font-light dark:text-white cursor-pointer'>
 						Dashboard
 					</span>
-					<div className='relative bg-[#f3f3f9] dark:bg-[#202328] ml-[74px] flex items-center border-0 rounded transition-colors'>
-						<Icon
-							className='ml-3 mr-2 text-gray dark:text-[#ced4da]'
-							style={{ fontSize: 18 }}
-							component={Search}
-						/>
-						<form onSubmit={handleSubmit}>
-							<input
-								value={input}
-								onChange={(e) => setInput(e.target.value)}
-								type='text'
-								placeholder='Search...'
-								className='bg-transparent dark:text-[#ced4da] h-[38px] max-w-[282px] pr-8 text-sm outline-none'
-							/>
-						</form>
-						{input.length > 0 && (
-							<span
-								className='w-4 h-4 rounded-full bg-gray absolute right-2 text-white dark:text-dark flex items-center justify-center'
-								onClick={() => setInput('')}
-							>
-								<Icon style={{ fontSize: 14 }} component={Close} />
-							</span>
-						)}
-					</div>
 				</div>
 				{/* right */}
 				<div className='flex items-center h-full'>

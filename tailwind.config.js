@@ -8,6 +8,7 @@ module.exports = {
 			white: '#fff',
 			gray: '#878a99',
 			'gray-dark': '#343a40',
+			'dark-white': '#ced4da',
 			primary: '#405189',
 			secondary: '#3577f1',
 			dark: '#212529',
@@ -18,6 +19,12 @@ module.exports = {
 		},
 		fontFamily: {
 			base: ['Poppins', 'sans-serif'],
+		},
+		extend: {
+			boxShadow: {
+				flatpickr: '-5px 0 0 #f3f6f9, 5px 0 0 #f3f6f9',
+				'flatpickr-dark': '-5px 0 0 #343a40, 5px 0 0 #343a40',
+			},
 		},
 	},
 	plugins: [],
