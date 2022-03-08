@@ -7,6 +7,7 @@ module.exports = {
 			inherit: 'inherit',
 			white: '#fff',
 			gray: '#878a99',
+			'gray-light': '#f3f6f9',
 			'gray-dark': '#343a40',
 			'dark-white': '#ced4da',
 			primary: '#405189',

@@ -11,10 +11,10 @@ const PotentialCustomer = ({ className }: PotentialCustomerProps) => {
 		<div className={cls('h-full', className)}>
 			<Box
 				headerTitle='Potential Customers'
-				options={<SortDropDown sortSelected='Current Year' />}
+				option={<SortDropDown sortSelected='Current Year' />}
+				pagination={<Pagination />}
 			>
 				<Table />
-				<Pagination />
 			</Box>
 		</div>
 	)

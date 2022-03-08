@@ -1,6 +1,6 @@
 import { Box, Pagination, SortDropDown } from '../../components'
 import { headerHOC } from '../../hoc'
-import { SearchForm, Calendar } from './components'
+import { SearchForm, Calendar, Table } from './components'
 
 const BillManagement = () => {
 	return (
@@ -12,7 +12,7 @@ const BillManagement = () => {
 			<Box
 				headerTitle='Bills'
 				className='mt-5'
-				options={
+				option={
 					<SortDropDown
 						sortTtile='Order status:'
 						sortSelected='Tất cả'
@@ -25,8 +25,9 @@ const BillManagement = () => {
 						]}
 					/>
 				}
+				pagination={<Pagination />}
 			>
-				<Pagination />
+				<Table />
 			</Box>
 		</div>
 	)

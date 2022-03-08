@@ -1,6 +1,6 @@
 import { Icon } from '@mui/material'
 import React from 'react'
-import { activeCls, cls } from '../../../utils/classname-supporter'
+import { activeCls, cls } from '../utils/classname-supporter'
 
 interface ButtonPaginateProps {
 	value?: string | number

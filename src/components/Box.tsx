@@ -5,7 +5,8 @@ interface BoxProps {
 	className?: string
 	children?: JSX.Element | JSX.Element[]
 	headerTitle?: string
-	options?: JSX.Element
+	option?: JSX.Element
+	pagination?: JSX.Element
 	hiddenBorder?: boolean
 }
 
@@ -13,7 +14,8 @@ const Box = ({
 	className,
 	children,
 	headerTitle = 'Audiences Sessions by Country',
-	options,
+	option,
+	pagination,
 	hiddenBorder = false,
 }: BoxProps) => {
 	return (
@@ -37,9 +39,10 @@ const Box = ({
 				<h4 className='flex-1 text-base text-[#495057] dark:text-[#ced4da] font-medium whitespace-nowrap overflow-hidden text-ellipsis'>
 					{headerTitle}
 				</h4>
-				{options}
+				{option}
 			</div>
 			{children}
+			{pagination}
 		</motion.div>
 	)
 }

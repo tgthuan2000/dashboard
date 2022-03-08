@@ -1,5 +1,5 @@
 import { ArrowBackOutlined, ArrowForwardOutlined } from '@mui/icons-material'
-import { ButtonPaginate } from '../containers/Ecommerce/components'
+import { ButtonPaginate } from '.'
 
 const Pagination = () => {
 	return (

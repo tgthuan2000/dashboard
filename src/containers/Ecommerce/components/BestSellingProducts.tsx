@@ -1,4 +1,4 @@
-import { ButtonPaginate, Table } from '.'
+import { Table } from '.'
 import { Box, Pagination, SortDropDown } from '../../../components'
 import { cls } from '../../../utils/classname-supporter'
 
@@ -12,7 +12,7 @@ const BestSellingProduct = ({ className }: BestSellingProductProps) => {
 			<Box
 				headerTitle='Best Selling Products'
 				className='mb-5'
-				options={
+				option={
 					<SortDropDown
 						sortSelected='Today'
 						sortData={[
@@ -25,9 +25,9 @@ const BestSellingProduct = ({ className }: BestSellingProductProps) => {
 						]}
 					/>
 				}
+				pagination={<Pagination />}
 			>
 				<Table />
-				<Pagination />
 			</Box>
 		</div>
 	)
