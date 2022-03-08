@@ -6,11 +6,13 @@ import { BoxChild } from '.'
 
 interface SortDropDownProps {
 	sortData?: string[]
+	sortTtile?: string
 	sortSelected?: string
 }
 const SortDropDown = ({
 	sortData = ['Today', 'Last week', 'Last Month', 'Current Year'],
 	sortSelected = 'Current Week',
+	sortTtile = 'Sort by:',
 }: SortDropDownProps) => {
 	const [showDropdown, setShowDropdown] = useState(false)
 
@@ -22,7 +24,7 @@ const SortDropDown = ({
 		>
 			<div onClick={() => setShowDropdown(!showDropdown)}>
 				<span className='font-semibold uppercase text-xs dark:text-[#ced4da]'>
-					Sort by:
+					{sortTtile}
 				</span>
 				<span className='ml-2 text-gray inline-flex items-center'>
 					{sortSelected}

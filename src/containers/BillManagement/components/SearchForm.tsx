@@ -2,6 +2,7 @@ import { Close, Search } from '@mui/icons-material'
 import { Icon } from '@mui/material'
 import { FormEvent, useState } from 'react'
 import { cls } from '../../../utils/classname-supporter'
+import { motion } from 'framer-motion'
 
 interface SearchFormProps {
 	className?: string
@@ -14,9 +15,11 @@ const SearchForm = ({ className }: SearchFormProps) => {
 		console.log(input)
 	}
 	return (
-		<div
+		<motion.div
+			viewport={{ once: true }}
+			whileInView={{ opacity: [0, 1] }}
 			className={cls(
-				'relative bg-white shadow-lg dark:bg-[#202328] flex items-center border-0 rounded transition-colors',
+				'relative bg-white shadow-md dark:bg-[#202328] flex items-center border-0 rounded transition-colors',
 				className
 			)}
 		>
@@ -42,7 +45,7 @@ const SearchForm = ({ className }: SearchFormProps) => {
 					<Icon style={{ fontSize: 14 }} component={Close} />
 				</span>
 			)}
-		</div>
+		</motion.div>
 	)
 }
 

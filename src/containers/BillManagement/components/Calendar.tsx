@@ -3,6 +3,7 @@ import { Icon } from '@mui/material'
 import './theme.css'
 import { LegacyRef, useState } from 'react'
 import Flatpickr, { DateTimePickerProps } from 'react-flatpickr'
+import { motion } from 'framer-motion'
 
 const today = new Date()
 const distance = 7 // days
@@ -33,7 +34,11 @@ interface CustomInputProps extends DateTimePickerProps {
 }
 
 const CustomInput = ({ defaultValue, inputRef }: CustomInputProps) => (
-	<div className='shadow-lg flex w-max min-w-[210px] rounded h-[38px]'>
+	<motion.div
+		viewport={{ once: true }}
+		whileInView={{ opacity: [0, 1] }}
+		className='shadow-md flex w-max min-w-[210px] rounded h-[38px]'
+	>
 		<input
 			className='px-4 rounded-l text-dark cursor-pointer bg-white dark:bg-[#262a2f] transition-colors dark:text-dark-white flex-1 outline-none'
 			defaultValue={defaultValue}
@@ -46,5 +51,5 @@ const CustomInput = ({ defaultValue, inputRef }: CustomInputProps) => (
 				style={{ fontSize: 18 }}
 			/>
 		</span>
-	</div>
+	</motion.div>
 )
