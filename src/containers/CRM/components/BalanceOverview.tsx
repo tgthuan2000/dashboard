@@ -11,7 +11,7 @@ const BalanceOverview = ({ className }: BalanceOverviewProps) => {
 		<div className={cls('h-full', className)}>
 			<Box
 				headerTitle='Balance Overview'
-				options={<SortDropDown sortSelected='Current Year' />}
+				option={<SortDropDown sortSelected='Current Year' />}
 			>
 				<div className='px-2'>
 					<div className='grid grid-cols-3 mt-5 mb-4'>

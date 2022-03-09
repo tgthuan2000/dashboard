@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { CardLogo, CardLogoColor } from '.'
-import { activeCls, cls } from '../../../utils/classname-supporter'
+import { activeStyleByZero, cls } from '../../../utils/classname-supporter'
 
 interface CardProps {
 	title?: string
@@ -38,9 +38,7 @@ const Card = ({
 				<span
 					className={cls(
 						'text-sm font-medium flex-shrink-0 ml-1',
-						activeCls(rate > 0, 'text-success'),
-						activeCls(rate == 0, 'text-gray '),
-						activeCls(rate < 0, 'text-danger ')
+						activeStyleByZero(rate, 'text-gray', 'text-danger', 'text-success')
 					)}
 				>
 					<Icon

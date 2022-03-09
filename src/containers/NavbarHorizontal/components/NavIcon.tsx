@@ -1,6 +1,7 @@
 import React from 'react'
 import { Icon } from '@mui/material'
-import { cls, activeCls } from '../../../utils/classname-supporter'
+import { cls, activeCls, oneOfStyle } from '../../../utils/classname-supporter'
+import { colorStyles } from '../../../utils/interfaces'
 
 interface NavIconProps {
 	className?: string
@@ -8,7 +9,7 @@ interface NavIconProps {
 	onBlur?: React.FocusEventHandler<HTMLSpanElement>
 	component: React.ElementType
 	numberMessage?: number
-	typeMessage?: 'danger' | 'info' | 'success' | 'warning'
+	typeMessage?: colorStyles
 	children?: JSX.Element
 	active?: boolean
 }
@@ -49,10 +50,11 @@ const NavIcon = ({
 				<span
 					className={cls(
 						'absolute select-none -top-1 right-0 text-[10px] inline-flex w-4 h-4 rounded-full items-center justify-center font-semibold text-white',
-						typeMessage === 'danger' && 'bg-danger',
-						typeMessage === 'info' && 'bg-info',
-						typeMessage === 'success' && 'bg-success',
-						typeMessage === 'warning' && 'bg-warning'
+						oneOfStyle(
+							typeMessage,
+							['danger', 'info', 'success', 'warning', 'primary'],
+							['bg-danger', 'bg-info', 'bg-success', 'bg-warning', 'bg-primary']
+						)
 					)}
 				>
 					{numberMessage}

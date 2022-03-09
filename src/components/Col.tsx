@@ -1,11 +1,12 @@
-import { activeCls, cls } from '../utils/classname-supporter'
+import { activeCls, cls, oneOfStyle } from '../utils/classname-supporter'
+import { colorStyles } from '../utils/interfaces'
 
 interface ColProps {
 	title?: string
 	value?: string | number
 	stock?: boolean
 	stockMessage?: string
-	type?: 'danger' | 'warning' | 'info' | 'success' | 'primary'
+	type?: colorStyles
 	bold?: boolean
 }
 
@@ -24,11 +25,17 @@ const Col = ({
 					<div
 						className={cls(
 							'text-center rounded text-xs font-semibold whitespace-nowrap p-1 select-none',
-							activeCls(type === 'danger', 'bg-[rgba(240,101,72,.1)] text-danger'),
-							activeCls(type === 'warning', 'bg-[rgba(247,184,75,.18)] text-warning'),
-							activeCls(type === 'info', 'bg-[rgba(41,156,219,.18)] text-info'),
-							activeCls(type === 'success', 'bg-[rgba(10,179,156,.18)] text-success'),
-							activeCls(type === 'primary', 'bg-[rgba(64,81,137,.18)] text-primary')
+							oneOfStyle(
+								type,
+								['danger', 'warning', 'info', 'success', 'primary'],
+								[
+									'bg-[rgba(240,101,72,.1)] text-danger',
+									'bg-[rgba(247,184,75,.18)] text-warning',
+									'bg-[rgba(41,156,219,.18)] text-info',
+									'bg-[rgba(10,179,156,.18)] text-success',
+									'bg-[rgba(64,81,137,.18)] text-primary',
+								]
+							)
 						)}
 					>
 						{stockMessage}

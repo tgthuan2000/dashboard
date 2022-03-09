@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PersonItem } from '.'
+import { Avatar } from '../../../components'
 import { dataPersonConfigs } from '../../../constants'
 import { cls } from '../../../utils/classname-supporter'
 
@@ -33,11 +34,7 @@ const PersonConfig = ({
 				className
 			)}
 		>
-			<img
-				className='w-8 h-8 rounded-full flex items-center justify-center bg-gray shrink-0'
-				src=''
-				alt={title[0]}
-			/>
+			<Avatar alt={title[0]} />
 			<div className='flex-1 overflow-hidden flex ml-3 flex-col justify-between'>
 				<h3 className='leading-normal text-sm text-[#495057] dark:text-[#cde4ca] font-medium overflow-hidden text-ellipsis whitespace-nowrap'>
 					{title}

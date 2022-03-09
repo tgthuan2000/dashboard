@@ -1,10 +1,11 @@
-import { activeCls, cls } from '../../../utils/classname-supporter'
+import { activeCls, cls, oneOfStyle } from '../../../utils/classname-supporter'
+import { colorStyles } from '../../../utils/interfaces'
 
 interface TextProps {
 	value?: string | number
 	title?: string
 	hiddenBorder?: boolean
-	valueType?: 'danger' | 'warning' | 'info' | 'primary' | 'success' | 'base'
+	valueType?: colorStyles | 'base'
 }
 
 const Text = ({
@@ -23,12 +24,18 @@ const Text = ({
 			<p
 				className={cls(
 					'mb-1 text-lg font-medium',
-					activeCls(valueType === 'base', 'text-[#495057] dark:text-[#ced4da]'),
-					activeCls(valueType === 'danger', 'text-danger'),
-					activeCls(valueType === 'warning', 'text-warning'),
-					activeCls(valueType === 'info', 'text-info'),
-					activeCls(valueType === 'primary', 'text-primary'),
-					activeCls(valueType === 'success', 'text-success')
+					oneOfStyle(
+						valueType,
+						['base', 'danger', 'warning', 'info', 'primary', 'success'],
+						[
+							'text-[#495057] dark:text-[#ced4da]',
+							'text-danger',
+							'text-warning',
+							'text-info',
+							'text-primary',
+							'text-success',
+						]
+					)
 				)}
 			>
 				{value}

@@ -11,7 +11,7 @@ interface RevenueProps {
 const Revenue = ({ className }: RevenueProps) => {
 	return (
 		<div className={cls('h-full', className)}>
-			<Box headerTitle='Revenue' hiddenBorder options={<ButtonGroup />}>
+			<Box headerTitle='Revenue' hiddenBorder option={<ButtonGroup />}>
 				<div className='grid grid-cols-4'>
 					{dataRevenue.map((props, index) => (
 						<Text

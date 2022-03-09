@@ -1,6 +1,6 @@
-import { Box, Pagination, SortDropDown } from '../../components'
+import { Box, SortDropDown } from '../../components'
 import { headerHOC } from '../../hoc'
-import { SearchForm, Calendar, Table } from './components'
+import { SearchForm, Calendar, Table, Pagination } from './components'
 
 const BillManagement = () => {
 	return (

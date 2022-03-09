@@ -6,7 +6,7 @@ import {
 } from '@mui/icons-material'
 import { Icon } from '@mui/material'
 import { motion } from 'framer-motion'
-import { activeCls, cls } from '../../../utils/classname-supporter'
+import { activeCls, activeStyleByZero, cls } from '../../../utils/classname-supporter'
 
 interface CardProps {
 	title?: string
@@ -39,9 +39,7 @@ const Card = ({
 						<span
 							className={cls(
 								'bg-[rgba(0,0,0,.05)] dark:bg-[#eff2f7] rounded-md px-1',
-								activeCls(rate > 0, 'text-success'),
-								activeCls(rate == 0, 'text-gray '),
-								activeCls(rate < 0, 'text-danger ')
+								activeStyleByZero(rate, 'text-gray', 'text-danger', 'text-success')
 							)}
 						>
 							<Icon

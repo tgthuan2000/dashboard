@@ -10,7 +10,7 @@ interface HeatChartProps {
 
 const HeatChart = ({ className }: HeatChartProps) => (
 	<div className={cls('h-full', className)}>
-		<Box options={<SortDropDown />}>
+		<Box option={<SortDropDown />}>
 			<div className='flex-1 py-2'>
 				<ReactApexChart options={options} series={series} type='heatmap' height='100%' />
 			</div>
