@@ -1,4 +1,5 @@
 import { SettingsOutlined } from '@mui/icons-material'
+import { Link } from 'react-router-dom'
 import { Col, ColHeader, Button } from '.'
 import { ButtonPaginate, Avatar } from '../../../components'
 import { colorStyles } from '../../../utils/interfaces'
@@ -66,7 +67,12 @@ const Table = () => {
 								</Button>
 							</Col>
 							<Col>
-								<ButtonPaginate icon={SettingsOutlined} />
+								<Link
+									to='#'
+									className='underline text-primary cursor-pointer hover:opacity-60'
+								>
+									Detail
+								</Link>
 							</Col>
 						</tr>
 					))}

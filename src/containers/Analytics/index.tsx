@@ -4,7 +4,7 @@ import { Card, HeatChart } from './components'
 
 const Analytics = () => {
 	return (
-		<div className='grid grid-cols-[400px_minmax(500px,1fr)] grid-rows-[500px] gap-6 mb-5'>
+		<div className='grid grid-cols-[repeat(auto-fit,minmax(500px,1fr))] grid-rows-[repeat(2,500px)] gap-6 mb-5'>
 			<CardList />
 			<HeatChart />
 		</div>

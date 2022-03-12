@@ -11,7 +11,7 @@ const Button = ({ style = 'danger', className, children }: ButtonProps) => {
 	return (
 		<span
 			className={cls(
-				'py-1 px-3 text-xs font-semibold rounded text-center',
+				'py-1 px-3 text-xs font-semibold rounded text-center cursor-default select-none',
 				oneOfStyle(
 					style,
 					['success', 'danger', 'warning', 'info'],

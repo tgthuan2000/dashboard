@@ -20,7 +20,7 @@ const SortDropDown = ({
 		<div
 			tabIndex={0}
 			onBlur={() => setShowDropdown(false)}
-			className='relative flex items-center flex-shrink-0 cursor-pointer select-none ml-2'
+			className='relative flex-shrink-0 cursor-pointer select-none ml-2'
 		>
 			<div onClick={() => setShowDropdown(!showDropdown)}>
 				<span className='font-semibold uppercase text-xs dark:text-[#ced4da]'>
@@ -41,7 +41,7 @@ const SortDropDown = ({
 						initial={{ y: 10, opacity: 0 }}
 						animate={{ y: 0, opacity: 1 }}
 						exit={{ y: 10, opacity: 0 }}
-						className='ml-2 absolute z-10 right-0 top-[calc(100%+10px)] py-2 min-w-[10rem] shadow-md rounded bg-white dark:bg-dark'
+						className='absolute z-10 right-0 top-[calc(100%+10px)] py-2 min-w-[10rem] shadow-md rounded bg-white dark:bg-dark'
 					>
 						{sortData.map((x, i) => (
 							<BoxChild key={i} onClick={() => setShowDropdown(false)}>

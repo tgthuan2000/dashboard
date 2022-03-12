@@ -3,7 +3,7 @@ import ReactApexChart from 'react-apexcharts'
 
 const Chart = () => {
 	return (
-		<div className='flex-1 py-2'>
+		<div className='flex-1 py-2 h-full'>
 			<ReactApexChart options={options} series={series} type='area' height='100%' />
 		</div>
 	)
