@@ -27,9 +27,11 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "simplebar-react": "^2.3.6",
+    "url": "^0.11.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/node": "^17.0.21",
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
     "@types/react-flatpickr": "^3.8.6",

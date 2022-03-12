@@ -1,4 +1,9 @@
-import { SpeedOutlined } from '@mui/icons-material'
+import {
+	AdminPanelSettingsOutlined,
+	InventoryOutlined,
+	MonetizationOnOutlined,
+	SpeedOutlined,
+} from '@mui/icons-material'
 
 export interface DataDropdown {
 	title: string
@@ -22,19 +27,35 @@ const dataDropdowns: DataDropdown[] = [
 				data: [
 					{
 						title: 'Ecommerce',
-						to: 'ecommerce',
+						to: 'dashboards/ecommerce',
 					},
 					{
 						title: 'Analytics',
-						to: 'analytics',
+						to: 'dashboards/analytics',
 					},
 					{
 						title: 'CRM',
-						to: 'crm',
+						to: 'dashboards/crm',
 					},
+				],
+			},
+			{
+				title: 'Payments',
+				icon: MonetizationOnOutlined,
+				data: [
 					{
 						title: 'Bill Management',
-						to: 'bill-management',
+						to: 'payments/bill-management',
+					},
+				],
+			},
+			{
+				title: 'Product Managements',
+				icon: InventoryOutlined,
+				data: [
+					{
+						title: 'Products',
+						to: 'product-managements/products',
 					},
 				],
 			},
@@ -45,15 +66,15 @@ const dataDropdowns: DataDropdown[] = [
 		list: [
 			{
 				title: 'Authentication',
-				icon: SpeedOutlined,
+				icon: AdminPanelSettingsOutlined,
 				data: [
 					{
 						title: 'Password reset',
-						to: 'password-reset',
+						to: 'authentication/password-reset',
 					},
 					{
 						title: 'Sign up',
-						to: 'sign-up',
+						to: 'authentication/sign-up',
 					},
 				],
 			},

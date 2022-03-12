@@ -17,11 +17,18 @@ ReactDOM.render(
 			<BrowserRouter>
 				<Routes>
 					<Route path='/' element={<App />}>
-						<Route index element={<Navigate to='ecommerce' />} />
-						<Route path='ecommerce' element={<Ecommerce />} />
-						<Route path='analytics' element={<Analytics />} />
-						<Route path='crm' element={<CRM />} />
-						<Route path='bill-management' element={<BillManagement />} />
+						<Route index element={<Navigate to='dashboards' />} />
+						<Route path='dashboards'>
+							<Route index element={<Navigate to='ecommerce' />} />
+							<Route path='ecommerce' element={<Ecommerce />} />
+							<Route path='analytics' element={<Analytics />} />
+							<Route path='crm' element={<CRM />} />
+						</Route>
+						<Route path='payments'>
+							<Route index element={<Navigate to='bill-management' />} />
+							<Route path='bill-management' element={<BillManagement />} />
+							<Route path='*' element={<NotFound />} />
+						</Route>
 						<Route path='*' element={<NotFound />} />
 					</Route>
 					<Route path='/auth' element={<Auth />}>

@@ -8,7 +8,7 @@ const tableHeaders = [
 	'Date',
 	'Order ID',
 	'Customer Name',
-	' Amount',
+	'Amount',
 	'Total Prices',
 	'Bill Status',
 	'',

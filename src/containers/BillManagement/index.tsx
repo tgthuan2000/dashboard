@@ -33,4 +33,6 @@ const BillManagement = () => {
 	)
 }
 
-export default headerHOC(BillManagement, 'Bill Management', [{ title: 'Dashboards', to: '/' }])
+export default headerHOC(BillManagement, 'Bill Management', [
+	{ title: 'Payments', to: '/payments' },
+])

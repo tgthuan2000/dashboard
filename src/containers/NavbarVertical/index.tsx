@@ -20,7 +20,7 @@ const NavbarVertical = () => {
 							title={title}
 							icon={icon}
 							active={dropdowns[dropdownIndex][index]}
-							links={data.map((x) => x.to)}
+							links={data.map((x) => x.to.split('/')[0])}
 							onClick={() => {
 								onClick(dropdownIndex, index)
 							}}

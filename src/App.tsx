@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
+import { client } from './client/sanity'
 import { NavbarHorizontal, NavbarVertical } from './containers'
 
 function App() {

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { DataDropdown } from '../constants'
 
+// [[true, false], [true]]
 const useDropdown = (data: DataDropdown[]) => {
 	const [dropdowns, setDropdowns] = useState<boolean[][]>(
 		data.map((item) => Array(item.list.length).fill(false))
