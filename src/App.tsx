@@ -1,45 +1,37 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { motion } from 'framer-motion'
+import { useEffect } from 'react'
+import { Outlet } from 'react-router-dom'
+import { NavbarHorizontal, NavbarVertical } from './containers'
 
 function App() {
-  const [count, setCount] = useState(0)
+    useEffect(() => {
+        if (
+            localStorage.theme === 'dark' ||
+            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    }, [])
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+    return (
+        <>
+            <NavbarHorizontal />
+            <div className='max-w-[95%] mx-auto px-6'>
+                <NavbarVertical />
+                <div className='md:ml-64 ml-0 transition-all min-h-screen'>
+                    <motion.div
+                        initial={{ x: '100vw' }}
+                        animate={{ x: 0 }}
+                        className='pt-[calc(70px+1.5rem)] pl-[calc(1.5rem/2)] pb-14 pr-[calc(1.5rem/2)]'
+                    >
+                        <Outlet />
+                    </motion.div>
+                </div>
+            </div>
+        </>
+    )
 }
 
 export default App
