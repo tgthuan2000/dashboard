@@ -1,7 +1,6 @@
-import { SettingsOutlined } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
-import { Col, ColHeader, Button } from '.'
-import { ButtonPaginate, Avatar } from '../../../components'
+import { Col, Button } from '.'
+import { Avatar, ColHeader } from '../../../components'
 import { colorStyles } from '../../../utils/interfaces'
 
 const colors: colorStyles[] = ['danger', 'info', 'warning', 'success']

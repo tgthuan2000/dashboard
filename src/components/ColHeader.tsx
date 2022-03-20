@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { activeCls, cls } from '../../../utils/classname-supporter'
+import { activeCls, cls } from '../utils/classname-supporter'
 
 interface ColHeaderProps {
 	children?: ReactElement<any, any> | string
