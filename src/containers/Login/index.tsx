@@ -54,11 +54,11 @@ const Login = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
             <motion.div
                 animate={{ opacity: [0, 1], scale: [1.5, 1] }}
-                className='w-96 p-6 bg-white shadow-md rounded-lg'
+                className='w-96 p-6 bg-white dark:bg-gray-dark shadow-md rounded-lg'
             >
                 <div className='text-center'>
-                    <h4 className='text-primary text-base font-medium mt-2'>Welcome Back !</h4>
-                    <p className='mt-2 text-gray'>Sign in to continue to Dashboard.</p>
+                    <h4 className='text-primary dark:text-gray-light text-base font-medium mt-2'>Welcome Back !</h4>
+                    <p className='mt-2 text-gray dark:text-gray-light'>Sign in to continue to Dashboard.</p>
                 </div>
                 <div className='mt-6'>
                     <InputText
@@ -84,7 +84,7 @@ const Login = () => {
                     <button
                         type='submit'
                         disabled={loading}
-                        className='cursor-pointer bg-success w-full py-2 rounded text-white	font-normal hover:bg-[#099885] transition-colors disabled:opacity-50 disabled:cursor-wait'
+                        className='cursor-pointer bg-success dark:bg-primary w-full py-2 rounded text-white	font-normal hover:bg-[#099885] transition-colors disabled:opacity-50 disabled:cursor-wait'
                     >
                         Sign In
                     </button>

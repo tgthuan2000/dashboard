@@ -28,7 +28,7 @@ const InputText = forwardRef<HTMLInputElement, InputTextProps & ReturnType<UseFo
         const [showPassword, setShowPassword] = useState(false)
         return (
             <div className={cls('flex flex-col mb-4', activeCls(password, 'relative'))}>
-                <label className='mb-2 font-medium' htmlFor={`input-${label}`}>
+                <label className='mb-2 font-medium dark:text-gray-light' htmlFor={`input-${label}`}>
                     {label}
                 </label>
                 <input
