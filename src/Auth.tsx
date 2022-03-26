@@ -16,6 +16,17 @@ function Auth() {
     const [searchParams] = useSearchParams()
 
     useEffect(() => {
+        if (
+            localStorage.theme === 'dark' ||
+            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    }, [])
+
+    useEffect(() => {
         if (Object.entries(account).length !== 0) navigate(searchParams.get('callback') || slug.dashboards)
     }, [account])
 

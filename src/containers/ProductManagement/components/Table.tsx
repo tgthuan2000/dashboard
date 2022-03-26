@@ -20,7 +20,7 @@ const Table = () => {
                 <tbody className='max-h-[100px] overflow-auto'>
                     {Array.from(new Array(5)).map((v, i) => (
                         <tr
-                            className='hover:bg-gray-light cursor-pointer dark:text-gray-light border-b border-[#e9ebec] dark:border-[#32383e] transition-colors'
+                            className='hover:bg-gray-light dark:hover:bg-gray-dark cursor-pointer dark:text-gray-light border-b border-[#e9ebec] dark:border-[#32383e] transition-colors'
                             key={i}
                             onClick={() => navigate(`edit/${Math.random()}`)}
                         >
