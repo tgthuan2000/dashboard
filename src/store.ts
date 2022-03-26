@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { counter } from './features'
+import { account } from './features'
 
 export const store = configureStore({
-	reducer: { counter },
+    reducer: { account },
 })
 
 export type RootState = ReturnType<typeof store.getState>
