@@ -1,9 +1,8 @@
 import axios from 'axios'
 
 const axiosClient = axios.create({
-    baseURL:
-        'https://velzon-authenticate.herokuapp.com/auth',
-        // 'http://localhost:5000/auth',
+    baseURL: 'https://admin-velzon-authenticate.herokuapp.com/auth',
+    // 'http://localhost:6000/auth',
     headers: {
         'Content-Type': 'application/json',
     },
@@ -27,3 +26,6 @@ axiosClient.interceptors.response.use(
     }
 )
 export default axiosClient
+
+export const LOGIN = '/login'
+export const RE_LOGIN = '/re-login'
