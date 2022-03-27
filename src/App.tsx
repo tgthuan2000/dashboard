@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import { NavbarHorizontal, NavbarVertical } from './containers'
 

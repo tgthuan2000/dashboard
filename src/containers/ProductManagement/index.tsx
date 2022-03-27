@@ -2,10 +2,13 @@ import { AddCircleOutlineOutlined } from '@mui/icons-material'
 import { memo } from 'react'
 import { Box, IconButton, Pagination, SortDropDown } from '../../components'
 import { headerHOC } from '../../hoc'
+import { useGetAllProducts } from '../../schema/hook'
 import { SearchForm } from '../BillManagement/components'
 import { Table } from './components'
 
 const ProductManagement = () => {
+    const { store, current, loading, next, prev, page, totalPage, end } = useGetAllProducts()
+
     return (
         <div>
             <div className='flex gap-5'>
@@ -25,9 +28,18 @@ const ProductManagement = () => {
                         />
                     </div>
                 }
-                pagination={<Pagination />}
+                pagination={
+                    <Pagination
+                        length={store.length}
+                        onNext={next}
+                        onPrev={prev}
+                        page={page}
+                        totalPage={totalPage}
+                        end={end}
+                    />
+                }
             >
-                <Table />
+                <Table loading={loading} data={current} end={end} page={page} totalPage={totalPage} />
             </Box>
         </div>
     )

@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { account } from './features'
+import { account, product } from './features'
 
 export const store = configureStore({
-    reducer: { account },
+    reducer: { account, product },
 })
 
 export type RootState = ReturnType<typeof store.getState>
