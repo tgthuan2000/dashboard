@@ -1,6 +1,7 @@
 import { AbcOutlined, ArrowDownwardOutlined, ArrowUpwardOutlined, RemoveOutlined } from '@mui/icons-material'
 import { Icon } from '@mui/material'
 import { activeStyleByZero, cls } from '../../../utils/classname-supporter'
+import CountUp from 'react-countup'
 
 interface CardProps {
     title?: string
@@ -11,7 +12,7 @@ interface CardProps {
 
 const Card = ({ title = 'Card title', icon = AbcOutlined, value = '10m 30sec', rate = '0.00' }: CardProps) => {
     return (
-        <div className='shadow-md rounded bg-white dark:bg-dark transition-colors p-4'>
+        <div className='shadow-md rounded bg-white dark:bg-dark transition-all p-4 hover:shadow-lg hover:-translate-y-1'>
             <div className='flex justify-between'>
                 <div className='flex-1'>
                     <p className='font-medium text-gray overflow-hidden text-ellipsis whitespace-nowrap'>{title}</p>
@@ -30,7 +31,7 @@ const Card = ({ title = 'Card title', icon = AbcOutlined, value = '10m 30sec', r
                                 style={{ fontSize: 12 }}
                                 className='mr-1'
                             />
-                            {rate}%
+                            <CountUp end={Number(rate)} />%
                         </span>{' '}
                         vs. previous month
                     </span>

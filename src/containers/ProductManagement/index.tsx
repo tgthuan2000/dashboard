@@ -1,4 +1,5 @@
 import { AddCircleOutlineOutlined } from '@mui/icons-material'
+import { memo } from 'react'
 import { Box, IconButton, Pagination, SortDropDown } from '../../components'
 import { headerHOC } from '../../hoc'
 import { SearchForm } from '../BillManagement/components'
@@ -32,4 +33,6 @@ const ProductManagement = () => {
     )
 }
 
-export default headerHOC(ProductManagement, 'Products', [{ title: 'Product Managements', to: '/product-managements' }])
+export default memo(
+    headerHOC(ProductManagement, 'Products', [{ title: 'Product Managements', to: '/product-managements' }])
+)

@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { headerHOC } from '../../hoc'
 import { BalanceOverview, PotentialCustomer } from './components'
 
@@ -10,4 +11,4 @@ const CRM = () => {
     )
 }
 
-export default headerHOC(CRM, 'CRM', [{ title: 'Dashboards', to: '/' }])
+export default memo(headerHOC(CRM, 'CRM', [{ title: 'Dashboards', to: '/' }]))

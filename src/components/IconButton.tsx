@@ -11,7 +11,7 @@ interface IconButtonProps {
 const IconButton = ({ to, icon, title }: IconButtonProps) =>
     to ? (
         <Link
-            to='add'
+            to={to}
             className='flex gap-1 tracking-wide hover:bg-success hover:text-white transition-colors items-center py-2 px-4 rounded text-success bg-[rgba(41,156,219,.18)]'
         >
             <Icon component={icon} style={{ fontSize: 16 }} />

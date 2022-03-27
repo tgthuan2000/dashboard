@@ -1,4 +1,5 @@
 import { AddCircleOutlineOutlined } from '@mui/icons-material'
+import { memo } from 'react'
 import { Box, IconButton, Pagination, SortDropDown } from '../../components'
 import { headerHOC } from '../../hoc'
 import { SearchForm } from '../BillManagement/components'
@@ -32,4 +33,11 @@ const Accounts = () => {
     )
 }
 
-export default headerHOC(Accounts, 'Accounts', [{ title: 'Authentication', to: '/authentication' }])
+export default memo(
+    headerHOC(Accounts, 'Accounts', [
+        {
+            title: 'Authentication',
+            to: '/authentication',
+        },
+    ])
+)

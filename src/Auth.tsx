@@ -7,6 +7,7 @@ import { setAccount, useAccount } from './features'
 import { slug } from './utils/slug'
 import { toastConfig } from './utils/toastConfig'
 import { Loading } from './components'
+import { storage } from './utils/localstorages'
 
 function Auth() {
     const dispatch = useDispatch()
@@ -17,8 +18,8 @@ function Auth() {
 
     useEffect(() => {
         if (
-            localStorage.theme === 'dark' ||
-            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+            localStorage[storage.theme] === 'dark' ||
+            (!(storage.theme in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
         ) {
             document.documentElement.classList.add('dark')
         } else {

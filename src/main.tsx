@@ -32,6 +32,8 @@ ReactDOM.render(
         <Provider store={store}>
             <BrowserRouter>
                 <ToastContainer
+                    closeButton={false}
+                    toastClassName='transition-colors dark:bg-dark dark:text-white font-medium text-sm font-base'
                     position='bottom-right'
                     autoClose={5000}
                     hideProgressBar={false}

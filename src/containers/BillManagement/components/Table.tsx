@@ -10,7 +10,7 @@ const Table = () => {
     return (
         <div className='flex-1 w-ful'>
             <table className='w-full'>
-                <thead className='bg-gray-light dark:bg-[#2a2f34] border-b border-[#e9ebec] text-gray transition-colors'>
+                <thead className='bg-gray-light dark:bg-[#2a2f34] border-b border-[#e9ebec] dark:border-[#32383e] text-gray transition-colors'>
                     <tr>
                         <ColHeader isCenter>
                             <input type='checkbox' className='disabled:cursor-not-allowed cursor-pointer' disabled />

@@ -1,6 +1,7 @@
 export const storage = {
     accessToken: 'velzon-access-token',
     rememberMe: 'velzon-remember-me',
+    theme: 'velzon-theme',
 }
 
 export const parseJSON = (storage: string) => {

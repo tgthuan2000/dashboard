@@ -9,7 +9,7 @@ interface ButtonProps {
 
 const Button = ({ style = 'danger', className, children }: ButtonProps) => {
     return (
-        <span
+        <button
             className={cls(
                 'py-1 px-3 text-xs font-semibold rounded text-center cursor-default select-none',
                 oneOfStyle(
@@ -26,7 +26,7 @@ const Button = ({ style = 'danger', className, children }: ButtonProps) => {
             )}
         >
             {children}
-        </span>
+        </button>
     )
 }
 
