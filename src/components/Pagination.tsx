@@ -3,12 +3,12 @@ import { MouseEventHandler } from 'react'
 import { ButtonPaginate } from '.'
 
 interface PaginationProps {
-    length: number
-    onNext: MouseEventHandler<HTMLButtonElement>
-    onPrev: MouseEventHandler<HTMLButtonElement>
-    page: number
-    totalPage: number
-    end: boolean
+    length?: number
+    onNext?: MouseEventHandler<HTMLButtonElement>
+    onPrev?: MouseEventHandler<HTMLButtonElement>
+    page?: number
+    totalPage?: number
+    end?: boolean
 }
 const Pagination = ({ length, onNext, onPrev, page, totalPage, end }: PaginationProps) => {
     return (
@@ -17,7 +17,7 @@ const Pagination = ({ length, onNext, onPrev, page, totalPage, end }: Pagination
                 Showing <span className='font-semibold'>{length}</span> Results
             </div>
             <div className='gap-1 flex'>
-                <ButtonPaginate icon={ArrowBackOutlined} onClick={onPrev} disabled={page <= 1} />
+                <ButtonPaginate icon={ArrowBackOutlined} onClick={onPrev} disabled={(page as number) <= 1} />
                 <ButtonPaginate icon={ArrowForwardOutlined} onClick={onNext} disabled={end && page === totalPage} />
             </div>
         </div>
