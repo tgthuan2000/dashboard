@@ -9,7 +9,10 @@ interface BalanceOverviewProps {
 const BalanceOverview = ({ className }: BalanceOverviewProps) => {
     return (
         <div className={cls('h-full', className)}>
-            <Box headerTitle='Balance Overview' option={<SortDropDown sortSelected='Current Year' />}>
+            <Box
+                headerTitle='Balance Overview'
+                option={<SortDropDown sortSelected={{ _id: '0', name: 'Current Year' }} />}
+            >
                 <div className='px-2'>
                     <div className='grid grid-cols-3 mt-5 mb-4'>
                         <Text primary value='$584k' name='Revenue' />

@@ -1,7 +1,7 @@
 import { MouseEventHandler } from 'react'
 import { Link } from 'react-router-dom'
+import { colorStyles } from '../@types'
 import { cls, oneOfStyle } from '../utils/classname-supporter'
-import { colorStyles } from '../utils/interfaces'
 
 interface ButtonProps {
     to?: string
