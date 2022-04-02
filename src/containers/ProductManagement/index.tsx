@@ -20,12 +20,16 @@ const ProductManagement = () => {
                 className='mt-5'
                 option={
                     <div className='flex gap-4'>
-                        <SortDropDown sortTtile='Status:' sortSelected='All' sortData={['Publish', 'Stock', 'Block']} />
                         <SortDropDown
-                            sortTtile='Categories:'
-                            sortSelected='All'
-                            sortData={['Type 1', 'Type 2', 'Type 3', 'Type 4']}
+                            sortTtile='Status:'
+                            sortSelected={{ _id: '0', name: 'All' }}
+                            sortData={[
+                                { _id: '1', name: 'Publish' },
+                                { _id: '2', name: 'Stock' },
+                                { _id: '3', name: 'Block' },
+                            ]}
                         />
+                        <SortDropDown sortTtile='Categories:' sortSelected={{ _id: '0', name: 'All' }} />
                     </div>
                 }
                 pagination={

@@ -1,14 +1,14 @@
+import { User } from '../../@types'
 import { FormInputs } from '../../containers/Login'
-import { AccountState } from '../../features'
 import { parseJSON, storage } from '../../utils/localstorages'
 import axiosClient, { LOGIN, RE_LOGIN } from './axiosClient'
 
 interface DataState {
     success: boolean
-    user?: AccountState
+    user?: User
     tokenAccess?: string
 }
-export const login = async ({ username, password, rememberMe }: FormInputs): Promise<AccountState | undefined> => {
+export const login = async ({ username, password, rememberMe }: FormInputs): Promise<User | undefined> => {
     try {
         const data: DataState = await axiosClient.post(LOGIN, { username, password })
         if (data.success) {
@@ -23,7 +23,7 @@ export const login = async ({ username, password, rememberMe }: FormInputs): Pro
     }
 }
 
-export const reLogin = async (): Promise<AccountState | undefined> => {
+export const reLogin = async (): Promise<User | undefined> => {
     try {
         const accessToken = parseJSON(storage.accessToken)
         if (accessToken) {

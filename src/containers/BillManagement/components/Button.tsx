@@ -1,5 +1,5 @@
+import { colorStyles } from '../../../@types'
 import { cls, oneOfStyle } from '../../../utils/classname-supporter'
-import { colorStyles } from '../../../utils/interfaces'
 
 interface ButtonProps {
     style?: colorStyles

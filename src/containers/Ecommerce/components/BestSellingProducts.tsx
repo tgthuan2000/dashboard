@@ -12,12 +12,7 @@ const BestSellingProduct = ({ className }: BestSellingProductProps) => {
             <Box
                 headerTitle='Best Selling Products'
                 className='mb-5'
-                option={
-                    <SortDropDown
-                        sortSelected='Today'
-                        sortData={['Today', 'Yesterday', 'Last 7 days', 'Last 30 days', 'This Month', 'Last Month']}
-                    />
-                }
+                option={<SortDropDown sortSelected={{ _id: '0', name: 'Today' }} />}
                 pagination={<Pagination />}
             >
                 <Table />

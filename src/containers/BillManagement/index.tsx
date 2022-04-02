@@ -1,9 +1,29 @@
-import { memo } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { Box, SortDropDown, Button } from '../../components'
 import { headerHOC } from '../../hoc'
+import { useBillStatus } from '../../schema/hook'
 import { SearchForm, Calendar, Table, Pagination } from './components'
 
 const BillManagement = () => {
+    const { data: sortData } = useBillStatus()
+    const [showStatus, setShowStatus] = useState(false)
+    const [billItems, setBillItems] = useState<any[]>([])
+
+    const handleRowClick = (value: any, index: number) => {
+        const temp = [...billItems]
+        const i = temp.findIndex((item) => item._id === value._id)
+        if (i !== -1) {
+            temp.splice(i, 1)
+            setBillItems(temp)
+            return
+        }
+        setBillItems([...temp, value])
+    }
+    useEffect(() => {
+        if (billItems.length === 0) setShowStatus(false)
+        else setShowStatus(true)
+    }, [billItems])
+
     return (
         <div className=''>
             <div className='flex gap-5'>
@@ -18,14 +38,14 @@ const BillManagement = () => {
                         <Button title='Export Report' style='success' />
                         <SortDropDown
                             sortTtile='Order status:'
-                            sortSelected='Tất cả'
-                            sortData={['Chờ xác nhận', 'Đang giao hàng', 'Đã giao hàng', 'Hủy hàng', 'Hoàn tiền']}
+                            sortSelected={{ _id: '0', name: 'Tất cả' }}
+                            sortData={sortData}
                         />
                     </div>
                 }
-                pagination={<Pagination />}
+                pagination={<Pagination isOpen={showStatus} />}
             >
-                <Table />
+                <Table onRowClick={handleRowClick} />
             </Box>
         </div>
     )

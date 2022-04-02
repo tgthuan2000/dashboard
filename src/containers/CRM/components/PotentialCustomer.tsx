@@ -11,7 +11,7 @@ const PotentialCustomer = ({ className }: PotentialCustomerProps) => {
         <div className={cls('h-full', className)}>
             <Box
                 headerTitle='Potential Customers'
-                option={<SortDropDown sortSelected='Current Year' />}
+                option={<SortDropDown sortSelected={{ _id: '0', name: 'Current Year' }} />}
                 pagination={<Pagination />}
             >
                 <Table />

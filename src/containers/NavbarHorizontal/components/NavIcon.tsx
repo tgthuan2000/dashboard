@@ -1,7 +1,7 @@
 import React from 'react'
 import { Icon } from '@mui/material'
 import { cls, activeCls, oneOfStyle } from '../../../utils/classname-supporter'
-import { colorStyles } from '../../../utils/interfaces'
+import { colorStyles } from '../../../@types'
 
 interface NavIconProps {
     className?: string

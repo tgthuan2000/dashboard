@@ -1,12 +1,11 @@
 import { Icon } from '@mui/material'
 import React from 'react'
+import { colorStyles } from '../../../@types'
 import { cls, oneOfStyle } from '../../../utils/classname-supporter'
-
-export type CardLogoColor = 'success' | 'info' | 'primary' | 'warning'
 
 interface CardLogoProps {
     icon: React.ElementType
-    color: CardLogoColor
+    color: colorStyles
 }
 
 const CardLogo = ({ icon, color }: CardLogoProps) => {

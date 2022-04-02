@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const axiosClient = axios.create({
-    baseURL: 'https://admin-velzon-authenticate.herokuapp.com/auth',
+    baseURL: import.meta.env.VITE_BACKEND,
     // 'http://localhost:6000/auth',
     headers: {
         'Content-Type': 'application/json',

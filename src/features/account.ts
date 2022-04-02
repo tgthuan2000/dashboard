@@ -1,24 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { useSelector } from 'react-redux'
+import { User } from '../@types'
 import { RootState } from '../store'
 import { storage } from '../utils/localstorages'
 
-export interface AccountState {
-    fullName?: string
-    email?: string
-    phone?: string | number
-    username?: string
-    address?: string
-    _id?: string
+type AccountType = {
+    [Property in keyof User]?: User[Property]
 }
 
-const initialState: AccountState = {}
+const initialState: AccountType = {}
 
 export const accountSlice = createSlice({
     name: 'account',
     initialState,
     reducers: {
-        setAccount: (state, action: PayloadAction<AccountState>) => {
+        setAccount: (state, action: PayloadAction<User>) => {
             return action.payload
         },
         logout: () => {

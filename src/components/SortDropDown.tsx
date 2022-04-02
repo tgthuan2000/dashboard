@@ -3,15 +3,21 @@ import { Icon } from '@mui/material'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
 import { BoxChild } from '.'
+import { tempDataSort } from '../constants'
+export interface SortType {
+    _id: string
+    name: string
+}
 
 interface SortDropDownProps {
-    sortData?: string[]
+    sortData?: SortType[]
     sortTtile?: string
-    sortSelected?: string
+    sortSelected?: SortType
 }
+
 const SortDropDown = ({
-    sortData = ['Today', 'Last week', 'Last Month', 'Current Year'],
-    sortSelected = 'Current Week',
+    sortData = tempDataSort,
+    sortSelected = { _id: '0', name: 'Current Week' },
     sortTtile,
 }: SortDropDownProps) => {
     const [showDropdown, setShowDropdown] = useState(false)
@@ -37,9 +43,9 @@ const SortDropDown = ({
                         exit={{ y: 10, opacity: 0 }}
                         className='absolute z-10 right-0 top-[calc(100%+10px)] py-2 min-w-[10rem] shadow-md rounded bg-white dark:bg-dark'
                     >
-                        {sortData.map((x, i) => (
-                            <BoxChild key={i} onClick={() => setShowDropdown(false)}>
-                                {x}
+                        {sortData.map(({ _id, name }) => (
+                            <BoxChild key={_id} onClick={() => setShowDropdown(false)}>
+                                {name}
                             </BoxChild>
                         ))}
                     </motion.ul>

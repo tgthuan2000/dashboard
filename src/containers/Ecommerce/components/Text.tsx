@@ -1,6 +1,5 @@
+import { colorStyles } from '../../../@types'
 import { activeCls, cls, oneOfStyle } from '../../../utils/classname-supporter'
-import { colorStyles } from '../../../utils/interfaces'
-import CountUp from 'react-countup'
 
 interface TextProps {
     value?: string | number

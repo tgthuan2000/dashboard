@@ -1,16 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { useSelector } from 'react-redux'
+import { Product } from '../@types'
 import { skipCount } from '../schema/hook/product'
 import { RootState } from '../store'
-
-export interface ProductData {
-    _id: string
-    name: string
-    image: string
-    price: number
-    quantity: number
-    totalCount: number
-}
 
 export interface ProductConfig {
     end: boolean
@@ -19,7 +11,7 @@ export interface ProductConfig {
 }
 
 export interface ProductState {
-    data: ProductData[]
+    data: Product[]
     config: ProductConfig
 }
 
@@ -36,9 +28,9 @@ export const productSlice = createSlice({
     name: 'product',
     initialState,
     reducers: {
-        addMoreProduct: (state, { payload }: PayloadAction<ProductData[]>) => {
+        addMoreProduct: (state, { payload }: PayloadAction<Product[]>) => {
             let config: ProductConfig = { ...state.config }
-            let data: ProductData[] = [...state.data]
+            let data: Product[] = [...state.data]
             if (payload.length > 0) {
                 config = {
                     ...config,

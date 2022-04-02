@@ -4,18 +4,7 @@ import {
     MonetizationOnOutlined,
     SpeedOutlined,
 } from '@mui/icons-material'
-
-export interface DataDropdown {
-    title: string
-    list: {
-        title: string
-        icon: React.ElementType
-        data: {
-            title: string
-            to: string
-        }[]
-    }[]
-}
+import { DataDropdown } from '../@types'
 
 const dataDropdowns: DataDropdown[] = [
     {

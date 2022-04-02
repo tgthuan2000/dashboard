@@ -1,12 +1,20 @@
 import { Link } from 'react-router-dom'
 import { Col, Button } from '.'
+import { colorStyles } from '../../../@types'
 import { Avatar, ColHeader } from '../../../components'
-import { colorStyles } from '../../../utils/interfaces'
 
 const colors: colorStyles[] = ['danger', 'info', 'warning', 'success']
 const tableHeaders = ['Date', 'Order ID', 'Customer Name', 'Amount', 'Total Prices', 'Bill Status', '']
 
-const Table = () => {
+interface TableProps {
+    onRowClick?: (value: any, index: number) => void
+}
+
+const Table = ({ onRowClick }: TableProps) => {
+    const handleClickItem = (v: any, index: number) => {
+        onRowClick?.(v, index)
+    }
+
     return (
         <div className='flex-1 w-ful'>
             <table className='w-full'>
@@ -28,7 +36,11 @@ const Table = () => {
                         >
                             <td className='text-center'>
                                 <label className='block h-full py-3'>
-                                    <input type='checkbox' className='cursor-pointer disabled:cursor-not-allowed' />
+                                    <input
+                                        type='checkbox'
+                                        className='cursor-pointer disabled:cursor-not-allowed'
+                                        onClick={() => handleClickItem(v, i)}
+                                    />
                                 </label>
                             </td>
                             <Col>{new Date().toDateString()}</Col>

@@ -1,27 +1,23 @@
 import { useState } from 'react'
-import { DataDropdown } from '../constants'
+import { DataDropdown } from '../@types'
 
 // [[true, false], [true]]
 const useDropdown = (data: DataDropdown[]) => {
-	const [dropdowns, setDropdowns] = useState<boolean[][]>(
-		data.map((item) => Array(item.list.length).fill(false))
-	)
+    const [dropdowns, setDropdowns] = useState<boolean[][]>(data.map((item) => Array(item.list.length).fill(false)))
 
-	const closeAll = () => {
-		setDropdowns(dropdowns.map((dropdown) => dropdown.fill(false)))
-	}
+    const closeAll = () => {
+        setDropdowns(dropdowns.map((dropdown) => dropdown.fill(false)))
+    }
 
-	const onClick = (dropdownIndex: number, itemIndex: number) => {
-		setDropdowns(
-			dropdowns.map((dropdown, index) =>
-				dropdownIndex === index
-					? dropdown.map((a, b) => b === itemIndex && !a)
-					: dropdown.fill(false)
-			)
-		)
-	}
+    const onClick = (dropdownIndex: number, itemIndex: number) => {
+        setDropdowns(
+            dropdowns.map((dropdown, index) =>
+                dropdownIndex === index ? dropdown.map((a, b) => b === itemIndex && !a) : dropdown.fill(false)
+            )
+        )
+    }
 
-	return { dropdowns, closeAll, onClick }
+    return { dropdowns, closeAll, onClick }
 }
 
 export default useDropdown

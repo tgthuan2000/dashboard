@@ -1,8 +1,8 @@
 import { InsertInvitationOutlined } from '@mui/icons-material'
 import { Icon } from '@mui/material'
-import './theme.css'
 import { LegacyRef, useState } from 'react'
 import Flatpickr, { DateTimePickerProps } from 'react-flatpickr'
+import './theme.css'
 
 const today = new Date()
 const distance = 7 // days
