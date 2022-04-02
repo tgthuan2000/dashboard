@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import { MouseEventHandler, ReactElement } from 'react'
 import { cls } from '../../../utils/classname-supporter'
 
 interface ColProps {

@@ -11,5 +11,5 @@ export const GET_BILLS = `
         _createdAt,
         user->,
         billStatus->,
-    }
+    } [$start...$end]
 `

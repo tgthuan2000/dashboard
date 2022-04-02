@@ -1,18 +1,21 @@
+import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { Col, Button } from '.'
-import { colorStyles } from '../../../@types'
-import { Avatar, ColHeader } from '../../../components'
+import { Bill, colorStyles } from '../../../@types'
+import { Avatar, ColHeader, Loading } from '../../../components'
 
 const colors: colorStyles[] = ['danger', 'info', 'warning', 'success']
-const tableHeaders = ['Date', 'Order ID', 'Customer Name', 'Amount', 'Total Prices', 'Bill Status', '']
+const tableHeaders = ['Date', 'Customer Name', 'Amount', 'Total Prices', 'Bill Status', '']
 
 interface TableProps {
-    onRowClick?: (value: any, index: number) => void
+    onRowChecked?: (value: any, index: number) => void
+    data?: Bill[]
+    loading?: boolean
 }
 
-const Table = ({ onRowClick }: TableProps) => {
-    const handleClickItem = (v: any, index: number) => {
-        onRowClick?.(v, index)
+const Table = ({ data, onRowChecked, loading }: TableProps) => {
+    const handleClickItem = (_id: string, index: number) => {
+        onRowChecked?.(_id, index)
     }
 
     return (
@@ -29,44 +32,57 @@ const Table = ({ onRowClick }: TableProps) => {
                     </tr>
                 </thead>
                 <tbody className='max-h-[100px] overflow-auto'>
-                    {Array.from(new Array(5)).map((v, i) => (
-                        <tr
-                            className='odd:bg-white even:bg-gray-light dark:odd:bg-dark dark:even:bg-[#2a2f34] dark:text-gray-light border-b border-[#e9ebec] dark:border-[#32383e] transition-colors'
-                            key={i}
-                        >
-                            <td className='text-center'>
-                                <label className='block h-full py-3'>
-                                    <input
-                                        type='checkbox'
-                                        className='cursor-pointer disabled:cursor-not-allowed'
-                                        onClick={() => handleClickItem(v, i)}
-                                    />
-                                </label>
-                            </td>
-                            <Col>{new Date().toDateString()}</Col>
-                            <Col>{(Math.floor(Math.random() * 899999) + 100000).toString()}</Col>
-                            <Col>
-                                <div className='flex items-center'>
-                                    <Avatar />
-                                    <div className='flex-1 overflow-hidden max-w-[200px] ml-3'>
-                                        <h3 className='leading-normal text-sm text-[#495057] dark:text-[#cde4ca] font-medium overflow-hidden text-ellipsis whitespace-nowrap'>
-                                            Username
-                                        </h3>
+                    {!loading ? (
+                        data?.map(({ _id, _createdAt, user, billStatus }, i) => (
+                            <tr
+                                className='odd:bg-white even:bg-gray-light dark:odd:bg-dark dark:even:bg-[#2a2f34] dark:text-gray-light border-b border-[#e9ebec] dark:border-[#32383e] transition-colors'
+                                key={_id}
+                            >
+                                <td className='text-center'>
+                                    <label className='block h-full py-3'>
+                                        <input
+                                            type='checkbox'
+                                            className='cursor-pointer disabled:cursor-not-allowed'
+                                            onClick={() => handleClickItem(_id, i)}
+                                        />
+                                    </label>
+                                </td>
+                                <Col>{moment.utc(_createdAt).local().format('HH:mm - DD/MM/YYYY')}</Col>
+                                <Col>
+                                    <div className='flex items-center'>
+                                        <Avatar alt={user.fullName[0]} />
+                                        <div className='flex-1 overflow-hidden max-w-[200px] ml-3'>
+                                            <h3 className='leading-normal text-sm text-[#495057] dark:text-[#cde4ca] font-medium overflow-hidden text-ellipsis whitespace-nowrap'>
+                                                {user.fullName}
+                                            </h3>
+                                        </div>
                                     </div>
-                                </div>
-                            </Col>
-                            <Col>{(Math.floor(Math.random() * 89) + 10).toString()}</Col>
-                            <Col>{`${Math.floor(Math.random() * 890) + 100}k`}</Col>
-                            <Col>
-                                <Button style={colors[Math.floor(Math.random() * colors.length)]}>status</Button>
-                            </Col>
-                            <Col>
-                                <Link to='#' className='underline text-primary cursor-pointer hover:opacity-60'>
-                                    Detail
-                                </Link>
-                            </Col>
+                                </Col>
+                                <Col>{(Math.floor(Math.random() * 89) + 10).toString()}</Col>
+                                <Col>{`${Math.floor(Math.random() * 890) + 100}k`}</Col>
+                                <Col>
+                                    <Button style={billStatus.style}>{billStatus.name}</Button>
+                                </Col>
+                                <Col>
+                                    <Link
+                                        to={`detail/${_id}`}
+                                        className='underline text-primary cursor-pointer hover:opacity-60'
+                                    >
+                                        Detail
+                                    </Link>
+                                </Col>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td
+                                colSpan={7}
+                                className='text-center py-28 text-gray select-none border-b border-[#e9ebec] dark:border-[#32383e] transition-colors'
+                            >
+                                <Loading size='small' />
+                            </td>
                         </tr>
-                    ))}
+                    )}
                 </tbody>
             </table>
         </div>

@@ -1,17 +1,22 @@
 import { memo, useEffect, useState } from 'react'
-import { BillStatus } from '../../@types'
+import { Bill, BillStatus } from '../../@types'
 import { Box, SortDropDown, Button } from '../../components'
 import { headerHOC } from '../../hoc'
 import { useQuery } from '../../hooks'
-import { GET_BILLSTATUS } from '../../schema'
+import { GET_BILLS, GET_BILLSTATUS } from '../../schema'
 import { SearchForm, Calendar, Table, Pagination } from './components'
 
 const BillManagement = () => {
     const { data: statusData } = useQuery<BillStatus>(GET_BILLSTATUS)
+    const { data: billData, loading: billLoading } = useQuery<Bill>(GET_BILLS, {
+        start: 0,
+        end: 5,
+    })
+    console.log(billData)
     const [showStatus, setShowStatus] = useState(false)
     const [billItems, setBillItems] = useState<any[]>([])
 
-    const handleRowClick = (value: any, index: number) => {
+    const handleRowCheck = (value: any, index: number) => {
         const temp = [...billItems]
         const i = temp.findIndex((item) => item._id === value._id)
         if (i !== -1) {
@@ -47,7 +52,7 @@ const BillManagement = () => {
                 }
                 pagination={<Pagination isOpen={showStatus} />}
             >
-                <Table onRowClick={handleRowClick} />
+                <Table data={billData} onRowChecked={handleRowCheck} loading={billLoading} />
             </Box>
         </div>
     )

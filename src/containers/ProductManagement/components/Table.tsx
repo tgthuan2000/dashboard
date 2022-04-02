@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom'
+import { Product } from '../../../@types'
 import { urlFor } from '../../../client/sanity'
 import { ColHeader, Loading } from '../../../components'
-import { ProductData } from '../../../features'
 
-const tableHeaders = ['Image', 'Product Name', 'Amount', 'Price', 'Status']
+const tableHeaders = ['Image', 'Product', 'Amount', 'Price', 'Status']
 
 interface TableProps {
     loading: boolean
-    data: ProductData[]
+    data: Product[]
     end: boolean
     page: number
     totalPage: number
@@ -46,7 +46,7 @@ const Table = ({ loading, data, end, page, totalPage }: TableProps) => {
                                     <td className='py-5'>{name}</td>
                                     <td className='text-center py-5'>{quantity}</td>
                                     <td className='text-center py-5'>{price}</td>
-                                    <td className='text-center py-5'></td>
+                                    <td className='text-center py-5'>Publish</td>
                                 </tr>
                             ))}
                             {end && page === totalPage && (

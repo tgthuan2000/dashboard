@@ -1,15 +1,16 @@
 import { ArrowBackOutlined, ArrowForwardOutlined } from '@mui/icons-material'
-import { ButtonPaginate } from '../../../components'
+import { ButtonPaginate, SortType } from '../../../components'
 import { StatusBill } from '.'
 
 interface PaginationProps {
     isOpen?: boolean
+    sortSelected?: SortType
 }
-const Pagination = ({ isOpen }: PaginationProps) => {
+const Pagination = ({ isOpen, sortSelected }: PaginationProps) => {
     return (
         <div className='flex justify-between items-center p-4'>
             <div className='flex items-center gap-4'>
-                <StatusBill isOpen={isOpen} />
+                <StatusBill isOpen={isOpen} sortSelected={sortSelected} />
             </div>
             <div className='flex gap-1 items-center'>
                 <div className='text-[#878a99] mr-2'>
