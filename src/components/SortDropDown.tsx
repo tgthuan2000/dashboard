@@ -31,7 +31,7 @@ const SortDropDown = ({
             <div onClick={() => setShowDropdown(!showDropdown)}>
                 <span className='font-semibold uppercase text-xs dark:text-[#ced4da]'>{sortTtile}</span>
                 <span className='ml-2 text-gray inline-flex items-center'>
-                    {sortSelected}
+                    {sortSelected.name}
                     <Icon className='ml-1' component={KeyboardArrowDownOutlined} style={{ fontSize: 16 }} />
                 </span>
             </div>

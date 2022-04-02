@@ -23,7 +23,7 @@ const StatusBill = ({
     return (
         <div className='select-none relative'>
             <span className='text-gray relative after:content-[">"] after:absolute after:dark:text-white after:text-dark after:-right-5 after:top-0 after:translate-x-1/2 mr-10'>
-                {sortSelected}
+                {sortSelected.name}
             </span>
             <AnimatePresence>
                 {!showStatus && (

@@ -1,21 +1,22 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { client } from '../../client/sanity'
-import { addMoreProduct, nextProductPage, prevProductPage, ProductData, useProduct } from '../../features'
-import { GET_PRODUCTS } from '../query'
+import { Product } from '../@types'
+import { client } from '../client/sanity'
+import { addMoreProduct, nextProductPage, prevProductPage, useProduct } from '../features'
+import { GET_PRODUCTS } from '../schema'
 
 export const skipCount = 5
 
-export const useGetAllProducts = () => {
+const useGetAllProducts = () => {
     const { data, config } = useProduct()
     const dispatch = useDispatch()
-    const [current, setCurrent] = useState<ProductData[]>([])
+    const [current, setCurrent] = useState<Product[]>([])
     const [loading, setLoading] = useState(true)
 
     const getProduct = useCallback(async () => {
         setLoading(true)
         try {
-            const data: ProductData[] = await client.fetch(GET_PRODUCTS, {
+            const data: Product[] = await client.fetch(GET_PRODUCTS, {
                 start: (config.currentPage - 1) * skipCount,
                 end: config.currentPage * skipCount,
             })
@@ -55,3 +56,4 @@ export const useGetAllProducts = () => {
         end: config.end,
     }
 }
+export default useGetAllProducts

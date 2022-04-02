@@ -8,6 +8,7 @@ interface DataState {
     user?: User
     tokenAccess?: string
 }
+
 export const login = async ({ username, password, rememberMe }: FormInputs): Promise<User | undefined> => {
     try {
         const data: DataState = await axiosClient.post(LOGIN, { username, password })

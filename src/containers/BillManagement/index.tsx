@@ -1,11 +1,13 @@
 import { memo, useEffect, useState } from 'react'
+import { BillStatus } from '../../@types'
 import { Box, SortDropDown, Button } from '../../components'
 import { headerHOC } from '../../hoc'
-import { useBillStatus } from '../../schema/hook'
+import { useQuery } from '../../hooks'
+import { GET_BILLSTATUS } from '../../schema'
 import { SearchForm, Calendar, Table, Pagination } from './components'
 
 const BillManagement = () => {
-    const { data: sortData } = useBillStatus()
+    const { data: statusData } = useQuery<BillStatus>(GET_BILLSTATUS)
     const [showStatus, setShowStatus] = useState(false)
     const [billItems, setBillItems] = useState<any[]>([])
 
@@ -39,7 +41,7 @@ const BillManagement = () => {
                         <SortDropDown
                             sortTtile='Order status:'
                             sortSelected={{ _id: '0', name: 'Tất cả' }}
-                            sortData={sortData}
+                            sortData={statusData}
                         />
                     </div>
                 }

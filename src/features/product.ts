@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { useSelector } from 'react-redux'
 import { Product } from '../@types'
-import { skipCount } from '../schema/hook/product'
+import { skipCount } from '../hooks'
 import { RootState } from '../store'
 
 export interface ProductConfig {

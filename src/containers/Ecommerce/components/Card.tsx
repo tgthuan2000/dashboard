@@ -3,7 +3,8 @@ import { Icon } from '@mui/material'
 import { motion } from 'framer-motion'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { CardLogo, CardLogoColor } from '.'
+import { CardLogo } from '.'
+import { colorStyles } from '../../../@types'
 import { activeStyleByZero, cls } from '../../../utils/classname-supporter'
 
 interface CardProps {
@@ -11,7 +12,7 @@ interface CardProps {
     rate?: number | string
     value?: string | number
     icon?: React.ElementType
-    color?: CardLogoColor
+    color?: colorStyles
     linkTitle?: string
     linkTo?: string
 }
