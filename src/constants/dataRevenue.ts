@@ -3,11 +3,11 @@ import { DataRevenue } from '../@types'
 const dataRevenue: DataRevenue[] = [
     {
         title: 'Orders',
-        value: '7,585',
+        value: '7585',
     },
     {
         title: 'Earnings',
-        value: '$22.89k',
+        value: '2289',
     },
     {
         title: 'Refunds',

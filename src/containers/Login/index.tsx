@@ -41,7 +41,7 @@ const Login = () => {
 
             if (user) {
                 dispatch(setAccount(user))
-                toast('Login success!', toastConfig)
+                toast(`Hi ${user.fullName}. Welcome back!!`, toastConfig)
             }
         } catch (err: any) {
             toast(err.message, toastConfig)

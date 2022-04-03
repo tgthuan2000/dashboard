@@ -1,3 +1,4 @@
+import NumberFormat from 'react-number-format'
 import { colorStyles } from '../@types'
 import { activeCls, cls, oneOfStyle } from '../utils/classname-supporter'
 
@@ -6,8 +7,9 @@ interface ColProps {
     value?: string | number
     stock?: boolean
     stockMessage?: string
-    type?: colorStyles
+    style?: colorStyles
     bold?: boolean
+    type?: 'text' | 'number'
 }
 
 const Col = ({
@@ -15,8 +17,9 @@ const Col = ({
     value = 'Col value',
     stock = false,
     stockMessage = 'Stock',
-    type = 'danger',
+    style = 'danger',
     bold = false,
+    type = 'number',
 }: ColProps) => {
     return (
         <td className='p-3'>
@@ -26,7 +29,7 @@ const Col = ({
                         className={cls(
                             'text-center rounded text-xs font-semibold whitespace-nowrap p-1 select-none',
                             oneOfStyle(
-                                type,
+                                style,
                                 ['danger', 'warning', 'info', 'success', 'primary'],
                                 [
                                     'bg-[rgba(240,101,72,.1)] text-danger',
@@ -40,10 +43,19 @@ const Col = ({
                     >
                         {stockMessage}
                     </div>
+                ) : type === 'number' ? (
+                    <NumberFormat
+                        value={value}
+                        displayType='text'
+                        thousandSeparator
+                        className={cls('text-[#495057] dark:text-[#ced4da]', activeCls(bold, 'font-semibold text-sm'))}
+                    />
                 ) : (
-                    <p className={cls('text-[#495057] dark:text-[#ced4da]', activeCls(bold, 'font-semibold text-sm'))}>
+                    <span
+                        className={cls('text-[#495057] dark:text-[#ced4da]', activeCls(bold, 'font-semibold text-sm'))}
+                    >
                         {value}
-                    </p>
+                    </span>
                 )}
                 <span className='text-gray'>{title}</span>
             </div>

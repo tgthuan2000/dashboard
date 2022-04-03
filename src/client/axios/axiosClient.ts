@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const axiosClient = axios.create({
     baseURL: import.meta.env.VITE_BACKEND,
-    // 'http://localhost:6000/auth',
+    // 'http://localhost:6001/auth',
     headers: {
         'Content-Type': 'application/json',
     },

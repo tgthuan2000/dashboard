@@ -5,6 +5,8 @@ export interface Bill {
     _createdAt: Date
     user: User
     billStatus: BillStatus
+    amount: number
+    totalPrice: number
 }
 
 export interface BillStatus {

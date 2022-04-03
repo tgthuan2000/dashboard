@@ -1,3 +1,4 @@
+import NumberFormat from 'react-number-format'
 import { useNavigate } from 'react-router-dom'
 import { Product } from '../../../@types'
 import { urlFor } from '../../../client/sanity'
@@ -44,8 +45,12 @@ const Table = ({ loading, data, end, page, totalPage }: TableProps) => {
                                         />
                                     </td>
                                     <td className='py-5'>{name}</td>
-                                    <td className='text-center py-5'>{quantity}</td>
-                                    <td className='text-center py-5'>{price}</td>
+                                    <td className='text-center py-5'>
+                                        <NumberFormat value={quantity} thousandSeparator displayType='text' />
+                                    </td>
+                                    <td className='text-center py-5'>
+                                        <NumberFormat value={price} thousandSeparator displayType='text' />
+                                    </td>
                                     <td className='text-center py-5'>Publish</td>
                                 </tr>
                             ))}

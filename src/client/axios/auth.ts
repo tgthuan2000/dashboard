@@ -20,7 +20,7 @@ export const login = async ({ username, password, rememberMe }: FormInputs): Pro
             return data.user
         }
     } catch (error: any) {
-        throw new Error(error.message)
+        throw new Error(error.response.data.message)
     }
 }
 
@@ -39,6 +39,6 @@ export const reLogin = async (): Promise<User | undefined> => {
     } catch (error: any) {
         localStorage.removeItem(storage.accessToken)
         axiosClient.defaults.headers.common.Authorization = ''
-        throw new Error(error.message)
+        throw new Error(error.response.data.message)
     }
 }

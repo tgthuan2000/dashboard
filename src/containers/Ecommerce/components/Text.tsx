@@ -1,3 +1,4 @@
+import NumberFormat from 'react-number-format'
 import { colorStyles } from '../../../@types'
 import { activeCls, cls, oneOfStyle } from '../../../utils/classname-supporter'
 
@@ -16,7 +17,10 @@ const Text = ({ value = 'value', title = 'Title', hiddenBorder = false, valueTyp
                 activeCls(!hiddenBorder, 'border-r')
             )}
         >
-            <p
+            <NumberFormat
+                value={value}
+                displayType='text'
+                thousandSeparator
                 className={cls(
                     'mb-1 text-lg font-medium',
                     oneOfStyle(
@@ -32,9 +36,7 @@ const Text = ({ value = 'value', title = 'Title', hiddenBorder = false, valueTyp
                         ]
                     )
                 )}
-            >
-                {value}
-            </p>
+            />
             <span className='text-[#878a99]'>{title}</span>
         </div>
     )

@@ -8,6 +8,7 @@ import { slug } from './utils/slug'
 import { toastConfig } from './utils/toastConfig'
 import { Loading } from './components'
 import { storage } from './utils/localstorages'
+import { Helmet } from 'react-helmet'
 
 function Auth() {
     const dispatch = useDispatch()
@@ -39,7 +40,7 @@ function Auth() {
 
                 if (user) {
                     dispatch(setAccount(user))
-                    toast('Login success!', toastConfig)
+                    toast(`Hi ${user.fullName}. Welcome back!!`, toastConfig)
                 }
             } catch (err: any) {
                 toast(err.message, toastConfig)
@@ -49,7 +50,14 @@ function Auth() {
         })()
     }, [])
 
-    return <div className='min-h-screen flex justify-center items-center'>{loading ? <Loading /> : <Outlet />}</div>
+    return (
+        <div className='min-h-screen flex justify-center items-center'>
+            <Helmet>
+                <title>Authentication | Login</title>
+            </Helmet>
+            {loading ? <Loading /> : <Outlet />}
+        </div>
+    )
 }
 
 export default Auth
