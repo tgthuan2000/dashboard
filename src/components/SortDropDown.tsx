@@ -1,7 +1,7 @@
 import { KeyboardArrowDownOutlined } from '@mui/icons-material'
 import { Icon } from '@mui/material'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useState } from 'react'
+import { MouseEventHandler, useState } from 'react'
 import { BoxChild } from '.'
 import { tempDataSort } from '../constants'
 export interface SortType {
@@ -13,14 +13,21 @@ interface SortDropDownProps {
     sortData?: SortType[]
     sortTtile?: string
     sortSelected?: SortType
+    onSortChange?: (_id: string) => void
 }
 
 const SortDropDown = ({
     sortData = tempDataSort,
     sortSelected = { _id: '0', name: 'Current Week' },
     sortTtile,
+    onSortChange,
 }: SortDropDownProps) => {
     const [showDropdown, setShowDropdown] = useState(false)
+
+    const handleSortClick = (_id: string) => {
+        setShowDropdown(false)
+        onSortChange?.(_id)
+    }
 
     return (
         <div
@@ -31,7 +38,7 @@ const SortDropDown = ({
             <div onClick={() => setShowDropdown(!showDropdown)}>
                 <span className='font-semibold uppercase text-xs dark:text-[#ced4da]'>{sortTtile}</span>
                 <span className='ml-2 text-gray inline-flex items-center'>
-                    {sortSelected.name}
+                    {sortSelected?.name}
                     <Icon className='ml-1' component={KeyboardArrowDownOutlined} style={{ fontSize: 16 }} />
                 </span>
             </div>
@@ -44,7 +51,7 @@ const SortDropDown = ({
                         className='absolute z-10 right-0 top-[calc(100%+10px)] py-2 min-w-[10rem] shadow-md rounded bg-white dark:bg-dark'
                     >
                         {sortData.map(({ _id, name }) => (
-                            <BoxChild key={_id} onClick={() => setShowDropdown(false)}>
+                            <BoxChild key={_id} onClick={() => handleSortClick(_id)}>
                                 {name}
                             </BoxChild>
                         ))}

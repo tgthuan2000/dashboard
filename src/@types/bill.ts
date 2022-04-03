@@ -12,5 +12,5 @@ export interface Bill {
 export interface BillStatus {
     _id: string
     name: string
-    style: colorStyles
+    style?: colorStyles
 }

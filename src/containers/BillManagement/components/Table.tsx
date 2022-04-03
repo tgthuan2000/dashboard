@@ -54,10 +54,10 @@ const Table = ({ data, onRowChecked, loading, end, page, totalPage }: TableProps
                                     <Col>{moment.utc(_createdAt).local().format('HH:mm - DD/MM/YYYY')}</Col>
                                     <Col>
                                         <div className='flex items-center'>
-                                            <Avatar alt={user.fullName[0]} />
+                                            <Avatar alt={user?.fullName[0]} />
                                             <div className='flex-1 overflow-hidden max-w-[200px] ml-3'>
                                                 <h3 className='leading-normal text-sm text-[#495057] dark:text-[#cde4ca] font-medium overflow-hidden text-ellipsis whitespace-nowrap'>
-                                                    {user.fullName}
+                                                    {user?.fullName}
                                                 </h3>
                                             </div>
                                         </div>
@@ -67,7 +67,7 @@ const Table = ({ data, onRowChecked, loading, end, page, totalPage }: TableProps
                                     </Col>
                                     <Col>0</Col>
                                     <Col>
-                                        <Button style={billStatus.style}>{billStatus.name}</Button>
+                                        <Button style={billStatus?.style}>{billStatus?.name}</Button>
                                     </Col>
                                     <Col>
                                         <Link

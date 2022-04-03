@@ -8,7 +8,7 @@ import { slug } from './utils/slug'
 import { toastConfig } from './utils/toastConfig'
 import { Loading } from './components'
 import { storage } from './utils/localstorages'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 
 function Auth() {
     const dispatch = useDispatch()

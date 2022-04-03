@@ -33,7 +33,7 @@ const StatusBill = ({
                         exit={{ y: '-150%', opacity: 0 }}
                         className='absolute left-full top-1/2 -translate-y-1/2 flex items-center whitespace-nowrap'
                     >
-                        <span className='dark:text-white'>{selected.name}</span>
+                        <span className='dark:text-white'>{selected?.name}</span>
                         <button className='ml-8 bg-danger px-3 py-1 rounded text-white font-semibold hover:opacity-80 transition-opacity'>
                             Save changed
                         </button>

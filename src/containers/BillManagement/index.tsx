@@ -1,13 +1,15 @@
 import { memo, useEffect, useState } from 'react'
 import { Bill, BillStatus } from '../../@types'
-import { Box, SortDropDown, Button } from '../../components'
+import { Box, SortDropDown } from '../../components'
 import { headerHOC } from '../../hoc'
 import { useQueryPaging, useQuery } from '../../hooks'
 import { GET_BILLS, GET_BILLSTATUS } from '../../schema'
+import { FILTER_BILLS } from '../../schema/bill'
 import { SearchForm, Calendar, Table, Pagination } from './components'
 
+const all: BillStatus = { _id: '0', name: 'Tất cả' }
+
 const BillManagement = () => {
-    const { data: statusData } = useQuery<BillStatus>(GET_BILLSTATUS)
     const {
         store: billStore,
         data: billData,
@@ -17,25 +19,46 @@ const BillManagement = () => {
         end: endBill,
         page: pageBill,
         totalPage: totalPageBill,
-    } = useQueryPaging<Bill>(GET_BILLS)
+        set: setFilterBill,
+    } = useQueryPaging<Bill>(GET_BILLS, {})
+
+    const { data: statusData } = useQuery<BillStatus>(GET_BILLSTATUS, [all])
+
+    const [sortSelected, setSortSelected] = useState<BillStatus>(all)
 
     const [showStatus, setShowStatus] = useState(false)
-    const [billItems, setBillItems] = useState<any[]>([])
+    const [billItems, setBillItems] = useState<string[]>([])
 
-    const handleRowCheck = (value: any, index: number) => {
+    const handleRowCheck = (_id: string, index: number) => {
         const temp = [...billItems]
-        const i = temp.findIndex((item) => item._id === value._id)
+        const i = temp.findIndex((item) => item === _id)
         if (i !== -1) {
             temp.splice(i, 1)
             setBillItems(temp)
             return
         }
-        setBillItems([...temp, value])
+        setBillItems([...temp, _id])
     }
+
     useEffect(() => {
         if (billItems.length === 0) setShowStatus(false)
         else setShowStatus(true)
     }, [billItems])
+
+    const handleSortChange = (_id: string) => {
+        if (_id === '0') {
+            setFilterBill(GET_BILLS, {})
+            setSortSelected(all)
+            return
+        }
+        const item = statusData.find((sort) => sort._id === _id)
+        if (item) {
+            setFilterBill(FILTER_BILLS, { _id })
+            setSortSelected(item)
+        }
+    }
+
+    useEffect(() => {}, [sortSelected])
 
     return (
         <div className=''>
@@ -49,8 +72,9 @@ const BillManagement = () => {
                 option={
                     <SortDropDown
                         sortTtile='Order status:'
-                        sortSelected={{ _id: '0', name: 'Tất cả' }}
+                        sortSelected={sortSelected}
                         sortData={statusData}
+                        onSortChange={handleSortChange}
                     />
                 }
                 pagination={
@@ -62,6 +86,7 @@ const BillManagement = () => {
                         page={pageBill}
                         totalPage={totalPageBill}
                         end={endBill}
+                        statusData={statusData}
                     />
                 }
             >

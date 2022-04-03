@@ -2,6 +2,7 @@ import { ArrowBackOutlined, ArrowForwardOutlined } from '@mui/icons-material'
 import { ButtonPaginate, SortType } from '../../../components'
 import { StatusBill } from '.'
 import { MouseEventHandler } from 'react'
+import { BillStatus } from '../../../@types'
 
 interface PaginationProps {
     isOpen?: boolean
@@ -12,6 +13,7 @@ interface PaginationProps {
     page?: number
     totalPage?: number
     end?: boolean
+    statusData?: BillStatus[]
 }
 const Pagination = ({
     isOpen,
@@ -22,11 +24,12 @@ const Pagination = ({
     page,
     totalPage,
     end,
+    statusData,
 }: PaginationProps) => {
     return (
         <div className='flex justify-between items-center p-4'>
             <div className='flex items-center gap-4'>
-                <StatusBill isOpen={isOpen} sortSelected={sortSelected} />
+                <StatusBill isOpen={isOpen} sortSelected={sortSelected} sortData={statusData} />
             </div>
             <div className='flex gap-1 items-center'>
                 <div className='text-[#878a99] mr-2'>
