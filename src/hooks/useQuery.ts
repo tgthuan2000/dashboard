@@ -25,12 +25,21 @@ export const useQuery = <T>(query: string, befores: T[] | undefined = []) => {
 }
 
 interface Params {
+    start: number
+    end: number
+    from: Date
+    to: Date
     [key: string]: any
 }
 interface OptionUseQueryPaging {
     numPerPage?: number
-    queryParams?: Params
+    queryParams?: Params | {}
 }
+
+const today = new Date()
+const distance = 7 // days
+
+const notIncludes = (query: string, queries: string[]) => queries.some((q) => !query.includes(q))
 
 export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryParams = {} }: OptionUseQueryPaging) => {
     const [loading, setLoading] = useState(true)
@@ -40,16 +49,25 @@ export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryPa
     const [page, setPage] = useState(1)
     const [end, setEnd] = useState(false)
     const [query, setQuery] = useState(queryString)
-    const params = useRef<Params>({ ...queryParams, start: 0, end: numPerPage })
 
-    const getQuery = useCallback(async () => {
+    const params = useRef<Params>({
+        start: 0,
+        end: numPerPage,
+        from: new Date(today.getTime() - distance * 24 * 60 * 60 * 1000),
+        to: today,
+        ...queryParams,
+    })
+
+    const fetch = useCallback(async () => {
         if (page <= totalPage.current) {
             setData(store.current.slice((page - 1) * numPerPage, page * numPerPage))
             loading && setLoading(false)
         } else {
             setLoading(true)
             try {
-                if (!query.includes('$start') || !query.includes('$end')) throw new Error('Query invalid!')
+                if (notIncludes(query, ['$start', '$end', '$from', '$to'])) {
+                    throw new Error('Query invalid!')
+                }
 
                 const q: T[] = await client.fetch<T[]>(query, params.current)
 
@@ -57,9 +75,11 @@ export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryPa
                     q.length < numPerPage && setEnd(true)
                     totalPage.current += 1
                     store.current = [...store.current, ...q]
+
                     setData(q)
                 } else {
                     setEnd(true)
+                    setPage(page - 1)
                 }
             } catch (error: any) {
                 throw new Error(error.message)
@@ -67,11 +87,11 @@ export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryPa
                 setLoading(false)
             }
         }
-    }, [page, query, totalPage.current, store.current])
+    }, [page, query, totalPage.current, store.current, params.current])
 
     useEffect(() => {
-        getQuery()
-    }, [getQuery])
+        fetch()
+    }, [fetch])
 
     const next = () => {
         if (!end || page < totalPage.current) {
@@ -95,14 +115,14 @@ export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryPa
         }
     }
 
-    const set = (q: string, p: Params) => {
+    const refetch = (q: string, p?: { [p in keyof Params]?: Params[p] }) => {
         setQuery(q)
         totalPage.current = 0
         store.current = []
         setData([])
         setEnd(false)
         setPage(1)
-        params.current = { ...params.current, ...p, start: 0, end: numPerPage }
+        params.current = { ...params.current, start: 0, end: numPerPage, ...p }
     }
 
     return {
@@ -114,7 +134,7 @@ export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryPa
         page,
         totalPage: totalPage.current,
         end,
-        set,
+        refetch,
         params,
     }
 }

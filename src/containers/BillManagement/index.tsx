@@ -1,44 +1,27 @@
 import { memo, useEffect, useState } from 'react'
 import { Bill, BillStatus } from '../../@types'
-import { Box, SortDropDown } from '../../components'
+import { Box, SortDropDown, SearchForm } from '../../components'
 import { headerHOC } from '../../hoc'
 import { useQueryPaging, useQuery } from '../../hooks'
 import { GET_BILLS, GET_BILLSTATUS } from '../../schema'
-import { FILTER_BILLS } from '../../schema/bill'
-import { SearchForm, Calendar, Table, Pagination } from './components'
+import { FILTER_BILL, FILTER_BILLS } from '../../schema/bill'
+import { Calendar, Table, Pagination } from './components'
 
 const all: BillStatus = { _id: '0', name: 'Tất cả' }
 
 const BillManagement = () => {
-    const {
-        store: billStore,
-        data: billData,
-        loading: billLoading,
-        next: nextBill,
-        prev: prevBill,
-        end: endBill,
-        page: pageBill,
-        totalPage: totalPageBill,
-        set: setFilterBill,
-    } = useQueryPaging<Bill>(GET_BILLS, {})
+    const { store, data, loading, next, prev, end, page, totalPage, refetch, params } = useQueryPaging<Bill>(
+        GET_BILLS,
+        {}
+    )
+    console.log({ data, store })
 
     const { data: statusData } = useQuery<BillStatus>(GET_BILLSTATUS, [all])
 
     const [sortSelected, setSortSelected] = useState<BillStatus>(all)
 
     const [showStatus, setShowStatus] = useState(false)
-    const [billItems, setBillItems] = useState<string[]>([])
-
-    const handleRowCheck = (_id: string, index: number) => {
-        const temp = [...billItems]
-        const i = temp.findIndex((item) => item === _id)
-        if (i !== -1) {
-            temp.splice(i, 1)
-            setBillItems(temp)
-            return
-        }
-        setBillItems([...temp, _id])
-    }
+    const [billItems, setBillItems] = useState<Bill[]>([])
 
     useEffect(() => {
         if (billItems.length === 0) setShowStatus(false)
@@ -46,25 +29,29 @@ const BillManagement = () => {
     }, [billItems])
 
     const handleSortChange = (_id: string) => {
+        if (sortSelected._id === _id) return
         if (_id === '0') {
-            setFilterBill(GET_BILLS, {})
+            refetch(GET_BILLS)
             setSortSelected(all)
+            delete params.current._id
             return
         }
         const item = statusData.find((sort) => sort._id === _id)
         if (item) {
-            setFilterBill(FILTER_BILLS, { _id })
+            refetch(FILTER_BILLS, { _id })
             setSortSelected(item)
         }
     }
 
-    useEffect(() => {}, [sortSelected])
+    const handleDateChange = (from: Date, to: Date) => {
+        refetch(params.current._id ? FILTER_BILLS : FILTER_BILL, { from, to })
+    }
 
     return (
         <div className=''>
             <div className='flex gap-5'>
                 <SearchForm className='flex-1' />
-                <Calendar />
+                <Calendar onDateChange={handleDateChange} range={[params.current.from, params.current.to]} />
             </div>
             <Box
                 headerTitle='Bills'
@@ -80,23 +67,24 @@ const BillManagement = () => {
                 pagination={
                     <Pagination
                         isOpen={showStatus}
-                        onNextPage={nextBill}
-                        onPrevPage={prevBill}
-                        length={billStore.length}
-                        page={pageBill}
-                        totalPage={totalPageBill}
-                        end={endBill}
+                        onNextPage={next}
+                        onPrevPage={prev}
+                        length={store.length}
+                        page={page}
+                        totalPage={totalPage}
+                        end={end}
                         statusData={statusData}
                     />
                 }
             >
                 <Table
-                    data={billData}
-                    onRowChecked={handleRowCheck}
-                    loading={billLoading}
-                    page={pageBill}
-                    totalPage={totalPageBill}
-                    end={endBill}
+                    data={data}
+                    onRowChecked={setBillItems}
+                    checkList={billItems}
+                    loading={loading}
+                    page={page}
+                    totalPage={totalPage}
+                    end={end}
                 />
             </Box>
         </div>

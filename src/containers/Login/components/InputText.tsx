@@ -35,7 +35,7 @@ const InputText = forwardRef<HTMLInputElement, InputTextProps & ReturnType<UseFo
                     {...props}
                     ref={ref}
                     className={cls(
-                        'outline-none border border-[#ced4da] py-2 px-4 rounded font-normal text-dark bg-white',
+                        'outline-none focus:ring-transparent focus:border-primary text-sm border border-[#ced4da] py-2 px-4 rounded font-normal text-dark bg-white',
                         activeCls(password, 'pr-10')
                     )}
                     placeholder={placeholder}

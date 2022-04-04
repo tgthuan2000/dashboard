@@ -44,14 +44,14 @@ const Table = ({ loading, data, end, page, totalPage }: TableProps) => {
                                             className='w-12 h-12 object-cover bg-gray-light rounded'
                                         />
                                     </td>
-                                    <td className='py-5'>{name}</td>
-                                    <td className='text-center py-5'>
+                                    <td className='py-5 px-4'>{name}</td>
+                                    <td className='text-right py-5 px-4'>
                                         <NumberFormat value={quantity} thousandSeparator displayType='text' />
                                     </td>
-                                    <td className='text-center py-5'>
+                                    <td className='text-right py-5 px-4'>
                                         <NumberFormat value={price} thousandSeparator displayType='text' />
                                     </td>
-                                    <td className='text-center py-5'>Publish</td>
+                                    <td className='text-center py-5 px-4'>Publish</td>
                                 </tr>
                             ))}
                             {end && page === totalPage && (

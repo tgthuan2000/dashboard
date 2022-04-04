@@ -1,7 +1,7 @@
 import { Close, Search } from '@mui/icons-material'
 import { Icon } from '@mui/material'
 import { FormEvent, useState } from 'react'
-import { cls } from '../../../utils/classname-supporter'
+import { cls } from '../utils/classname-supporter'
 
 interface SearchFormProps {
     className?: string
@@ -25,7 +25,6 @@ const SearchForm = ({ className }: SearchFormProps) => {
                 <input
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    type='text'
                     placeholder='Search...'
                     className='bg-transparent dark:text-dark-white h-[38px] min-w-[282px] w-full pr-8 text-sm outline-none'
                 />

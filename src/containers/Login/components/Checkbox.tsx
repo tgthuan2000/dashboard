@@ -21,7 +21,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps & ReturnType<UseForm
                 />
                 {label && (
                     <label
-                        className='ml-2 select-none cursor-pointer dark:text-gray-light'
+                        className='ml-2 select-none cursor-pointer dark:text-gray-light h-4 w-4 rounded text-primary'
                         htmlFor={`checbox-${label}`}
                     >
                         {label}

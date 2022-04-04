@@ -1,5 +1,4 @@
 export { default as Calendar } from './Calendar'
-export { default as SearchForm } from './SearchForm'
 export { default as Table } from './Table'
 export { default as Col } from './Col'
 export { default as Pagination } from './Pagination'

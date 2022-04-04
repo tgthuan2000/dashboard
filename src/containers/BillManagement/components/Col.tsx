@@ -7,7 +7,7 @@ interface ColProps {
 }
 
 const Col = ({ children, className }: ColProps) => {
-    return <td className={cls('py-3 px-2', className)}>{children}</td>
+    return <td className={cls('py-3 px-4', className)}>{children}</td>
 }
 
 export default Col

@@ -10,10 +10,10 @@ export interface SortType {
 }
 
 interface SortDropDownProps {
-    sortData?: SortType[]
-    sortTtile?: string
-    sortSelected?: SortType
-    onSortChange?: (_id: string) => void
+    sortData: SortType[]
+    sortTtile: string
+    sortSelected: SortType
+    onSortChange: (_id: string) => void
 }
 
 const SortDropDown = ({

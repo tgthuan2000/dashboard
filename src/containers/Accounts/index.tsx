@@ -1,8 +1,7 @@
 import { AddCircleOutlineOutlined } from '@mui/icons-material'
 import { memo } from 'react'
-import { Box, IconButton, Pagination, SortDropDown } from '../../components'
+import { Box, IconButton, Pagination, SortDropDown, SearchForm } from '../../components'
 import { headerHOC } from '../../hoc'
-import { SearchForm } from '../BillManagement/components'
 import { Table } from './components'
 
 const Accounts = () => {

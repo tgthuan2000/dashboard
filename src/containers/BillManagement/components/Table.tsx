@@ -2,23 +2,38 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { Col, Button } from '.'
 import { Bill } from '../../../@types'
-import { Avatar, ColHeader, Loading } from '../../../components'
+import { Avatar, Checkbox, ColHeader, Loading } from '../../../components'
 import NumberFormat from 'react-number-format'
+import { useEffect, useRef, useState } from 'react'
 
 const tableHeaders = ['Date', 'Customer Name', 'Amount', 'Total Prices', 'Bill Status', '']
 
 interface TableProps {
-    onRowChecked?: (value: any, index: number) => void
-    data?: Bill[]
+    onRowChecked: (data: Bill[]) => void
+    data: Bill[]
     loading?: boolean
     end?: boolean
     page?: number
     totalPage?: number
+    checkList: Bill[]
 }
 
-const Table = ({ data, onRowChecked, loading, end, page, totalPage }: TableProps) => {
-    const handleClickItem = (_id: string, index: number) => {
-        onRowChecked?.(_id, index)
+const Table = ({ data, onRowChecked, loading, end, page, totalPage, checkList }: TableProps) => {
+    const [checkAll, setCheckAll] = useState(false)
+    const checkbox = useRef<HTMLInputElement>(null)
+    const [indeterminate, setIndeterminate] = useState(false)
+
+    useEffect(() => {
+        const isIndeterminate = checkList.length > 0 && checkList.length < data.length
+        setCheckAll(data.length > 0 && checkList.length === data.length)
+        setIndeterminate(isIndeterminate)
+        if (checkbox.current) checkbox.current.indeterminate = isIndeterminate
+    }, [checkList])
+
+    const toggleAll = () => {
+        onRowChecked(checkAll || indeterminate ? [] : data)
+        setCheckAll(!checkAll && !indeterminate)
+        setIndeterminate(false)
     }
 
     return (
@@ -27,51 +42,56 @@ const Table = ({ data, onRowChecked, loading, end, page, totalPage }: TableProps
                 <thead className='bg-gray-light dark:bg-[#2a2f34] border-b border-[#e9ebec] dark:border-[#32383e] text-gray transition-colors'>
                     <tr>
                         <ColHeader isCenter>
-                            <input type='checkbox' className='disabled:cursor-not-allowed cursor-pointer' disabled />
+                            <Checkbox cbRef={checkbox} checked={checkAll} onChange={toggleAll} />
                         </ColHeader>
                         {tableHeaders.map((value, index) => (
-                            <ColHeader key={`${value}-${index}`}>{value}</ColHeader>
+                            <ColHeader key={`${value}-${index}`} isCenter>
+                                {value}
+                            </ColHeader>
                         ))}
                     </tr>
                 </thead>
                 <tbody className='max-h-[100px] overflow-auto'>
                     {!loading ? (
                         <>
-                            {data?.map(({ _id, _createdAt, user, billStatus, amount }, i) => (
+                            {data?.map((d, i) => (
                                 <tr
                                     className='odd:bg-white even:bg-gray-light dark:odd:bg-dark dark:even:bg-[#2a2f34] dark:text-gray-light border-b border-[#e9ebec] dark:border-[#32383e] transition-colors'
-                                    key={_id}
+                                    key={d._id}
                                 >
                                     <td className='text-center'>
                                         <label className='block h-full py-3'>
-                                            <input
-                                                type='checkbox'
-                                                className='cursor-pointer disabled:cursor-not-allowed'
-                                                onClick={() => handleClickItem(_id, i)}
+                                            <Checkbox
+                                                checked={checkList?.includes(d)}
+                                                onChange={({ target: { checked } }) =>
+                                                    onRowChecked(
+                                                        checked ? [...checkList, d] : checkList.filter((i) => i !== d)
+                                                    )
+                                                }
                                             />
                                         </label>
                                     </td>
-                                    <Col>{moment.utc(_createdAt).local().format('HH:mm - DD/MM/YYYY')}</Col>
+                                    <Col>{moment(d._createdAt).format('HH:mm - DD/MM/YYYY')}</Col>
                                     <Col>
                                         <div className='flex items-center'>
-                                            <Avatar alt={user?.fullName[0]} />
+                                            <Avatar alt={d.user?.fullName[0]} />
                                             <div className='flex-1 overflow-hidden max-w-[200px] ml-3'>
                                                 <h3 className='leading-normal text-sm text-[#495057] dark:text-[#cde4ca] font-medium overflow-hidden text-ellipsis whitespace-nowrap'>
-                                                    {user?.fullName}
+                                                    {d.user?.fullName}
                                                 </h3>
                                             </div>
                                         </div>
                                     </Col>
-                                    <Col>
-                                        <NumberFormat value={amount} displayType='text' thousandSeparator />
+                                    <Col className='text-right'>
+                                        <NumberFormat value={d.amount} displayType='text' thousandSeparator />
                                     </Col>
-                                    <Col>0</Col>
-                                    <Col>
-                                        <Button style={billStatus?.style}>{billStatus?.name}</Button>
+                                    <Col className='text-right'>0</Col>
+                                    <Col className='text-center'>
+                                        <Button style={d.billStatus?.style}>{d.billStatus?.name}</Button>
                                     </Col>
                                     <Col>
                                         <Link
-                                            to={`detail/${_id}`}
+                                            to={`detail/${d._id}`}
                                             className='underline text-primary cursor-pointer hover:opacity-60'
                                         >
                                             Detail
