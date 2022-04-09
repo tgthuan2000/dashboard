@@ -1,7 +1,7 @@
 import { KeyboardArrowDownOutlined } from '@mui/icons-material'
 import { Icon } from '@mui/material'
 import { AnimatePresence, motion } from 'framer-motion'
-import { MouseEventHandler, useState } from 'react'
+import { useState } from 'react'
 import { BoxChild } from '.'
 import { tempDataSort } from '../constants'
 export interface SortType {
@@ -10,10 +10,10 @@ export interface SortType {
 }
 
 interface SortDropDownProps {
-    sortData: SortType[]
-    sortTtile: string
-    sortSelected: SortType
-    onSortChange: (_id: string) => void
+    sortData?: SortType[]
+    sortTtile?: string
+    sortSelected?: SortType
+    onSortChange?: (_id: string) => void
 }
 
 const SortDropDown = ({

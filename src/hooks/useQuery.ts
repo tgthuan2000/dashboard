@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { client } from '../client/sanity'
+import { GET_BILLS } from '../schema'
 
 export const useQuery = <T>(query: string, befores: T[] | undefined = []) => {
     const [loading, setLoading] = useState(true)
@@ -35,6 +36,14 @@ interface OptionUseQueryPaging {
     numPerPage?: number
     queryParams?: Params | {}
 }
+interface _<T> {
+    store: T[]
+    totalPage: number
+    page: number
+    end: boolean
+    query: string
+    params: Params
+}
 
 const today = new Date()
 const distance = 7 // days
@@ -44,42 +53,39 @@ const notIncludes = (query: string, queries: string[]) => queries.some((q) => !q
 export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryParams = {} }: OptionUseQueryPaging) => {
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState<T[]>([])
-    const store = useRef<T[]>([])
-    const totalPage = useRef(0)
-    const [page, setPage] = useState(1)
-    const [end, setEnd] = useState(false)
-    const [query, setQuery] = useState(queryString)
-
-    const params = useRef<Params>({
-        start: 0,
-        end: numPerPage,
-        from: new Date(today.getTime() - distance * 24 * 60 * 60 * 1000),
-        to: today,
-        ...queryParams,
+    const [_, set] = useState<_<T>>({
+        store: [],
+        totalPage: 0,
+        end: false,
+        page: 1,
+        query: queryString,
+        params: {
+            start: 0,
+            end: numPerPage,
+            from: new Date(today.getTime() - distance * 24 * 60 * 60 * 1000),
+            to: today,
+            ...queryParams,
+        },
     })
 
     const fetch = useCallback(async () => {
-        if (page <= totalPage.current) {
-            setData(store.current.slice((page - 1) * numPerPage, page * numPerPage))
+        if (_.page <= _.totalPage) {
+            setData(_.store.slice((_.page - 1) * numPerPage, _.page * numPerPage))
             loading && setLoading(false)
         } else {
             setLoading(true)
             try {
-                if (notIncludes(query, ['$start', '$end', '$from', '$to'])) {
+                if (notIncludes(_.query, ['$start', '$end', '$from', '$to'])) {
                     throw new Error('Query invalid!')
                 }
 
-                const q: T[] = await client.fetch<T[]>(query, params.current)
+                const q: T[] = await client.fetch<T[]>(_.query, _.params)
 
                 if (q.length > 0) {
-                    q.length < numPerPage && setEnd(true)
-                    totalPage.current += 1
-                    store.current = [...store.current, ...q]
-
+                    set({ ..._, store: [..._.store, ...q], totalPage: _.totalPage + 1, end: q.length < numPerPage })
                     setData(q)
                 } else {
-                    setEnd(true)
-                    setPage(page - 1)
+                    set({ ..._, end: true, page: _.page - 1 })
                 }
             } catch (error: any) {
                 throw new Error(error.message)
@@ -87,54 +93,66 @@ export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryPa
                 setLoading(false)
             }
         }
-    }, [page, query, totalPage.current, store.current, params.current])
+    }, [_])
 
     useEffect(() => {
         fetch()
     }, [fetch])
 
     const next = () => {
-        if (!end || page < totalPage.current) {
-            setPage(page + 1)
-            params.current = {
-                ...params.current,
-                start: page * numPerPage,
-                end: (page + 1) * numPerPage,
-            }
+        if (!_.end || _.page < _.totalPage) {
+            set({
+                ..._,
+                page: _.page + 1,
+                params: {
+                    ..._.params,
+                    start: _.page * numPerPage,
+                    end: (_.page + 1) * numPerPage,
+                },
+            })
         }
     }
 
     const prev = () => {
-        if (page > 1) {
-            setPage(page - 1)
-            params.current = {
-                ...params.current,
-                start: (page - 2) * numPerPage,
-                end: (page - 1) * numPerPage,
-            }
+        if (_.page > 1) {
+            set({
+                ..._,
+                page: _.page - 1,
+                params: {
+                    ..._.params,
+                    start: (_.page - 2) * numPerPage,
+                    end: (_.page - 1) * numPerPage,
+                },
+            })
         }
     }
 
     const refetch = (q: string, p?: { [p in keyof Params]?: Params[p] }) => {
-        setQuery(q)
-        totalPage.current = 0
-        store.current = []
+        const newParams: Params = { ..._.params, start: 0, end: numPerPage, ...p }
+        if (q === GET_BILLS) {
+            delete newParams._id
+        }
         setData([])
-        setEnd(false)
-        setPage(1)
-        params.current = { ...params.current, start: 0, end: numPerPage, ...p }
+        set({
+            query: q,
+            totalPage: 0,
+            store: [],
+            end: false,
+            page: 1,
+            params: newParams,
+        })
     }
 
     return {
         loading,
         data,
-        store: store.current,
+        store: _.store,
         next,
         prev,
-        page,
-        totalPage: totalPage.current,
-        end,
+        page: _.page,
+        totalPage: _.totalPage,
+        end: _.end,
         refetch,
-        params,
+        params: _.params,
     }
 }

@@ -14,7 +14,6 @@ const BillManagement = () => {
         GET_BILLS,
         {}
     )
-    console.log({ data, store })
 
     const { data: statusData } = useQuery<BillStatus>(GET_BILLSTATUS, [all])
 
@@ -33,7 +32,6 @@ const BillManagement = () => {
         if (_id === '0') {
             refetch(GET_BILLS)
             setSortSelected(all)
-            delete params.current._id
             return
         }
         const item = statusData.find((sort) => sort._id === _id)
@@ -44,14 +42,14 @@ const BillManagement = () => {
     }
 
     const handleDateChange = (from: Date, to: Date) => {
-        refetch(params.current._id ? FILTER_BILLS : FILTER_BILL, { from, to })
+        refetch(params._id ? FILTER_BILLS : FILTER_BILL, { from, to })
     }
 
     return (
         <div className=''>
             <div className='flex gap-5'>
                 <SearchForm className='flex-1' />
-                <Calendar onDateChange={handleDateChange} range={[params.current.from, params.current.to]} />
+                <Calendar onDateChange={handleDateChange} range={[params.from, params.to]} />
             </div>
             <Box
                 headerTitle='Bills'
