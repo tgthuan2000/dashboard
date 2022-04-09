@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { client } from '../client/sanity'
-import { GET_BILLS } from '../schema'
 
 export const useQuery = <T>(query: string, befores: T[] | undefined = []) => {
     const [loading, setLoading] = useState(true)
@@ -30,6 +29,7 @@ interface Params {
     end: number
     from: Date
     to: Date
+    query: string
     [key: string]: any
 }
 interface OptionUseQueryPaging {
@@ -48,7 +48,7 @@ interface _<T> {
 const today = new Date()
 const distance = 7 // days
 
-const notIncludes = (query: string, queries: string[]) => queries.some((q) => !query.includes(q))
+const checkValidParams = (query: string, queries: string[]) => queries.filter((q) => !query.includes(q))
 
 export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryParams = {} }: OptionUseQueryPaging) => {
     const [loading, setLoading] = useState(true)
@@ -64,6 +64,7 @@ export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryPa
             end: numPerPage,
             from: new Date(today.getTime() - distance * 24 * 60 * 60 * 1000),
             to: today,
+            query: '*',
             ...queryParams,
         },
     })
@@ -71,21 +72,30 @@ export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryPa
     const fetch = useCallback(async () => {
         if (_.page <= _.totalPage) {
             setData(_.store.slice((_.page - 1) * numPerPage, _.page * numPerPage))
-            loading && setLoading(false)
+            setLoading(false)
         } else {
             setLoading(true)
             try {
-                if (notIncludes(_.query, ['$start', '$end', '$from', '$to'])) {
-                    throw new Error('Query invalid!')
+                const errs = checkValidParams(
+                    _.query,
+                    Object.keys(_.params).map((item) => `$${item}`)
+                )
+                if (errs.length !== 0) {
+                    throw new Error(`Query invalid at ${errs}`)
                 }
 
                 const q: T[] = await client.fetch<T[]>(_.query, _.params)
 
                 if (q.length > 0) {
-                    set({ ..._, store: [..._.store, ...q], totalPage: _.totalPage + 1, end: q.length < numPerPage })
+                    set((prev) => ({
+                        ...prev,
+                        store: [...prev.store, ...q],
+                        totalPage: prev.totalPage + 1,
+                        end: q.length < numPerPage,
+                    }))
                     setData(q)
                 } else {
-                    set({ ..._, end: true, page: _.page - 1 })
+                    set((prev) => ({ ...prev, end: true, page: prev.page - 1 }))
                 }
             } catch (error: any) {
                 throw new Error(error.message)
@@ -101,45 +111,47 @@ export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryPa
 
     const next = () => {
         if (!_.end || _.page < _.totalPage) {
-            set({
-                ..._,
-                page: _.page + 1,
+            set((prev) => ({
+                ...prev,
+                page: prev.page + 1,
                 params: {
-                    ..._.params,
-                    start: _.page * numPerPage,
-                    end: (_.page + 1) * numPerPage,
+                    ...prev.params,
+                    start: prev.page * numPerPage,
+                    end: (prev.page + 1) * numPerPage,
                 },
-            })
+            }))
         }
     }
 
     const prev = () => {
         if (_.page > 1) {
-            set({
-                ..._,
-                page: _.page - 1,
+            set((prev) => ({
+                ...prev,
+                page: prev.page - 1,
                 params: {
-                    ..._.params,
-                    start: (_.page - 2) * numPerPage,
-                    end: (_.page - 1) * numPerPage,
+                    ...prev.params,
+                    start: (prev.page - 2) * numPerPage,
+                    end: (prev.page - 1) * numPerPage,
                 },
-            })
+            }))
         }
     }
 
     const refetch = (q: string, p?: { [p in keyof Params]?: Params[p] }) => {
-        const newParams: Params = { ..._.params, start: 0, end: numPerPage, ...p }
-        if (q === GET_BILLS) {
-            delete newParams._id
-        }
         setData([])
-        set({
-            query: q,
-            totalPage: 0,
-            store: [],
-            end: false,
-            page: 1,
-            params: newParams,
+        set((prev) => {
+            const newParams: Params = { ...prev.params, start: 0, end: numPerPage, ...p }
+            if (!p) {
+                delete newParams._id
+            }
+            return {
+                query: q,
+                totalPage: 0,
+                store: [],
+                end: false,
+                page: 1,
+                params: newParams,
+            }
         })
     }
 

@@ -3,22 +3,19 @@ import { Bill, BillStatus } from '../../@types'
 import { Box, SortDropDown, SearchForm } from '../../components'
 import { headerHOC } from '../../hoc'
 import { useQueryPaging, useQuery } from '../../hooks'
-import { GET_BILLS, GET_BILLSTATUS } from '../../schema'
-import { FILTER_BILL, FILTER_BILLS } from '../../schema/bill'
+import { BillEnum, BILL_QUERY, BILLSTATUS_QUERY } from '../../schema'
 import { Calendar, Table, Pagination } from './components'
 
 const all: BillStatus = { _id: '0', name: 'Tất cả' }
 
 const BillManagement = () => {
     const { store, data, loading, next, prev, end, page, totalPage, refetch, params } = useQueryPaging<Bill>(
-        GET_BILLS,
+        BILL_QUERY(BillEnum.ALL_STATUS),
         {}
     )
 
-    const { data: statusData } = useQuery<BillStatus>(GET_BILLSTATUS, [all])
-
+    const { data: statusData } = useQuery<BillStatus>(BILLSTATUS_QUERY, [all])
     const [sortSelected, setSortSelected] = useState<BillStatus>(all)
-
     const [showStatus, setShowStatus] = useState(false)
     const [billItems, setBillItems] = useState<Bill[]>([])
 
@@ -30,25 +27,35 @@ const BillManagement = () => {
     const handleSortChange = (_id: string) => {
         if (sortSelected._id === _id) return
         if (_id === '0') {
-            refetch(GET_BILLS)
+            refetch(BILL_QUERY(BillEnum.ALL_STATUS))
             setSortSelected(all)
             return
         }
         const item = statusData.find((sort) => sort._id === _id)
         if (item) {
-            refetch(FILTER_BILLS, { _id })
+            refetch(BILL_QUERY(BillEnum.BY_STATUS), { _id })
             setSortSelected(item)
         }
     }
 
     const handleDateChange = (from: Date, to: Date) => {
-        refetch(params._id ? FILTER_BILLS : FILTER_BILL, { from, to })
+        // params invalid!!!!!!!!!!!!!!!!!!!
+        refetch(BILL_QUERY(params._id ? BillEnum.BY_STATUS : BillEnum.ALL_STATUS), {
+            from,
+            to,
+        })
+    }
+
+    const handleSearch = (value: string) => {
+        refetch(BILL_QUERY(params._id ? BillEnum.BY_STATUS : BillEnum.ALL_STATUS), {
+            query: value.trim().length === 0 ? '*' : `*${value.trim().toLowerCase()}*`,
+        })
     }
 
     return (
         <div className=''>
             <div className='flex gap-5'>
-                <SearchForm className='flex-1' />
+                <SearchForm className='flex-1' onSearch={handleSearch} />
                 <Calendar onDateChange={handleDateChange} range={[params.from, params.to]} />
             </div>
             <Box

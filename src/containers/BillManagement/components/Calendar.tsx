@@ -1,20 +1,18 @@
 import { InsertInvitationOutlined } from '@mui/icons-material'
 import { Icon } from '@mui/material'
-import { LegacyRef, useRef } from 'react'
+import { LegacyRef } from 'react'
 import Flatpickr, { DateTimePickerProps } from 'react-flatpickr'
 import './theme.css'
 
 interface CalendarProps {
     range: Date[]
-    onDateChange: (from: Date, to: Date) => void
+    onDateChange?: (from: Date, to: Date) => void
 }
 
 const Calendar = ({ onDateChange, range }: CalendarProps) => {
-    const count = useRef(0)
     const handleChangeDate = ([from, to]: Date[]) => {
-        count.current += 1
-        if (count.current % 2 === 0 && from && to) {
-            onDateChange(from, to)
+        if (from && to) {
+            onDateChange?.(from, to)
         }
     }
     return (
