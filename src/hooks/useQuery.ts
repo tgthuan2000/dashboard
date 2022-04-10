@@ -53,7 +53,7 @@ const checkValidParams = (query: string, queries: string[]) => queries.filter((q
 export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryParams = {} }: OptionUseQueryPaging) => {
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState<T[]>([])
-    const [_, set] = useState<_<T>>({
+    const [_, $] = useState<_<T>>({
         store: [],
         totalPage: 0,
         end: false,
@@ -80,6 +80,7 @@ export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryPa
                     _.query,
                     Object.keys(_.params).map((item) => `$${item}`)
                 )
+
                 if (errs.length !== 0) {
                     throw new Error(`Query invalid at ${errs}`)
                 }
@@ -87,7 +88,7 @@ export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryPa
                 const q: T[] = await client.fetch<T[]>(_.query, _.params)
 
                 if (q.length > 0) {
-                    set((prev) => ({
+                    $((prev) => ({
                         ...prev,
                         store: [...prev.store, ...q],
                         totalPage: prev.totalPage + 1,
@@ -95,7 +96,7 @@ export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryPa
                     }))
                     setData(q)
                 } else {
-                    set((prev) => ({ ...prev, end: true, page: prev.page - 1 }))
+                    $((prev) => ({ ...prev, end: true, page: prev.page - 1 }))
                 }
             } catch (error: any) {
                 throw new Error(error.message)
@@ -111,7 +112,7 @@ export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryPa
 
     const next = () => {
         if (!_.end || _.page < _.totalPage) {
-            set((prev) => ({
+            $((prev) => ({
                 ...prev,
                 page: prev.page + 1,
                 params: {
@@ -125,7 +126,7 @@ export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryPa
 
     const prev = () => {
         if (_.page > 1) {
-            set((prev) => ({
+            $((prev) => ({
                 ...prev,
                 page: prev.page - 1,
                 params: {
@@ -139,7 +140,7 @@ export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryPa
 
     const refetch = (q: string, p?: { [p in keyof Params]?: Params[p] }) => {
         setData([])
-        set((prev) => {
+        $((prev) => {
             const newParams: Params = { ...prev.params, start: 0, end: numPerPage, ...p }
             if (!p) {
                 delete newParams._id

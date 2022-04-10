@@ -15,6 +15,7 @@ const Calendar = ({ onDateChange, range }: CalendarProps) => {
             onDateChange?.(from, to)
         }
     }
+
     return (
         <Flatpickr
             value={range}
@@ -35,7 +36,7 @@ interface CustomInputProps extends DateTimePickerProps {
     inputRef?: LegacyRef<HTMLInputElement>
 }
 
-const CustomInput = ({ defaultValue, inputRef, type }: CustomInputProps) => (
+const CustomInput = ({ defaultValue, inputRef }: CustomInputProps) => (
     <div className='shadow-md flex w-max min-w-[210px] rounded h-[38px]'>
         <input
             className='px-4 rounded-l text-dark cursor-pointer bg-white dark:bg-[#262a2f] transition-colors dark:text-dark-white flex-1 outline-none border-none text-sm focus:ring-transparent'
