@@ -14,7 +14,7 @@ const BillManagement = () => {
         {}
     )
 
-    const { data: statusData } = useQuery<BillStatus>(BILLSTATUS_QUERY, [all])
+    const { data: statusData, loading: statusLoading } = useQuery<BillStatus>(BILLSTATUS_QUERY, [all])
     const [sortSelected, setSortSelected] = useState<BillStatus>(all)
     const [showStatus, setShowStatus] = useState(false)
     const [billItems, setBillItems] = useState<Bill[]>([])
@@ -68,7 +68,8 @@ const BillManagement = () => {
                 className='mt-5'
                 option={
                     <SortDropDown
-                        sortTtile='Order status:'
+                        loading={statusLoading}
+                        sortTitle='Order status:'
                         sortSelected={sortSelected}
                         sortData={statusData}
                         onSortChange={handleSortChange}

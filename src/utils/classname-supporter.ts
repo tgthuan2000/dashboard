@@ -21,7 +21,7 @@ export const activeStyleByZero = (
     return greaterThanZero
 }
 
-export const oneOfStyle = <T>(input: T, checkValues: T[], activeValues: string[]) => {
+export const oneOfStyle = <T>(input: T, checkValues: T[], activeValues: any[]) => {
     if (checkValues.length !== activeValues.length)
         throw Error('Variable checkValues not same length with activeValues')
     const index = checkValues.findIndex((value) => value === input)

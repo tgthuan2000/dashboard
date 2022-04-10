@@ -1,8 +1,8 @@
 import moment from 'moment'
 import { Link } from 'react-router-dom'
-import { Col, Button } from '.'
+import { Col } from '.'
 import { Bill } from '../../../@types'
-import { Avatar, Checkbox, ColHeader, Loading } from '../../../components'
+import { Avatar, Badge, Checkbox, ColHeader, Loading } from '../../../components'
 import NumberFormat from 'react-number-format'
 import { useEffect, useRef, useState } from 'react'
 
@@ -87,7 +87,7 @@ const Table = ({ data, onRowChecked, loading, end, page, totalPage, checkList }:
                                     </Col>
                                     <Col className='text-right'>0</Col>
                                     <Col className='text-center'>
-                                        <Button style={d.billStatus?.style}>{d.billStatus?.name}</Button>
+                                        <Badge style={d.billStatus?.style}>{d.billStatus?.name}</Badge>
                                     </Col>
                                     <Col>
                                         <Link

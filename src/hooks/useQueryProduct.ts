@@ -7,7 +7,7 @@ import { GET_PRODUCTS } from '../schema'
 
 export const skipCount = 5
 
-const useGetAllProducts = () => {
+const useQueryProduct = () => {
     const { data, config } = useProduct()
     const dispatch = useDispatch()
     const [current, setCurrent] = useState<Product[]>([])
@@ -31,7 +31,7 @@ const useGetAllProducts = () => {
     useEffect(() => {
         if (config.currentPage <= config.page) {
             setCurrent(data.slice((config.currentPage - 1) * skipCount, config.currentPage * skipCount))
-            loading && setLoading(false)
+            setLoading(false)
         } else {
             getProduct()
         }
@@ -56,4 +56,4 @@ const useGetAllProducts = () => {
         end: config.end,
     }
 }
-export default useGetAllProducts
+export default useQueryProduct

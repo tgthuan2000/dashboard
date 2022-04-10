@@ -1,13 +1,13 @@
-import { colorStyles } from '../../../@types'
-import { cls, oneOfStyle } from '../../../utils/classname-supporter'
+import { colorStyles } from '../@types'
+import { cls, oneOfStyle } from '../utils/classname-supporter'
 
-interface ButtonProps {
+interface BadgeProps {
     style?: colorStyles | 'dark'
     children?: string
     className?: string
 }
 
-const Button = ({ style = 'danger', className, children }: ButtonProps) => {
+const Badge = ({ style = 'danger', className, children }: BadgeProps) => {
     return (
         <button
             className={cls(
@@ -32,4 +32,4 @@ const Button = ({ style = 'danger', className, children }: ButtonProps) => {
     )
 }
 
-export default Button
+export default Badge

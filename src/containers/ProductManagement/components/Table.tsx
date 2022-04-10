@@ -2,7 +2,7 @@ import NumberFormat from 'react-number-format'
 import { useNavigate } from 'react-router-dom'
 import { Product } from '../../../@types'
 import { urlFor } from '../../../client/sanity'
-import { ColHeader, Loading } from '../../../components'
+import { Badge, ColHeader, Loading } from '../../../components'
 
 const tableHeaders = ['Image', 'Product', 'Amount', 'Price', 'Status']
 
@@ -31,27 +31,36 @@ const Table = ({ loading, data, end, page, totalPage }: TableProps) => {
                 <tbody className='max-h-[100px] overflow-auto'>
                     {!loading ? (
                         <>
-                            {data.map(({ _id, name, image, quantity, price }) => (
+                            {data.map(({ _id, name, image, quantity, price, status, categoryProduct }) => (
                                 <tr
                                     className='hover:bg-gray-light dark:hover:bg-gray-dark cursor-pointer dark:text-gray-light border-b border-[#e9ebec] dark:border-[#32383e] transition-colors'
                                     key={_id}
                                     onClick={() => navigate(`edit/${_id}`)}
                                 >
-                                    <td className='py-3 flex items-center justify-center'>
+                                    <td className='py-3 px-4 flex items-center justify-center'>
                                         <img
                                             src={urlFor(image)}
                                             alt={`img-${_id}`}
                                             className='w-12 h-12 object-cover bg-gray-light rounded'
                                         />
                                     </td>
-                                    <td className='py-5 px-4'>{name}</td>
-                                    <td className='text-right py-5 px-4'>
+                                    <td className='pl-4'>
+                                        <span className='flex flex-col items-start justify-between'>
+                                            <p className='truncate max-w-2xl'>{name}</p>
+                                            <span className='text-xs text-gray-dark dark:text-gray-light transition-colors'>
+                                                Loại: <span className='text-gray'>{categoryProduct?.name}</span>
+                                            </span>
+                                        </span>
+                                    </td>
+                                    <td className='text-right px-4'>
                                         <NumberFormat value={quantity} thousandSeparator displayType='text' />
                                     </td>
-                                    <td className='text-right py-5 px-4'>
+                                    <td className='text-right px-4'>
                                         <NumberFormat value={price} thousandSeparator displayType='text' />
                                     </td>
-                                    <td className='text-center py-5 px-4'>Publish</td>
+                                    <td className='text-center px-4'>
+                                        <Badge style={status?.style}>{status?.name}</Badge>
+                                    </td>
                                 </tr>
                             ))}
                             {end && page === totalPage && (
