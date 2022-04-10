@@ -1,22 +1,37 @@
 import { InsertInvitationOutlined } from '@mui/icons-material'
 import { Icon } from '@mui/material'
-import './theme.css'
-import { LegacyRef, useState } from 'react'
+import { LegacyRef, useEffect, useRef } from 'react'
 import Flatpickr, { DateTimePickerProps } from 'react-flatpickr'
+import './theme.css'
 
-const today = new Date()
-const distance = 7 // days
+interface CalendarProps {
+    range: Date[]
+    onDateChange?: (from: Date, to: Date) => void
+}
 
-const Calendar = () => {
-    const [date, setDate] = useState<Date[]>([new Date(today.getTime() - distance * 24 * 60 * 60 * 1000), today])
+const Calendar = ({ onDateChange, range }: CalendarProps) => {
+    const ref = useRef(onDateChange)
+
+    useEffect(() => {
+        ref.current = onDateChange
+    }, [onDateChange])
+
+    const handleChangeDate = ([from, to]: Date[]) => {
+        if (from && to) {
+            ref.current?.(from, to)
+        }
+    }
+
     return (
         <Flatpickr
-            value={date}
-            onChange={(date) => {
-                setDate(date)
-            }}
+            value={range}
+            onChange={handleChangeDate}
             render={({ defaultValue }, ref) => <CustomInput defaultValue={defaultValue} inputRef={ref} />}
-            options={{ dateFormat: 'd-m-Y', mode: 'range', maxDate: today }}
+            options={{
+                dateFormat: 'd-m-Y',
+                mode: 'range',
+                maxDate: new Date(),
+            }}
         />
     )
 }
@@ -30,7 +45,7 @@ interface CustomInputProps extends DateTimePickerProps {
 const CustomInput = ({ defaultValue, inputRef }: CustomInputProps) => (
     <div className='shadow-md flex w-max min-w-[210px] rounded h-[38px]'>
         <input
-            className='px-4 rounded-l text-dark cursor-pointer bg-white dark:bg-[#262a2f] transition-colors dark:text-dark-white flex-1 outline-none'
+            className='px-4 rounded-l text-dark cursor-pointer bg-white dark:bg-[#262a2f] transition-colors dark:text-dark-white flex-1 outline-none border-none text-sm focus:ring-transparent'
             defaultValue={defaultValue}
             ref={inputRef}
         />

@@ -1,18 +1,15 @@
 import { LogoutOutlined } from '@mui/icons-material'
-import React from 'react'
-
-interface DataPersonConfig {
-	title: string
-	icon: React.ElementType
-	link: string
-}
+import { DataPersonConfig } from '../@types'
+import { logout } from '../features'
 
 const dataPersonConfigs: DataPersonConfig[] = [
-	{
-		title: 'Logout',
-		icon: LogoutOutlined,
-		link: '/auth',
-	},
+    {
+        title: 'Logout',
+        icon: LogoutOutlined,
+        action: (dispatch, navigate) => {
+            dispatch(logout())
+        },
+    },
 ]
 
 export default dataPersonConfigs
