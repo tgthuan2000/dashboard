@@ -37,7 +37,7 @@ const Table = ({ data, onRowChecked, loading, end, page, totalPage, checkList }:
     }
 
     return (
-        <div className='flex-1 w-ful'>
+        <div className='flex-1 w-full'>
             <table className='w-full'>
                 <thead className='bg-gray-light dark:bg-[#2a2f34] border-b border-[#e9ebec] dark:border-[#32383e] text-gray transition-colors'>
                     <tr>
@@ -51,7 +51,7 @@ const Table = ({ data, onRowChecked, loading, end, page, totalPage, checkList }:
                         ))}
                     </tr>
                 </thead>
-                <tbody className='max-h-[100px] overflow-auto'>
+                <tbody>
                     {!loading ? (
                         <>
                             {data?.map((d, i) => (

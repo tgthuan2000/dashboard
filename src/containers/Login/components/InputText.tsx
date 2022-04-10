@@ -11,6 +11,7 @@ interface InputTextProps {
     password?: boolean
     errorMessage?: string
     autoFocus?: boolean
+    disabled?: boolean
 }
 
 const InputText = forwardRef<HTMLInputElement, InputTextProps & ReturnType<UseFormRegister<FormInputs>>>(
@@ -21,6 +22,7 @@ const InputText = forwardRef<HTMLInputElement, InputTextProps & ReturnType<UseFo
             password = false,
             errorMessage,
             autoFocus = false,
+            disabled = false,
             ...props
         },
         ref
@@ -42,14 +44,15 @@ const InputText = forwardRef<HTMLInputElement, InputTextProps & ReturnType<UseFo
                     id={`input-${label}`}
                     type={password ? (showPassword ? 'text' : 'password') : 'text'}
                     autoFocus={autoFocus}
+                    disabled={disabled}
                 />
                 {password && (
                     <span
                         className='absolute right-0 bottom-0 w-[38px] h-[38px] flex items-center justify-center'
-                        onClick={() => setShowPassword(!showPassword)}
+                        onClick={() => !disabled && setShowPassword(!showPassword)}
                     >
                         <Icon
-                            className='text-gray cursor-pointer'
+                            className={cls('text-gray', !disabled && 'cursor-pointer')}
                             component={showPassword ? RemoveRedEyeOutlined : VisibilityOffOutlined}
                             style={{ fontSize: 16 }}
                         />

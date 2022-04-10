@@ -62,12 +62,14 @@ const Login = () => {
                 </div>
                 <div className='mt-6'>
                     <InputText
+                        disabled={loading}
                         label='Username'
                         placeholder='Enter username'
                         errorMessage={errors.username?.message}
                         {...register('username')}
                     />
                     <InputText
+                        disabled={loading}
                         password
                         label='Password'
                         placeholder='Enter password'
@@ -75,6 +77,7 @@ const Login = () => {
                         {...register('password')}
                     />
                     <Checkbox
+                        disabled={loading}
                         checked={localStorage[storage.rememberMe]}
                         label='Remember me'
                         {...register('rememberMe')}
