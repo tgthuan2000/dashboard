@@ -19,8 +19,8 @@ const Loading = ({ size = 'default' }: LoadingProps) =>
                     <div></div>
                 </div>
             </div>,
-            <div key='extra-small' className='loadingio-spinner-eclipse-c2706jhodod'>
-                <div className='ldio-jvs1rpn1nin'>
+            <div key='extra-small' className='loadingio-spinner-eclipse-5nja7msdgdc'>
+                <div className='ldio-8b8gxbdangk'>
                     <div></div>
                 </div>
             </div>,

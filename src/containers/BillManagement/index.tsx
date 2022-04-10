@@ -10,8 +10,7 @@ const all: BillStatus = { _id: '0', name: 'Tất cả' }
 
 const BillManagement = () => {
     const { store, data, loading, next, prev, end, page, totalPage, refetch, params } = useQueryPaging<Bill>(
-        BILL_QUERY(BillEnum.ALL_STATUS),
-        {}
+        BILL_QUERY(BillEnum.ALL_STATUS)
     )
 
     const { data: statusData, loading: statusLoading } = useQuery<BillStatus>(BILLSTATUS_QUERY, [all])

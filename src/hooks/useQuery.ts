@@ -46,11 +46,14 @@ interface _<T> {
 }
 
 const today = new Date()
-const distance = 7 // days
+const distance = 30 // days
 
-const checkValidParams = (query: string, queries: string[]) => queries.filter((q) => !query.includes(q))
+export const checkValidParams = (query: string, queries: string[]) => queries.filter((q) => !query.includes(q))
 
-export const useQueryPaging = <T>(queryString: string, { numPerPage = 5, queryParams = {} }: OptionUseQueryPaging) => {
+export const useQueryPaging = <T>(
+    queryString: string,
+    { numPerPage = 5, queryParams = {} }: OptionUseQueryPaging = { numPerPage: 5, queryParams: {} }
+) => {
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState<T[]>([])
     const [_, $] = useState<_<T>>({

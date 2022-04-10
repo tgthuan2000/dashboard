@@ -11,9 +11,16 @@ export const GET_PRODUCT_STATUS = `
         name,
     } | order(_createdAt desc)
 `
-
-export const GET_PRODUCTS = `
-    *[_type == "product"] {
+export enum ProductEnum {
+    BY_STATUS = '&& references($idStatus)',
+    BY_CATEGORY = '&& references($idCategory)',
+}
+export const PRODUCT_QUERY = (...params: (ProductEnum | undefined | '')[]) => `
+    *[_type == "product" 
+        && name match $query 
+        ${params.join(' ')} 
+    ]
+    {
         _id,
         name,
         image,
