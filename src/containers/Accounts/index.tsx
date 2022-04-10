@@ -17,7 +17,7 @@ const Accounts = () => {
                 option={
                     <div className='flex gap-4'>
                         <SortDropDown
-                            sortTtile='Status:'
+                            sortTitle='Status:'
                             sortSelected={{ _id: '0', name: 'All' }}
                             sortData={[
                                 { _id: '1', name: 'Publish' },
@@ -25,7 +25,7 @@ const Accounts = () => {
                             ]}
                         />
                         <SortDropDown
-                            sortTtile='Sort By:'
+                            sortTitle='Sort By:'
                             sortSelected={{ _id: '0', name: 'All' }}
                             sortData={[
                                 { _id: '1', name: 'Type 1' },
