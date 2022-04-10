@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
 import { Bill, BillStatus } from '../../@types'
 import { Box, SortDropDown, SearchForm } from '../../components'
 import { headerHOC } from '../../hoc'
@@ -38,19 +38,24 @@ const BillManagement = () => {
         }
     }
 
-    const handleDateChange = (from: Date, to: Date) => {
-        // params invalid!!!!!!!!!!!!!!!!!!!
-        refetch(BILL_QUERY(params._id ? BillEnum.BY_STATUS : BillEnum.ALL_STATUS), {
-            from,
-            to,
-        })
-    }
+    const handleDateChange = useCallback(
+        (from: Date, to: Date) => {
+            refetch(BILL_QUERY(params._id ? BillEnum.BY_STATUS : BillEnum.ALL_STATUS), {
+                from,
+                to,
+            })
+        },
+        [params._id]
+    )
 
-    const handleSearch = (value: string) => {
-        refetch(BILL_QUERY(params._id ? BillEnum.BY_STATUS : BillEnum.ALL_STATUS), {
-            query: value.trim().length === 0 ? '*' : `*${value.trim().toLowerCase()}*`,
-        })
-    }
+    const handleSearch = useCallback(
+        (value: string) => {
+            refetch(BILL_QUERY(params._id ? BillEnum.BY_STATUS : BillEnum.ALL_STATUS), {
+                query: value.trim().length === 0 ? '*' : `*${value.trim().toLowerCase()}*`,
+            })
+        },
+        [params._id]
+    )
 
     return (
         <div className=''>

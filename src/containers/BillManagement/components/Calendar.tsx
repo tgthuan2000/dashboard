@@ -1,6 +1,6 @@
 import { InsertInvitationOutlined } from '@mui/icons-material'
 import { Icon } from '@mui/material'
-import { LegacyRef } from 'react'
+import { LegacyRef, useEffect, useRef } from 'react'
 import Flatpickr, { DateTimePickerProps } from 'react-flatpickr'
 import './theme.css'
 
@@ -10,9 +10,15 @@ interface CalendarProps {
 }
 
 const Calendar = ({ onDateChange, range }: CalendarProps) => {
+    const ref = useRef(onDateChange)
+
+    useEffect(() => {
+        ref.current = onDateChange
+    }, [onDateChange])
+
     const handleChangeDate = ([from, to]: Date[]) => {
         if (from && to) {
-            onDateChange?.(from, to)
+            ref.current?.(from, to)
         }
     }
 
