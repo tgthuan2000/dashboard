@@ -1,11 +1,10 @@
 import { AddCircleOutlineOutlined } from '@mui/icons-material'
-import { memo, useRef, useState } from 'react'
-import { ProductCategory, ProductStatus } from '../../@types'
+import { memo, useState } from 'react'
+import { Product, ProductCategory, ProductStatus } from '../../@types'
 import { Box, IconButton, Pagination, SearchForm, SortDropDown } from '../../components'
-import { ProductParams } from '../../features'
 import { headerHOC } from '../../hoc'
-import { useQueryProduct, useQuery } from '../../hooks'
-import { GET_PRODUCT_CATEGORIES, GET_PRODUCT_STATUS, ProductEnum } from '../../schema'
+import { useQuery, useQueries } from '../../hooks'
+import { GET_PRODUCT_CATEGORIES, GET_PRODUCT_STATUS, ProductEnum, PRODUCT_QUERY } from '../../schema'
 import { Table } from './components'
 
 const all = { _id: '0', name: 'Tất cả' }
@@ -15,78 +14,52 @@ interface ProductSort {
     category: ProductCategory
 }
 
+const getType = (type: keyof ProductSort) => ({ status: 'idStatus', category: 'idCategory' }[type])
+const getEnumType = (type: keyof ProductSort) =>
+    ({ status: ProductEnum.BY_STATUS, category: ProductEnum.BY_CATEGORY }[type])
+
 const ProductManagement = () => {
-    const { store, current, loading, next, prev, page, totalPage, end, refetch } = useQueryProduct()
+    const { store, data, loading, next, prev, end, page, totalPage, refetch } = useQueries<Product, ProductEnum>(
+        PRODUCT_QUERY
+    )
+
     const { loading: statusLoading, data: statusData } = useQuery(GET_PRODUCT_STATUS, [all])
     const { loading: categoryLoading, data: categoryData } = useQuery(GET_PRODUCT_CATEGORIES, [all])
     const [sortSelected, setSortSelected] = useState<ProductSort>({ status: all, category: all })
-    const query = useRef<ProductEnum[]>([])
 
     const handleSortChange = (_id: string, type: keyof ProductSort) => {
         if (sortSelected[type]._id === _id) return
         if (_id === '0') {
-            let index: number = -1
-            let params: keyof ProductParams | undefined = undefined
-            let current: keyof ProductParams | undefined = undefined
-            switch (type) {
-                case 'status': {
-                    current = 'idStatus'
-                    params = 'idCategory'
-                    index = query.current.findIndex((i) => i === ProductEnum.BY_STATUS)
-                    break
-                }
-                case 'category': {
-                    current = 'idCategory'
-                    params = 'idStatus'
-                    index = query.current.findIndex((i) => i === ProductEnum.BY_CATEGORY)
-                    break
-                }
-                default:
-                    break
+            refetch({ [type]: null }, {}, [getType(type)])
+            setSortSelected({ ...sortSelected, [type]: all })
+            return
+        }
+        let item: ProductStatus | ProductCategory | undefined = undefined
+        switch (type) {
+            case 'status': {
+                item = statusData.find((status) => status._id === _id)
+                break
             }
-            if (index !== -1) {
-                const q = [...query.current]
-                q.splice(index, 1)
-                query.current = q
+            case 'category': {
+                item = categoryData.find((category) => category._id === _id)
+                break
             }
-            if (params && current) {
-                refetch(query.current, {}, [current])
-            }
-            setSortSelected((prev) => ({ ...prev, [type]: all }))
-        } else {
-            let item: ProductStatus | ProductCategory | undefined
-            let params: keyof ProductParams | undefined = undefined
-            switch (type) {
-                case 'status': {
-                    params = 'idStatus'
-                    item = statusData.find((sort) => sort._id === _id)
-                    if (!query.current.includes(ProductEnum.BY_STATUS))
-                        query.current = [...query.current, ProductEnum.BY_STATUS]
-                    break
-                }
-                case 'category': {
-                    params = 'idCategory'
-                    item = categoryData.find((sort) => sort._id === _id)
-                    if (!query.current.includes(ProductEnum.BY_CATEGORY))
-                        query.current = [...query.current, ProductEnum.BY_CATEGORY]
-                    break
-                }
-                default:
-                    break
-            }
-            if (item) {
-                setSortSelected((prev) => ({ ...prev, [type]: item }))
-                if (params) {
-                    refetch(query.current, { [params]: _id })
-                }
-            }
+            default:
+                break
+        }
+        if (item) {
+            setSortSelected({ ...sortSelected, [type]: item })
+            refetch({ [type]: getEnumType(type) }, { [getType(type)]: _id })
         }
     }
 
     const handleSearch = (value: string) => {
-        refetch(query.current, {
-            query: value.trim().length === 0 ? '*' : `*${value.trim().toLowerCase()}*`,
-        })
+        refetch(
+            {},
+            {
+                query: value.trim().length === 0 ? '*' : `*${value.trim().toLowerCase()}*`,
+            }
+        )
     }
 
     return (
@@ -127,7 +100,7 @@ const ProductManagement = () => {
                     />
                 }
             >
-                <Table loading={loading} data={current} end={end} page={page} totalPage={totalPage} />
+                <Table loading={loading} data={data} end={end} page={page} totalPage={totalPage} />
             </Box>
         </div>
     )

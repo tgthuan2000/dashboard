@@ -1,3 +1,5 @@
+import { cls } from '../utils/classname-supporter'
+
 export const GET_PRODUCT_CATEGORIES = `
     *[_type == "categoryProduct"] {
         _id,
@@ -15,10 +17,10 @@ export enum ProductEnum {
     BY_STATUS = '&& references($idStatus)',
     BY_CATEGORY = '&& references($idCategory)',
 }
-export const PRODUCT_QUERY = (...params: (ProductEnum | undefined | '')[]) => `
+export const PRODUCT_QUERY = (...params: (ProductEnum | null)[]) => `
     *[_type == "product" 
         && name match $query 
-        ${params.join(' ')} 
+        ${cls(...params)} 
     ]
     {
         _id,
