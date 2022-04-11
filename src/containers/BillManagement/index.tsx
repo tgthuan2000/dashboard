@@ -30,14 +30,14 @@ const BillManagement = () => {
     const handleSortChange = (_id: string) => {
         if (sortSelected._id === _id) return
         if (_id === '0') {
-            refetch({ status: BillEnum.ALL_STATUS }, {}, ['_id'])
             setSortSelected(all)
+            refetch({ status: BillEnum.ALL_STATUS }, {}, ['_id'])
             return
         }
         const item = statusData.find((sort) => sort._id === _id)
         if (item) {
-            refetch({ status: BillEnum.BY_STATUS }, { _id })
             setSortSelected(item)
+            refetch({ status: BillEnum.BY_STATUS }, { _id })
         }
     }
 

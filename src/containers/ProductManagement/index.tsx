@@ -30,8 +30,8 @@ const ProductManagement = () => {
     const handleSortChange = (_id: string, type: keyof ProductSort) => {
         if (sortSelected[type]._id === _id) return
         if (_id === '0') {
-            refetch({ [type]: null }, {}, [getType(type)])
             setSortSelected({ ...sortSelected, [type]: all })
+            refetch({ [type]: null }, {}, [getType(type)])
             return
         }
         let item: ProductStatus | ProductCategory | undefined = undefined
