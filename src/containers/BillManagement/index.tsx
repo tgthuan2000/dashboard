@@ -20,12 +20,15 @@ const BillManagement = () => {
     const { data: statusData, loading: statusLoading } = useQuery<BillStatus>(BILLSTATUS_QUERY, [all])
     const [sortSelected, setSortSelected] = useState<BillStatus>(all)
     const [showStatus, setShowStatus] = useState(false)
-    const [billItems, setBillItems] = useState<Bill[]>([])
+    const [billSelected, setBillSelected] = useState<{ allChecked: boolean; data: Bill[] }>({
+        allChecked: false,
+        data: [],
+    })
 
     useEffect(() => {
-        if (billItems.length === 0) setShowStatus(false)
+        if (billSelected.data.length === 0) setShowStatus(false)
         else setShowStatus(true)
-    }, [billItems])
+    }, [billSelected])
 
     const handleSortChange = (_id: string) => {
         if (sortSelected._id === _id) return
@@ -91,8 +94,10 @@ const BillManagement = () => {
             >
                 <Table
                     data={data}
-                    onRowChecked={setBillItems}
-                    checkList={billItems}
+                    onRowChecked={(data) =>
+                        setBillSelected((prev) => ({ ...billSelected, data: [...prev.data, ...data] }))
+                    }
+                    checkList={billSelected.data}
                     loading={loading}
                     page={page}
                     totalPage={totalPage}

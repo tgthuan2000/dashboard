@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { Checkbox, InputText } from './components'
+import { Checkbox } from './components'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { motion } from 'framer-motion'
@@ -10,6 +10,7 @@ import { login } from '../../client/axios/auth'
 import { toast } from 'react-toastify'
 import { toastConfig } from '../../utils/toastConfig'
 import { storage } from '../../utils/localstorages'
+import { InputText } from '../../components'
 
 export type FormInputs = {
     username: string

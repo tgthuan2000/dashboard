@@ -30,6 +30,10 @@ const Table = ({ data, onRowChecked, loading, end, page, totalPage, checkList }:
         if (checkbox.current) checkbox.current.indeterminate = isIndeterminate
     }, [checkList])
 
+    useEffect(() => {
+        setCheckAll(false)
+    }, [data])
+
     const toggleAll = () => {
         onRowChecked(checkAll || indeterminate ? [] : data)
         setCheckAll(!checkAll && !indeterminate)
