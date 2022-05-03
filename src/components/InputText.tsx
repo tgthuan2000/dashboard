@@ -2,7 +2,6 @@ import { RemoveRedEyeOutlined, VisibilityOffOutlined } from '@mui/icons-material
 import { Icon } from '@mui/material'
 import { useState, forwardRef, HTMLInputTypeAttribute } from 'react'
 import { UseFormRegister } from 'react-hook-form'
-import { FormInputs } from '../containers/Login'
 import { activeCls, cls } from '../utils/classname-supporter'
 
 interface InputTextProps {
@@ -13,6 +12,13 @@ interface InputTextProps {
     autoFocus?: boolean
     disabled?: boolean
     type?: HTMLInputTypeAttribute
+}
+
+type FormInputs = {
+    username: string
+    password: string
+    rememberMe: boolean
+    name: string
 }
 
 const InputText = forwardRef<HTMLInputElement, InputTextProps & ReturnType<UseFormRegister<FormInputs>>>(

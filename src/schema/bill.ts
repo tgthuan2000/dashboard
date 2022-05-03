@@ -18,7 +18,7 @@ export const BILL_QUERY = (...params: (BillEnum | null)[]) => `
         && _createdAt <= $to 
         && references(*[_type == "user" && fullName match $query]._id) 
         ${cls(...params)}
-    ] 
+    ] | order(_createdAt desc)  
     {
         _id,
         _createdAt,
@@ -36,5 +36,5 @@ export const BILL_QUERY = (...params: (BillEnum | null)[]) => `
             name,
             style
     },
-    } | order(_createdAt desc) [$start...$end]
+    } [$start...$end]
 `

@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from 'react'
 import { client } from '../client/sanity'
 
-export const useQuery = <T>(query: string, befores: T[] | undefined = []) => {
+export const useQuery = <T>(query: string, befores: T[] | undefined = [], params = {}) => {
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState<T[]>([])
 
     const getQuery = async () => {
         setLoading(true)
         try {
-            const q: T[] = await client.fetch<T[]>(query)
+            const q: T[] = await client.fetch<T[]>(query, params)
             setData([...befores, ...q])
         } catch (error: any) {
             throw new Error(error.message)

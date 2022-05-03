@@ -1,4 +1,5 @@
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
+import { client } from '../../client/sanity'
 import { headerHOC } from '../../hoc'
 import { BestSellingProducts, Revenue } from './components'
 
