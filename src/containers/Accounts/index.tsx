@@ -1,44 +1,86 @@
 import { AddCircleOutlineOutlined } from '@mui/icons-material'
-import { memo } from 'react'
+import { memo, useState } from 'react'
+import { User, UserRole } from '../../@types'
 import { Box, IconButton, Pagination, SortDropDown, SearchForm } from '../../components'
 import { headerHOC } from '../../hoc'
+import { useQueries, useQuery } from '../../hooks'
+import { UserEnum, USER_QUERY, USER_ROLES } from '../../schema'
 import { Table } from './components'
 
+interface UserSort {
+    role: UserRole
+}
+
+const all = { _id: '0', name: 'Tất cả' }
+
+const getType = (type: keyof UserSort) => ({ role: '_id' }[type])
+const getEnumType = (type: keyof UserSort) => ({ role: UserEnum.BY_STATUS }[type])
+
 const Accounts = () => {
+    const { data: roleData, loading: roleLoading } = useQuery<{ _id: string; name: string }>(USER_ROLES, [all])
+    const { store, data, loading, next, prev, end, page, totalPage, refetch } = useQueries<User, UserEnum>(USER_QUERY)
+    const [sortSelected, setSortSelected] = useState<UserSort>({ role: all })
+
+    const handleSortChange = (_id: string, type: keyof UserSort) => {
+        if (sortSelected[type]._id === _id) return
+        if (_id === '0') {
+            setSortSelected({ ...sortSelected, [type]: all })
+            refetch({ [type]: null }, {}, [getType(type)])
+            return
+        }
+        let item: UserRole | undefined = undefined
+        switch (type) {
+            case 'role': {
+                item = roleData.find((role) => role._id === _id)
+                break
+            }
+            default:
+                break
+        }
+        if (item) {
+            setSortSelected({ ...sortSelected, [type]: item })
+            refetch({ [type]: getEnumType(type) }, { [getType(type)]: _id })
+        }
+    }
+
+    const handleSearch = (value: string) => {
+        refetch(
+            {},
+            {
+                query: value.trim().length === 0 ? '*' : `*${value.trim().toLowerCase()}*`,
+            }
+        )
+    }
     return (
         <div>
             <div className='flex gap-5'>
-                <SearchForm className='flex-1' />
+                <SearchForm className='flex-1' onSearch={handleSearch} />
                 <IconButton icon={AddCircleOutlineOutlined} to='add' title='New account' />
             </div>
             <Box
-                headerTitle='Accounts'
+                headerTitle='Account'
                 className='mt-5'
                 option={
-                    <div className='flex gap-4'>
-                        <SortDropDown
-                            sortTitle='Status:'
-                            sortSelected={{ _id: '0', name: 'All' }}
-                            sortData={[
-                                { _id: '1', name: 'Publish' },
-                                { _id: '2', name: 'Block' },
-                            ]}
-                        />
-                        <SortDropDown
-                            sortTitle='Sort By:'
-                            sortSelected={{ _id: '0', name: 'All' }}
-                            sortData={[
-                                { _id: '1', name: 'Type 1' },
-                                { _id: '2', name: 'Type 2' },
-                                { _id: '3', name: 'Type 3' },
-                                { _id: '4', name: 'Type 4' },
-                            ]}
-                        />
-                    </div>
+                    <SortDropDown
+                        loading={roleLoading}
+                        sortSelected={sortSelected.role}
+                        sortTitle='Role:'
+                        sortData={roleData}
+                        onSortChange={(_id) => handleSortChange(_id, 'role')}
+                    />
                 }
-                pagination={<Pagination />}
+                pagination={
+                    <Pagination
+                        length={store.length}
+                        onNext={next}
+                        onPrev={prev}
+                        page={page}
+                        totalPage={totalPage}
+                        end={end}
+                    />
+                }
             >
-                <Table />
+                <Table loading={loading} data={data} end={end} page={page} totalPage={totalPage} />
             </Box>
         </div>
     )

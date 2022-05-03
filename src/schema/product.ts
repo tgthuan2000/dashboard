@@ -32,6 +32,8 @@ export const PRODUCT_QUERY = (...params: (ProductEnum | null)[]) => `
     ] | order(_createdAt desc) 
     {
         _id,
+        _createdAt,
+        _updatedAt,
         name,
         description,
         image,

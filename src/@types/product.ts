@@ -14,6 +14,8 @@ export interface ProductCategory {
 
 export interface Product {
     _id: string
+    _createdAt: string
+    _updatedAt: string
     name: string
     image: SanityImageAssetDocument
     price: number

@@ -11,7 +11,7 @@ interface DataState {
 
 export const login = async ({ username, password, rememberMe }: FormInputs): Promise<User | undefined> => {
     try {
-        const data: DataState = await axiosClient.post(LOGIN, { username, password })
+        const data: DataState = await axiosClient.post(LOGIN, { username: username.toLowerCase(), password })
         if (data.success) {
             localStorage.setItem(storage.accessToken, JSON.stringify(data.tokenAccess))
             axiosClient.defaults.headers.common.Authorization = `Bearer ${data.tokenAccess}`

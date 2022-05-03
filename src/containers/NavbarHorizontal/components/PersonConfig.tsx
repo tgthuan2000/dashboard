@@ -20,7 +20,7 @@ interface PersonConfigProps {
 const PersonConfig = ({ className, active = false, onClick, onBlur }: PersonConfigProps) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { fullName } = useAccount()
+    const { fullName, role } = useAccount()
     return (
         <div
             tabIndex={0}
@@ -37,7 +37,7 @@ const PersonConfig = ({ className, active = false, onClick, onBlur }: PersonConf
                     {fullName}
                 </h3>
                 <p className='text-xs text-[#878a99] dark:text-[#878a99] overflow-hidden whitespace-nowrap text-ellipsis'>
-                    Admin
+                    {role?.name}
                 </p>
             </div>
 
