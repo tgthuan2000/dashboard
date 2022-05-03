@@ -21,49 +21,45 @@ const EditProduct = () => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
 
-    const onSubmit = async (d: FormInputs) => {
-        try {
-            setLoading(true)
+    const onSubmit = (d: FormInputs) => {
+        setLoading(true)
 
-            const category = d.category && {
-                _type: 'reference',
-                _ref: d.category,
-            }
-            const image = d.image && {
-                _type: 'image',
-                asset: {
-                    _type: 'reference',
-                    _ref: d.image,
-                },
-            }
-            const status = d.status && {
-                _type: 'reference',
-                _ref: d.status,
-            }
-            const supplier = d.supplier && {
-                _type: 'reference',
-                _ref: d.supplier,
-            }
-            if (productData?._id) {
-                client
-                    .patch(productData._id)
-                    .set({
-                        name: d.name,
-                        price: d.price,
-                        quantity: d.quantity,
-                        description: d.description,
-                        categoryProduct: category,
-                        image,
-                        status,
-                        supplier,
-                    })
-                    .commit()
-                    .then(() => navigate('../'))
-            }
-        } catch (error: any) {
-        } finally {
-            setLoading(false)
+        const category = d.category && {
+            _type: 'reference',
+            _ref: d.category,
         }
+        const image = d.image && {
+            _type: 'image',
+            asset: {
+                _type: 'reference',
+                _ref: d.image,
+            },
+        }
+        const status = d.status && {
+            _type: 'reference',
+            _ref: d.status,
+        }
+        const supplier = d.supplier && {
+            _type: 'reference',
+            _ref: d.supplier,
+        }
+        client
+            .patch(productData._id)
+            .set({
+                name: d.name,
+                price: d.price,
+                quantity: d.quantity,
+                description: d.description,
+                categoryProduct: category,
+                image,
+                status,
+                supplier,
+            })
+            .commit()
+            .then(() => navigate('../'))
+            .finally(() => {
+                setLoading(false)
+            })
     }
 
     if (loading || productLoading || categoryLoading || statusLoading || supplierLoading)
