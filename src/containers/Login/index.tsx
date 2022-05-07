@@ -39,7 +39,6 @@ const Login = () => {
         setLoading(true)
         try {
             const user = await login(data)
-
             if (user) {
                 dispatch(setAccount(user))
                 toast(`Hi ${user.fullName}. Welcome back!!`, toastConfig)

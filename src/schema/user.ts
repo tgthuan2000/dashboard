@@ -27,6 +27,25 @@ export const USER_QUERY = (...params: (UserEnum | null)[]) => `
     } [$start...$end]
 `
 
+export const GET_ACCOUNT_BY_ID = `
+    *[_type == "user" && _id == $_id] {
+        _id,
+        _createdAt,
+        _updatedAt,
+        username,
+        password,
+        fullName,
+        address,
+        image,
+        phone,
+        email,
+        role-> {
+            _id,
+            name
+        }
+    }
+`
+
 export const USER_ROLES = `
     *[_type == 'role'] | order(_createdAt desc) {
         _id,

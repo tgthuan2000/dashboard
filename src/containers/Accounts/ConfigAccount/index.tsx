@@ -1,35 +1,37 @@
-import { InputText, Selection, TextArea } from '../../../components'
-import * as yup from 'yup'
-import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { ChangeEvent, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+import { User } from '../../../@types'
+import * as yup from 'yup'
 import { client, urlFor } from '../../../client/sanity'
+import { InputText, Selection, TextArea } from '../../../components'
 import { SanityImageAssetDocument } from '@sanity/client'
-import { useNavigate, useParams } from 'react-router-dom'
-import { Product } from '../../../@types'
+import { ChangeEvent, useState } from 'react'
 import { slug } from '../../../utils/slug'
 
 export type FormInputs = {
-    name?: string
-    price?: number
-    quantity?: number
+    username?: string
+    password?: string
+    fullName?: string
     image?: string
-    category?: string
-    supplier?: string
-    status?: string
-    description?: string
+    phone?: string
+    email?: string
+    role?: string
+    address?: string
 }
+const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
 const schema = yup
     .object({
+        username: yup.string().required('Username is required').min(4, 'Username must have at least 4 characters'),
+        password: yup.string().required('User password is required').min(4, 'Password must have at least 4 characters'),
+        fullName: yup.string().required('User fullname is required'),
+        address: yup.string(),
+        phone: yup.string().matches(phoneRegExp, 'Phone number is not valid'),
+        email: yup.string().email('Must be an email'),
         image: yup.string(),
-        name: yup.string().required('Product name is required'),
-        price: yup.number().required('Product price required'),
-        quantity: yup.number().required('Product quantity required'),
-        category: yup.string().required('Product category is required'),
-        supplier: yup.string().required('Product supplier is required'),
-        status: yup.string().required('Product status is required'),
-        description: yup.string(),
+        role: yup.string().required('User role is required'),
     })
     .required()
 
@@ -38,15 +40,13 @@ export interface selectType {
     name: string
 }
 
-interface ConfigProductProps {
-    productData?: Product
-    categoryData?: selectType[]
-    statusData?: selectType[]
-    supplierData?: selectType[]
+interface ConfigAccountProps {
+    accountData?: User
+    roleData?: selectType[]
     onSubmit?: SubmitHandler<FormInputs>
 }
 
-const ConfigProduct = ({ productData, categoryData, statusData, supplierData, onSubmit }: ConfigProductProps) => {
+const ConfigAccount = ({ onSubmit, roleData, accountData }: ConfigAccountProps) => {
     const navigate = useNavigate()
     const {
         register,
@@ -57,17 +57,17 @@ const ConfigProduct = ({ productData, categoryData, statusData, supplierData, on
     } = useForm<FormInputs>({
         resolver: yupResolver(schema),
         defaultValues: {
-            image: productData?.image?._id || undefined,
-            name: productData?.name || '',
-            price: productData?.price || 0,
-            quantity: productData?.quantity || 0,
-            category: productData?.categoryProduct?._id || undefined,
-            supplier: productData?.supplier?._id || undefined,
-            status: productData?.status?._id || undefined,
-            description: productData?.description || '',
+            username: accountData?.username || '',
+            password: accountData?.password ? '*******************' : '',
+            fullName: accountData?.fullName || '',
+            phone: accountData?.phone || '',
+            email: accountData?.email || '',
+            address: accountData?.address || '',
+            image: accountData?.image?._id || undefined,
+            role: accountData?.role?._id || undefined,
         },
     })
-    const [imageData, setImageData] = useState<SanityImageAssetDocument | null>(productData?.image || null)
+    const [imageData, setImageData] = useState<SanityImageAssetDocument | null>(accountData?.image || null)
 
     const handleUploadFile = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
@@ -81,7 +81,6 @@ const ConfigProduct = ({ productData, categoryData, statusData, supplierData, on
                 .catch((error) => console.log(error))
         }
     }
-
     return (
         <form onSubmit={onSubmit && handleSubmit(onSubmit)}>
             <div className='bg-white dark:bg-dark p-10 rounded-lg transition-colors'>
@@ -89,7 +88,7 @@ const ConfigProduct = ({ productData, categoryData, statusData, supplierData, on
                     <div className='grid md:grid-cols-2 grid-cols-1 gap-x-10 gap-y-3'>
                         <div className='mb-3'>
                             <label className='mb-2 font-medium dark:text-gray-light' htmlFor='image'>
-                                Image
+                                User Image
                             </label>
                             <div className='flex items-end space-x-4 mt-2 mb-1'>
                                 <img
@@ -106,55 +105,52 @@ const ConfigProduct = ({ productData, categoryData, statusData, supplierData, on
                         </div>
                         <div />
                         <InputText
-                            label='Name'
-                            placeholder='Enter product name'
-                            errorMessage={errors.name?.message}
-                            {...register('name')}
+                            label='User name'
+                            placeholder='Username'
+                            errorMessage={errors.username?.message}
+                            {...register('username')}
                         />
                         <InputText
-                            type='number'
-                            label='Price'
-                            placeholder='Enter product price'
-                            errorMessage={errors.price?.message}
-                            {...register('price')}
+                            password
+                            label='Password'
+                            placeholder='Password'
+                            errorMessage={errors.password?.message}
+                            {...register('password')}
                         />
                         <InputText
-                            type='number'
-                            label='Quantity'
-                            placeholder='Enter quantity'
-                            errorMessage={errors.quantity?.message}
-                            {...register('quantity')}
+                            label='Full name'
+                            placeholder='Enter fullname'
+                            errorMessage={errors.fullName?.message}
+                            {...register('fullName')}
+                        />
+                        <InputText
+                            label='Email'
+                            type='email'
+                            placeholder='Enter email'
+                            errorMessage={errors.email?.message}
+                            {...register('email')}
+                        />
+                        <InputText
+                            label='Phone'
+                            type='tel'
+                            placeholder='Enter phone'
+                            errorMessage={errors.phone?.message}
+                            {...register('phone')}
                         />
                         <Selection
-                            selected={getValues('category')}
-                            data={categoryData}
-                            label='Category'
-                            placeholder='Choose a category'
-                            errorMessage={errors.category?.message}
-                            onChange={(id) => setValue('category', id)}
-                        />
-                        <Selection
-                            selected={getValues('supplier')}
-                            data={supplierData}
-                            label='Supplier'
-                            placeholder='Choose a supplier'
-                            errorMessage={errors.supplier?.message}
-                            onChange={(id) => setValue('supplier', id)}
-                        />
-                        <Selection
-                            selected={getValues('status')}
-                            data={statusData}
-                            label='Status'
-                            placeholder='Choose a status'
-                            errorMessage={errors.status?.message}
-                            onChange={(id) => setValue('status', id)}
+                            selected={getValues('role')}
+                            data={roleData}
+                            label='Role'
+                            placeholder='Choose a role'
+                            errorMessage={errors.role?.message}
+                            onChange={(id) => setValue('role', id)}
                         />
                         <TextArea
                             className='col-span-2'
-                            label='Description'
-                            placeholder='Enter description'
-                            errorMessage={errors.description?.message}
-                            {...register('description')}
+                            label='Address'
+                            placeholder='Enter address'
+                            errorMessage={errors.address?.message}
+                            {...register('address')}
                         />
                     </div>
                     <div className='flex justify-end space-x-3 mt-5'>
@@ -166,7 +162,7 @@ const ConfigProduct = ({ productData, categoryData, statusData, supplierData, on
                         </button>
                         <button
                             type='button'
-                            onClick={() => navigate(slug.products)}
+                            onClick={() => navigate(slug.accounts)}
                             className='cursor-pointer uppercase bg-gray min-w-[150px] px-4 py-2 rounded text-white hover:text-dark font-semibold hover:bg-dark-white dark:hover:bg-gray dark:hover:text-white transition-colors disabled:opacity-50 disabled:cursor-wait'
                         >
                             Close
@@ -177,5 +173,4 @@ const ConfigProduct = ({ productData, categoryData, statusData, supplierData, on
         </form>
     )
 }
-
-export default ConfigProduct
+export default ConfigAccount

@@ -8,7 +8,8 @@ export interface User {
     username: string
     fullName: string
     email?: string
-    phone?: string | number
+    password?: string
+    phone?: string
     address?: string
     role: UserRole
     image?: SanityImageAssetDocument
