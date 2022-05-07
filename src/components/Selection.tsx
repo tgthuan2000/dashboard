@@ -20,8 +20,8 @@ const Selection = ({
     placeholder = 'Placeholder',
     label = 'Label',
     errorMessage,
-    autoFocus = false,
-    disabled = false,
+    autoFocus,
+    disabled,
     onChange,
     selected,
     data = [],
@@ -43,13 +43,16 @@ const Selection = ({
             </label>
             <div className='relative'>
                 <div
-                    className='flex items-center justify-between outline-none focus:ring-transparent focus:border-primary text-sm border border-[#ced4da] py-2 rounded font-normal text-dark bg-white'
-                    onClick={() => setShowDropdown(!showDropdown)}
+                    className={cls(
+                        'flex items-center justify-between outline-none focus:ring-transparent focus:border-primary text-sm border border-[#ced4da] py-2 rounded font-normal text-dark',
+                        disabled ? 'bg-gray-light' : 'bg-white'
+                    )}
+                    onClick={() => !disabled && setShowDropdown(!showDropdown)}
                 >
                     <span
                         className={cls(
                             'ml-4 inline-flex items-center',
-                            !selectedChange ? 'select-none text-gray' : 'text-dark'
+                            disabled ? 'select-none text-gray' : !selectedChange ? 'select-none text-gray' : 'text-dark'
                         )}
                     >
                         {selectedChange?.name || placeholder}

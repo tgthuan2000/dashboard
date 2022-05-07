@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { User } from '../../../@types'
 import * as yup from 'yup'
 import { client, urlFor } from '../../../client/sanity'
@@ -8,6 +8,7 @@ import { InputText, Selection, TextArea } from '../../../components'
 import { SanityImageAssetDocument } from '@sanity/client'
 import { ChangeEvent, useState } from 'react'
 import { slug } from '../../../utils/slug'
+import { useAccount } from '../../../features'
 
 export type FormInputs = {
     username?: string
@@ -45,8 +46,11 @@ interface ConfigAccountProps {
     roleData?: selectType[]
     onSubmit?: SubmitHandler<FormInputs>
 }
+const ADMIN_ROLE = 'c036b28f-9870-4b4b-972b-9c7ea282b373'
 
 const ConfigAccount = ({ onSubmit, roleData, accountData }: ConfigAccountProps) => {
+    const { id } = useParams()
+    const account = useAccount()
     const navigate = useNavigate()
     const {
         register,
@@ -144,6 +148,7 @@ const ConfigAccount = ({ onSubmit, roleData, accountData }: ConfigAccountProps) 
                             placeholder='Choose a role'
                             errorMessage={errors.role?.message}
                             onChange={(id) => setValue('role', id)}
+                            disabled={id === account._id || getValues('role') === ADMIN_ROLE}
                         />
                         <TextArea
                             className='col-span-2'
