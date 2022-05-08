@@ -5,6 +5,7 @@ import { Loading } from '../../components'
 import { headerHOC } from '../../hoc'
 import { useQuery } from '../../hooks'
 import { USER_ROLES } from '../../schema'
+import { slug } from '../../utils/slug'
 import ConfigAccount, { FormInputs, selectType } from './ConfigAccount'
 
 const AddAccount = () => {
@@ -63,6 +64,6 @@ const AddAccount = () => {
 }
 
 export default headerHOC(AddAccount, 'Add account', [
-    { title: 'Authentication', to: '/authentication' },
-    { title: 'Accounts', to: '/authentication/accounts' },
+    { title: 'Authentication', to: slug.authentication },
+    { title: 'Accounts', to: slug.accounts },
 ])

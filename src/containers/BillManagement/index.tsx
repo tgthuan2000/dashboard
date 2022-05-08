@@ -4,6 +4,7 @@ import { Box, SortDropDown, SearchForm } from '../../components'
 import { headerHOC } from '../../hoc'
 import { useQueries, useQuery } from '../../hooks'
 import { BillEnum, BILL_QUERY, BILLSTATUS_QUERY } from '../../schema'
+import { slug } from '../../utils/slug'
 import { Calendar, Table, Pagination } from './components'
 
 const all: BillStatus = { _id: '0', name: 'Tất cả' }
@@ -112,7 +113,7 @@ export default memo(
     headerHOC(BillManagement, 'Bill Management', [
         {
             title: 'Payments',
-            to: '/payments',
+            to: slug.payments,
         },
     ])
 )

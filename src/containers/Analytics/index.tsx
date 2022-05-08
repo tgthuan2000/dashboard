@@ -1,6 +1,7 @@
 import { memo } from 'react'
 import { dataCardAnalytics } from '../../constants'
 import { headerHOC } from '../../hoc'
+import { slug } from '../../utils/slug'
 import { Card, HeatChart } from './components'
 
 const Analytics = () => {
@@ -12,7 +13,14 @@ const Analytics = () => {
     )
 }
 
-export default memo(headerHOC(Analytics, 'Analytics', [{ title: 'Dashboards', to: '/' }]))
+export default memo(
+    headerHOC(Analytics, 'Analytics', [
+        {
+            title: 'Dashboards',
+            to: slug.home,
+        },
+    ])
+)
 
 const CardList = () => {
     return (

@@ -5,6 +5,7 @@ import { Loading } from '../../components'
 import { headerHOC } from '../../hoc'
 import { useQuery } from '../../hooks'
 import { GET_PRODUCT_CATEGORIES, GET_PRODUCT_STATUS, GET_PRODUCT_SUPPLIER } from '../../schema'
+import { slug } from '../../utils/slug'
 import ConfigProduct, { FormInputs, selectType } from './ConfigProduct'
 
 const AddProduct = () => {
@@ -72,6 +73,6 @@ const AddProduct = () => {
 }
 
 export default headerHOC(AddProduct, 'Add product', [
-    { title: 'Product Managements', to: '/product-managements' },
-    { title: 'Products', to: '/product-managements/products' },
+    { title: 'Product Managements', to: slug.productManagements },
+    { title: 'Products', to: slug.products },
 ])

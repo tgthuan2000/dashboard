@@ -5,6 +5,7 @@ import { Box, IconButton, Pagination, SearchForm, SortDropDown } from '../../com
 import { headerHOC } from '../../hoc'
 import { useQuery, useQueries } from '../../hooks'
 import { GET_PRODUCT_CATEGORIES, GET_PRODUCT_STATUS, ProductEnum, PRODUCT_QUERY } from '../../schema'
+import { slug } from '../../utils/slug'
 import { Table } from './components'
 
 const all = { _id: '0', name: 'Tất cả' }
@@ -107,5 +108,10 @@ const ProductManagement = () => {
 }
 
 export default memo(
-    headerHOC(ProductManagement, 'Products', [{ title: 'Product Managements', to: '/product-managements' }])
+    headerHOC(ProductManagement, 'Products', [
+        {
+            title: 'Product Managements',
+            to: slug.productManagements,
+        },
+    ])
 )

@@ -29,12 +29,58 @@ export const BILL_QUERY = (...params: (BillEnum | null)[]) => `
             username,
             phone,
             address,
-            email
+            email,
+            image
         },
         billStatus-> {
             _id,
             name,
             style
-    },
+        },
+        "prices": *[_type == "bill-detail" && references(^._id)].price
     } [$start...$end]
+`
+
+export const GET_BILL_BY_ID = `
+    *[_type == "bill" && _id == $_id] {
+        _id,
+        user-> {
+            _id,
+            fullName,
+            username,
+            phone,
+            address,
+            email,
+            role-> {
+                _id,
+                name,
+                style
+            },
+            image
+        },
+        billStatus-> {
+            _id,
+            name,
+            style
+        },
+        "detail": *[_type == "bill-detail" && references(^._id)] {
+            product-> {
+                _id,
+                name,
+                image,
+                price,
+                categoryProduct-> {
+                    _id,
+                    name
+                },
+                supplier-> {
+                    _id,
+                    name
+                }
+            },
+            quantity,
+            price,
+            _id
+        }
+    }
 `

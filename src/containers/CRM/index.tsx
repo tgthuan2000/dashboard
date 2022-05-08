@@ -1,5 +1,6 @@
 import { memo } from 'react'
 import { headerHOC } from '../../hoc'
+import { slug } from '../../utils/slug'
 import { BalanceOverview, PotentialCustomer } from './components'
 
 const CRM = () => {
@@ -11,4 +12,11 @@ const CRM = () => {
     )
 }
 
-export default memo(headerHOC(CRM, 'CRM', [{ title: 'Dashboards', to: '/' }]))
+export default memo(
+    headerHOC(CRM, 'CRM', [
+        {
+            title: 'Dashboards',
+            to: slug.home,
+        },
+    ])
+)

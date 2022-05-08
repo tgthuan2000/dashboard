@@ -1,6 +1,7 @@
 import { memo, useEffect } from 'react'
 import { client } from '../../client/sanity'
 import { headerHOC } from '../../hoc'
+import { slug } from '../../utils/slug'
 import { BestSellingProducts, Revenue } from './components'
 
 const Ecommerce = () => {
@@ -12,4 +13,11 @@ const Ecommerce = () => {
     )
 }
 
-export default memo(headerHOC(Ecommerce, 'Ecommerce', [{ title: 'Dashboards', to: '/' }]))
+export default memo(
+    headerHOC(Ecommerce, 'Ecommerce', [
+        {
+            title: 'Dashboards',
+            to: slug.home,
+        },
+    ])
+)

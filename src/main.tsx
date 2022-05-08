@@ -16,6 +16,7 @@ import {
     Accounts,
     AddAccount,
     EditAccount,
+    BillDetail,
 } from './containers'
 import { headerHOC } from './hoc'
 import './index.css'
@@ -36,7 +37,7 @@ const PageNotFound = () => (
     </div>
 )
 
-const NotFound = headerHOC(PageNotFound, 'Page not found', [{ title: 'Go Home', to: '/' }])
+const NotFound = headerHOC(PageNotFound, 'Page not found', [{ title: 'Go Home', to: slug.home }])
 
 ReactDOM.render(
     <React.StrictMode>
@@ -101,6 +102,14 @@ ReactDOM.render(
                                     element={
                                         <PrivateRoute>
                                             <BillManagement />
+                                        </PrivateRoute>
+                                    }
+                                />
+                                <Route
+                                    path={slug._billDetail}
+                                    element={
+                                        <PrivateRoute>
+                                            <BillDetail />
                                         </PrivateRoute>
                                     }
                                 />

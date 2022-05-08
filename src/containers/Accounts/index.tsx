@@ -5,6 +5,7 @@ import { Box, IconButton, Pagination, SortDropDown, SearchForm } from '../../com
 import { headerHOC } from '../../hoc'
 import { useQueries, useQuery } from '../../hooks'
 import { UserEnum, USER_QUERY, USER_ROLES } from '../../schema'
+import { slug } from '../../utils/slug'
 import { Table } from './components'
 
 interface UserSort {
@@ -90,7 +91,7 @@ export default memo(
     headerHOC(Accounts, 'Accounts', [
         {
             title: 'Authentication',
-            to: '/authentication',
+            to: slug.authentication,
         },
     ])
 )
