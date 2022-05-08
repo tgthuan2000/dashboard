@@ -3,6 +3,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { PersonItem } from '.'
+import { urlFor } from '../../../client/sanity'
 import { Avatar } from '../../../components'
 import { dataPersonConfigs } from '../../../constants'
 import { useAccount } from '../../../features'
@@ -20,7 +21,7 @@ interface PersonConfigProps {
 const PersonConfig = ({ className, active = false, onClick, onBlur }: PersonConfigProps) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { fullName } = useAccount()
+    const { fullName, role, image } = useAccount()
     return (
         <div
             tabIndex={0}
@@ -31,13 +32,13 @@ const PersonConfig = ({ className, active = false, onClick, onBlur }: PersonConf
                 className
             )}
         >
-            <Avatar alt={fullName?.[0]} />
+            <Avatar src={image && urlFor(image)} alt={fullName?.[0]} />
             <div className='flex-1 overflow-hidden flex ml-3 flex-col justify-between'>
                 <h3 className='leading-normal text-sm text-[#495057] dark:text-[#cde4ca] font-medium overflow-hidden text-ellipsis whitespace-nowrap'>
                     {fullName}
                 </h3>
                 <p className='text-xs text-[#878a99] dark:text-[#878a99] overflow-hidden whitespace-nowrap text-ellipsis'>
-                    Admin
+                    {role?.name}
                 </p>
             </div>
 

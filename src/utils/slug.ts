@@ -12,7 +12,9 @@ export const slug = {
 
     payments: '/payments',
     billManagement: '/payments/bill-management',
+    billDetail: '/payments/bill-management/detail/:id',
     _billManagement: 'bill-management',
+    _billDetail: 'bill-management/detail/:id',
 
     productManagements: '/product-managements',
     products: '/product-managements/products',
@@ -22,7 +24,7 @@ export const slug = {
     _products_add: 'products/add',
     _products_edit: 'products/edit/:id',
 
-    authentication: 'authentication',
+    authentication: '/authentication',
     accounts: '/authentication/accounts',
     accounts_add: '/authentication/accounts/add',
     accounts_edit: '/authentication/accounts/edit/:id',

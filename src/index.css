@@ -26,4 +26,7 @@ body {
     input[type='checkbox'] {
         @apply h-4 w-4 rounded text-primary;
     }
+    input[type='checkbox']:focus {
+        @apply ring-transparent;
+    }
 }

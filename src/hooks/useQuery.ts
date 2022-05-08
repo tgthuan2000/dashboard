@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from 'react'
 import { client } from '../client/sanity'
 
-export const useQuery = <T>(query: string, befores: T[] | undefined = []) => {
+export const useQuery = <T>(query: string, befores: T[] | undefined = [], params = {}) => {
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState<T[]>([])
 
     const getQuery = async () => {
         setLoading(true)
         try {
-            const q: T[] = await client.fetch<T[]>(query)
+            const q: T[] = await client.fetch<T[]>(query, params)
             setData([...befores, ...q])
         } catch (error: any) {
             throw new Error(error.message)
@@ -27,46 +27,49 @@ export const useQuery = <T>(query: string, befores: T[] | undefined = []) => {
 interface Params {
     start: number
     end: number
-    from: Date
-    to: Date
     query: string
     [key: string]: any
 }
-interface OptionUseQueryPaging {
+interface OptionUseQueries {
     numPerPage?: number
     queryParams?: Params | {}
 }
-interface _<T> {
+
+type QueryString<Q> = (...params: (Q | null)[]) => string
+
+interface SubQuery<Q> {
+    [key: string]: Q | null
+}
+
+interface _<T, Q> {
     store: T[]
     totalPage: number
     page: number
     end: boolean
-    query: string
+    query: QueryString<Q>
+    subQueries: SubQuery<Q>
     params: Params
 }
 
-const today = new Date()
-const distance = 30 // days
-
 export const checkValidParams = (query: string, queries: string[]) => queries.filter((q) => !query.includes(q))
 
-export const useQueryPaging = <T>(
-    queryString: string,
-    { numPerPage = 5, queryParams = {} }: OptionUseQueryPaging = { numPerPage: 5, queryParams: {} }
+export const useQueries = <T, Q>(
+    queryString: QueryString<Q>,
+    { numPerPage = 5, queryParams = {} }: OptionUseQueries = { numPerPage: 5, queryParams: {} },
+    initSubQueries: SubQuery<Q> = {}
 ) => {
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState<T[]>([])
-    const [_, $] = useState<_<T>>({
+    const [_, $] = useState<_<T, Q>>({
         store: [],
         totalPage: 0,
         end: false,
         page: 1,
         query: queryString,
+        subQueries: initSubQueries,
         params: {
             start: 0,
             end: numPerPage,
-            from: new Date(today.getTime() - distance * 24 * 60 * 60 * 1000),
-            to: today,
             query: '*',
             ...queryParams,
         },
@@ -80,7 +83,7 @@ export const useQueryPaging = <T>(
             setLoading(true)
             try {
                 const errs = checkValidParams(
-                    _.query,
+                    _.query(...Object.values(_.subQueries)),
                     Object.keys(_.params).map((item) => `$${item}`)
                 )
 
@@ -88,7 +91,7 @@ export const useQueryPaging = <T>(
                     throw new Error(`Query invalid at ${errs}`)
                 }
 
-                const q: T[] = await client.fetch<T[]>(_.query, _.params)
+                const q: T[] = await client.fetch<T[]>(_.query(...Object.values(_.subQueries)), _.params)
 
                 if (q.length > 0) {
                     $((prev) => ({
@@ -141,15 +144,16 @@ export const useQueryPaging = <T>(
         }
     }
 
-    const refetch = (q: string, p?: { [p in keyof Params]?: Params[p] }) => {
+    const refetch = (q: SubQuery<Q>, p?: { [p in keyof Params]?: Params[p] }, d?: (keyof Params)[]) => {
         setData([])
         $((prev) => {
             const newParams: Params = { ...prev.params, start: 0, end: numPerPage, ...p }
-            if (!p) {
-                delete newParams._id
-            }
+            d?.forEach((item) => {
+                delete newParams[item]
+            })
             return {
-                query: q,
+                ...prev,
+                subQueries: { ...prev.subQueries, ...q },
                 totalPage: 0,
                 store: [],
                 end: false,

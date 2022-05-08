@@ -1,1 +1,1 @@
-export { default as headerHOC } from './headerHOC'
+export { default as headerHOC } from './HeaderHOC'

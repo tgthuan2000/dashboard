@@ -16,6 +16,7 @@ import {
     Accounts,
     AddAccount,
     EditAccount,
+    BillDetail,
 } from './containers'
 import { headerHOC } from './hoc'
 import './index.css'
@@ -25,8 +26,18 @@ import { ToastContainer } from 'react-toastify'
 import { slug } from './utils/slug'
 import { PrivateRoute } from './components'
 import { HelmetProvider } from 'react-helmet-async'
+import { QuestionMark } from '@mui/icons-material'
 
-const NotFound = headerHOC(() => <></>, 'Page not found', [{ title: 'Go Home', to: '/' }])
+const PageNotFound = () => (
+    <div className='select-none cursor-not-allowed rounded-lg text-warning bg-white dark:bg-dark transition-colors h-[calc(100vh-70px-3rem)] flex items-center justify-center text-2xl font-medium uppercase'>
+        <div className='animate-pulse flex flex-col items-center justify-center space-y-2'>
+            <QuestionMark style={{ width: 100, height: 100 }} />
+            <span>PAGE NOT FOUND</span>
+        </div>
+    </div>
+)
+
+const NotFound = headerHOC(PageNotFound, 'Page not found', [{ title: 'Go Home', to: slug.home }])
 
 ReactDOM.render(
     <React.StrictMode>
@@ -91,6 +102,14 @@ ReactDOM.render(
                                     element={
                                         <PrivateRoute>
                                             <BillManagement />
+                                        </PrivateRoute>
+                                    }
+                                />
+                                <Route
+                                    path={slug._billDetail}
+                                    element={
+                                        <PrivateRoute>
+                                            <BillDetail />
                                         </PrivateRoute>
                                     }
                                 />

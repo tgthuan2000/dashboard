@@ -2,56 +2,62 @@ import { memo, useCallback, useEffect, useState } from 'react'
 import { Bill, BillStatus } from '../../@types'
 import { Box, SortDropDown, SearchForm } from '../../components'
 import { headerHOC } from '../../hoc'
-import { useQueryPaging, useQuery } from '../../hooks'
+import { useQueries, useQuery } from '../../hooks'
 import { BillEnum, BILL_QUERY, BILLSTATUS_QUERY } from '../../schema'
+import { slug } from '../../utils/slug'
 import { Calendar, Table, Pagination } from './components'
 
 const all: BillStatus = { _id: '0', name: 'Tất cả' }
 
 const BillManagement = () => {
-    const { store, data, loading, next, prev, end, page, totalPage, refetch, params } = useQueryPaging<Bill>(
-        BILL_QUERY(BillEnum.ALL_STATUS)
+    const { store, data, loading, next, prev, end, page, totalPage, refetch, params } = useQueries<Bill, BillEnum>(
+        BILL_QUERY,
+        {
+            queryParams: { from: new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000), to: new Date() },
+        },
+        { status: BillEnum.ALL_STATUS }
     )
 
     const { data: statusData, loading: statusLoading } = useQuery<BillStatus>(BILLSTATUS_QUERY, [all])
     const [sortSelected, setSortSelected] = useState<BillStatus>(all)
     const [showStatus, setShowStatus] = useState(false)
-    const [billItems, setBillItems] = useState<Bill[]>([])
+    const [billSelected, setBillSelected] = useState<{ allChecked: boolean; data: Bill[] }>({
+        allChecked: false,
+        data: [],
+    })
 
     useEffect(() => {
-        if (billItems.length === 0) setShowStatus(false)
+        if (billSelected.data.length === 0) setShowStatus(false)
         else setShowStatus(true)
-    }, [billItems])
+    }, [billSelected])
 
     const handleSortChange = (_id: string) => {
         if (sortSelected._id === _id) return
         if (_id === '0') {
-            refetch(BILL_QUERY(BillEnum.ALL_STATUS))
             setSortSelected(all)
+            refetch({ status: BillEnum.ALL_STATUS }, {}, ['_id'])
             return
         }
         const item = statusData.find((sort) => sort._id === _id)
         if (item) {
-            refetch(BILL_QUERY(BillEnum.BY_STATUS), { _id })
             setSortSelected(item)
+            refetch({ status: BillEnum.BY_STATUS }, { _id })
         }
     }
 
     const handleDateChange = useCallback(
         (from: Date, to: Date) => {
-            refetch(BILL_QUERY(params._id ? BillEnum.BY_STATUS : BillEnum.ALL_STATUS), {
-                from,
-                to,
-            })
+            refetch({ status: params._id ? BillEnum.BY_STATUS : BillEnum.ALL_STATUS }, { from, to })
         },
         [params._id]
     )
 
     const handleSearch = useCallback(
         (value: string) => {
-            refetch(BILL_QUERY(params._id ? BillEnum.BY_STATUS : BillEnum.ALL_STATUS), {
-                query: value.trim().length === 0 ? '*' : `*${value.trim().toLowerCase()}*`,
-            })
+            refetch(
+                { status: params._id ? BillEnum.BY_STATUS : BillEnum.ALL_STATUS },
+                { query: value.trim().length === 0 ? '*' : `*${value.trim().toLowerCase()}*` }
+            )
         },
         [params._id]
     )
@@ -89,8 +95,10 @@ const BillManagement = () => {
             >
                 <Table
                     data={data}
-                    onRowChecked={setBillItems}
-                    checkList={billItems}
+                    onRowChecked={(data) =>
+                        setBillSelected((prev) => ({ ...billSelected, data: [...prev.data, ...data] }))
+                    }
+                    checkList={billSelected.data}
                     loading={loading}
                     page={page}
                     totalPage={totalPage}
@@ -105,7 +113,7 @@ export default memo(
     headerHOC(BillManagement, 'Bill Management', [
         {
             title: 'Payments',
-            to: '/payments',
+            to: slug.payments,
         },
     ])
 )

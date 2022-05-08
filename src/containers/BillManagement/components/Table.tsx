@@ -5,6 +5,7 @@ import { Bill } from '../../../@types'
 import { Avatar, Badge, Checkbox, ColHeader, Loading } from '../../../components'
 import NumberFormat from 'react-number-format'
 import { useEffect, useRef, useState } from 'react'
+import { urlFor } from '../../../client/sanity'
 
 const tableHeaders = ['Date', 'Customer Name', 'Amount', 'Total Prices', 'Bill Status', '']
 
@@ -29,6 +30,10 @@ const Table = ({ data, onRowChecked, loading, end, page, totalPage, checkList }:
         setIndeterminate(isIndeterminate)
         if (checkbox.current) checkbox.current.indeterminate = isIndeterminate
     }, [checkList])
+
+    useEffect(() => {
+        setCheckAll(false)
+    }, [data])
 
     const toggleAll = () => {
         onRowChecked(checkAll || indeterminate ? [] : data)
@@ -74,7 +79,10 @@ const Table = ({ data, onRowChecked, loading, end, page, totalPage, checkList }:
                                     <Col>{moment(d._createdAt).format('HH:mm - DD/MM/YYYY')}</Col>
                                     <Col>
                                         <div className='flex items-center'>
-                                            <Avatar alt={d.user?.fullName[0]} />
+                                            <Avatar
+                                                src={d.user.image && urlFor(d.user.image)}
+                                                alt={d.user?.fullName[0]}
+                                            />
                                             <div className='flex-1 overflow-hidden max-w-[200px] ml-3'>
                                                 <h3 className='leading-normal text-sm text-[#495057] dark:text-[#cde4ca] font-medium overflow-hidden text-ellipsis whitespace-nowrap'>
                                                     {d.user?.fullName}
@@ -85,7 +93,14 @@ const Table = ({ data, onRowChecked, loading, end, page, totalPage, checkList }:
                                     <Col className='text-right'>
                                         <NumberFormat value={d.amount} displayType='text' thousandSeparator />
                                     </Col>
-                                    <Col className='text-right'>0</Col>
+                                    <Col className='text-right'>
+                                        <NumberFormat
+                                            value={d.prices.reduce((total, price) => total + price, 0)}
+                                            displayType='text'
+                                            thousandSeparator
+                                            defaultValue={'-'}
+                                        />
+                                    </Col>
                                     <Col className='text-center'>
                                         <Badge style={d.billStatus?.style}>{d.billStatus?.name}</Badge>
                                     </Col>
