@@ -44,6 +44,7 @@ const AddProduct = () => {
                 name: d.name,
                 price: d.price,
                 quantity: d.quantity,
+                forecast: d.forecast,
                 description: d.description,
                 categoryProduct: category,
                 image,

@@ -13,6 +13,7 @@ export type FormInputs = {
     name?: string
     price?: number
     quantity?: number
+    forecast?: number
     image?: string
     category?: string
     supplier?: string
@@ -26,6 +27,7 @@ const schema = yup
         name: yup.string().required('Product name is required'),
         price: yup.number().required('Product price required'),
         quantity: yup.number().required('Product quantity required'),
+        forecast: yup.number().min(0, 'Forecast at least 0'),
         category: yup.string().required('Product category is required'),
         supplier: yup.string().required('Product supplier is required'),
         status: yup.string().required('Product status is required'),
@@ -61,6 +63,7 @@ const ConfigProduct = ({ productData, categoryData, statusData, supplierData, on
             name: productData?.name || '',
             price: productData?.price || 0,
             quantity: productData?.quantity || 0,
+            forecast: productData?.forecast || 0,
             category: productData?.categoryProduct?._id || undefined,
             supplier: productData?.supplier?._id || undefined,
             status: productData?.status?._id || undefined,
@@ -124,6 +127,13 @@ const ConfigProduct = ({ productData, categoryData, statusData, supplierData, on
                             placeholder='Enter quantity'
                             errorMessage={errors.quantity?.message}
                             {...register('quantity')}
+                        />
+                        <InputText
+                            type='number'
+                            label='Forecast'
+                            placeholder='Enter forecast'
+                            errorMessage={errors.forecast?.message}
+                            {...register('forecast')}
                         />
                         <Selection
                             selected={getValues('category')}

@@ -5,7 +5,7 @@ import { Product } from '../../../@types'
 import { urlFor } from '../../../client/sanity'
 import { Badge, ColHeader, Loading } from '../../../components'
 
-const tableHeaders = ['Image', 'Product', 'Amount', 'Price', 'Status', 'Created At', 'Updated At']
+const tableHeaders = ['Image', 'Product', 'Amount', 'Forecast', 'Price', 'Status', 'Created At', 'Updated At']
 
 interface TableProps {
     loading: boolean
@@ -40,6 +40,7 @@ const Table = ({ loading, data, end, page, totalPage }: TableProps) => {
                                     name,
                                     image,
                                     quantity,
+                                    forecast,
                                     price,
                                     status,
                                     categoryProduct,
@@ -66,6 +67,14 @@ const Table = ({ loading, data, end, page, totalPage }: TableProps) => {
                                         </td>
                                         <td className='text-right px-4'>
                                             <NumberFormat value={quantity} thousandSeparator displayType='text' />
+                                        </td>
+                                        <td className='text-right px-4'>
+                                            <NumberFormat
+                                                value={forecast}
+                                                thousandSeparator
+                                                displayType='text'
+                                                defaultValue={'-'}
+                                            />
                                         </td>
                                         <td className='text-right px-4'>
                                             <NumberFormat value={price} thousandSeparator displayType='text' />

@@ -20,6 +20,7 @@ export interface Product {
     image: SanityImageAssetDocument
     price: number
     quantity: number
+    forecast?: number
     totalCount: number
     status: ProductStatus
     supplier: { _id: string; name: string }

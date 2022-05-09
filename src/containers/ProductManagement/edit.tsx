@@ -44,12 +44,14 @@ const EditProduct = () => {
             _type: 'reference',
             _ref: d.supplier,
         }
+
         client
             .patch(productData._id)
             .set({
                 name: d.name,
                 price: d.price,
                 quantity: d.quantity,
+                forecast: d.forecast,
                 description: d.description,
                 categoryProduct: category,
                 image,

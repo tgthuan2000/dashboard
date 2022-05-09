@@ -39,6 +39,7 @@ export const PRODUCT_QUERY = (...params: (ProductEnum | null)[]) => `
         image,
         price,
         quantity,
+        forecast,
         status-> {
             _id,
             name,
@@ -63,6 +64,7 @@ export const GET_PRODUCT_BY_ID = `
         image,
         price,
         quantity,
+        forecast,
         status-> {
             _id,
             name,
