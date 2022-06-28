@@ -94,7 +94,7 @@ const Table = ({ loading, data, end, page, totalPage }: TableProps) => {
                             {end && page === totalPage && (
                                 <tr>
                                     <td
-                                        colSpan={7}
+                                        colSpan={tableHeaders.length}
                                         className='text-center py-3 text-gray select-none border-b border-[#e9ebec] dark:border-[#32383e] transition-colors'
                                     >
                                         No infomation result
@@ -105,7 +105,7 @@ const Table = ({ loading, data, end, page, totalPage }: TableProps) => {
                     ) : (
                         <tr>
                             <td
-                                colSpan={7}
+                                colSpan={tableHeaders.length}
                                 className='text-center py-36 text-gray select-none border-b border-[#e9ebec] dark:border-[#32383e] transition-colors'
                             >
                                 <Loading size='small' />
